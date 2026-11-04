@@ -34,7 +34,7 @@ a{color:inherit;text-decoration:none}
 .logo .a::after{content:"";position:absolute;top:-4px;right:-9px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:2px solid var(--lime);animation:beat 2.4s ease-in-out infinite}
 .nav-r{display:flex;gap:14px;align-items:center}
 .lang{display:flex;padding:4px;border-radius:99px;background:var(--surface);border:1px solid var(--line)}
-.lang button{font:600 11px Inter,sans-serif;color:var(--muted);background:none;border:0;border-radius:99px;padding:6px 10px;cursor:pointer}
+.lang button{font:600 11px Inter,sans-serif;color:var(--muted);background:none;border:0;border-radius:99px;padding:6px 10px}
 .lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .lang button{transition:background .25s,color .25s}.lang button:not([aria-pressed="true"]):hover{color:var(--ink)}
 .btn{display:inline-flex;align-items:center;gap:8px;font:600 15px Inter,sans-serif;border-radius:99px;padding:14px 24px;border:1.5px solid transparent;position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.3,1.6,.5,1),background .2s,color .2s,box-shadow .3s,border-color .2s}
@@ -56,8 +56,8 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .sub{max-width:520px;margin:28px auto 30px;color:var(--muted);font-size:clamp(15px,1.5vw,17px);line-height:1.55;animation:up .7s cubic-bezier(.2,.8,.2,1) .7s both;transition:color .3s,scale .4s cubic-bezier(.3,1.6,.5,1)}.sub:hover{color:var(--ink);scale:1.04}
 .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;z-index:2}.cta .btn{animation:up .7s cubic-bezier(.3,1.4,.5,1) .9s backwards}.cta .btn+.btn{animation-delay:1s}
 
-.sticker{position:absolute;z-index:3;touch-action:none;cursor:grab;user-select:none;transform:translate(var(--tx,0),var(--ty,0)) rotate(var(--r,0deg));transition:transform .25s;animation:float var(--fdur,5s) ease-in-out var(--fd,0s) infinite}
-.sticker.drag{cursor:grabbing;transition:none;z-index:5;animation-play-state:paused}.sticker.fall{transition:none;animation-play-state:paused;pointer-events:none;z-index:5}
+.sticker{position:absolute;z-index:3;touch-action:none;user-select:none;transform:translate(var(--tx,0),var(--ty,0)) rotate(var(--r,0deg));transition:transform .25s;animation:float var(--fdur,5s) ease-in-out var(--fd,0s) infinite}
+.sticker.drag{transition:none;z-index:5;animation-play-state:paused}.sticker.fall{transition:none;animation-play-state:paused;pointer-events:none;z-index:5}
 .sticker .in{display:flex;align-items:center;justify-content:center;animation:pop .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:var(--d,.7s);box-shadow:0 14px 30px rgba(0,0,0,.45);transition:scale .35s cubic-bezier(.3,1.8,.5,1),rotate .35s cubic-bezier(.3,1.8,.5,1),box-shadow .3s}.sticker:hover .in{scale:1.12;rotate:-4deg;box-shadow:0 20px 40px rgba(124,92,253,.4)}.sticker.drag .in{scale:1.18}.eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
 .pill-s{font:600 clamp(16px,2vw,26px) Inter,sans-serif;color:var(--bg);padding:.55em 1.1em;border-radius:99px;border:4px solid var(--ink);white-space:nowrap}
 .s1{top:9%;left:1%;--r:-8deg;--fdur:5.2s;--fd:-1s}.s1 .in{background:linear-gradient(100deg,var(--purple),var(--lilac) 40%,var(--lime) 70%,var(--purple)) 0 0/250% 100%;animation:pop .6s cubic-bezier(.3,1.6,.5,1) var(--d,.75s) both,slide 5s ease-in-out infinite alternate}
@@ -108,8 +108,7 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .pf *,.pf *::before,.pf *::after{box-sizing:border-box}
 .pf :focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 
-.pf-stage{position:relative;height:560px;overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(#000 var(--mk,78%),transparent);mask-image:linear-gradient(#000 var(--mk,78%),transparent)}
-.pf-stage.drag{cursor:grabbing}
+.pf-stage{position:relative;height:560px;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(#000 var(--mk,78%),transparent);mask-image:linear-gradient(#000 var(--mk,78%),transparent)}
 .pf-stage:focus-visible{outline-offset:-3px}
 
 .pf-card{position:absolute;left:0;top:0;width:var(--w);height:var(--h);will-change:transform,opacity}
@@ -118,10 +117,10 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .pf-face img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .pf-ph{padding:.3em .4em;font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-size:calc(var(--w)*.14);line-height:.9;font-stretch:66%;font-variation-settings:"wdth" 66;text-transform:uppercase;color:var(--c)}
 
-.pf-meta{position:absolute;left:50%;top:var(--mt,300px);transform:translateX(-50%);z-index:30;width:min(94%,440px);display:flex;flex-direction:column;align-items:center;text-align:center;cursor:default}
+.pf-meta{position:absolute;left:50%;top:var(--mt,300px);transform:translateX(-50%);z-index:30;width:min(94%,440px);display:flex;flex-direction:column;align-items:center;text-align:center}
 .pf-row{display:flex;align-items:center;gap:clamp(10px,2vw,20px)}
 .pf-row h3{margin:0;min-width:clamp(150px,22vw,300px);font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-stretch:66%;font-variation-settings:"wdth" 66;text-transform:uppercase;font-size:clamp(30px,4vw,52px);line-height:.9}
-.pf-arrow{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,border-color .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.pf-arrow{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);transition:background .2s,border-color .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
 .pf-arrow:hover{background:rgba(124,92,253,.16);border-color:var(--purple);transform:scale(1.1)}.pf-arrow:active{transform:scale(.94)}
 .pf-meta p{display:flex;align-items:center;justify-content:center;min-height:3em;margin:14px 0 20px;max-width:340px;color:var(--muted);font-size:clamp(14px,1.4vw,16px);line-height:1.5}
 .pf-btn{display:inline-flex;align-items:center;gap:8px;font:600 14px Inter,sans-serif;background:var(--lime);color:var(--bg);border-radius:99px;padding:11px 20px;transition:transform .3s cubic-bezier(.3,1.6,.5,1),box-shadow .3s}
@@ -137,7 +136,7 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .pf-btn{position:relative;overflow:hidden}
 .pf-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);transform:translateX(-120%);animation:pf-shine 5s ease-in-out 2.5s infinite;pointer-events:none}
 .pf-dots{display:flex;gap:8px;margin-top:18px}
-.pf-dots button{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:99px;background:var(--line);cursor:pointer;transition:width .4s cubic-bezier(.3,1.6,.5,1),background .25s}
+.pf-dots button{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:99px;background:var(--line);transition:width .4s cubic-bezier(.3,1.6,.5,1),background .25s}
 .pf-dots button::before{content:"";position:absolute;inset:-8px -4px}
 .pf-dots button:hover{background:var(--lilac)}
 .pf-dots button[aria-current="true"]{width:26px;background:var(--lime)}
@@ -353,7 +352,7 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 @keyframes ts-float{0%,100%{translate:0 0}50%{translate:0 -7px}}
 @media (hover:hover){.ts-item:not(.open):hover{z-index:2}}
 
-.ts-head{display:flex;align-items:center;width:100%;min-width:max-content;height:calc(var(--hh) - 6px);margin:0;padding:0 22px;border:0;background:none;color:inherit;font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-stretch:66%;font-variation-settings:"wdth" 66;font-size:22px;line-height:1;text-transform:uppercase;white-space:nowrap;text-align:left;cursor:pointer}
+.ts-head{display:flex;align-items:center;width:100%;min-width:max-content;height:calc(var(--hh) - 6px);margin:0;padding:0 22px;border:0;background:none;color:inherit;font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-stretch:66%;font-variation-settings:"wdth" 66;font-size:22px;line-height:1;text-transform:uppercase;white-space:nowrap;text-align:left}
 .ts-head:focus-visible{outline:none}
 
 .ts-body{position:absolute;left:0;top:calc(var(--hh) - 6px);width:calc(var(--cw) - 6px);padding:2px 22px 22px;visibility:hidden;opacity:0;translate:0 8px;transition:opacity .2s,translate .3s,visibility 0s .2s}
@@ -385,8 +384,8 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .ft-ch{display:inline-block;font-variation-settings:"wght" var(--w,900),"wdth" 62;color:color-mix(in srgb,var(--lime) calc(var(--p,0)*100%),var(--ink))}
 .ft-measure .ft-ch{--w:900!important}
 
-.ft-st{position:absolute;left:0;top:0;z-index:3;cursor:grab;touch-action:none;will-change:transform;animation:ft-float var(--fdur,5s) ease-in-out var(--fd,0s) infinite}
-.ft-st.free,.ft-st.drag{animation:none}.ft-st.drag{cursor:grabbing;z-index:5}
+.ft-st{position:absolute;left:0;top:0;z-index:3;touch-action:none;will-change:transform;animation:ft-float var(--fdur,5s) ease-in-out var(--fd,0s) infinite}
+.ft-st.free,.ft-st.drag{animation:none}.ft-st.drag{z-index:5}
 .ft-st .in{display:flex;align-items:center;justify-content:center;transition:scale .35s cubic-bezier(.3,1.8,.5,1)}
 .ft-st:hover .in{scale:1.08}.ft-st.drag .in{scale:1.15}
 .ft-pill .in{font:600 clamp(13px,1.7vw,22px) Inter,sans-serif;color:var(--bg);background:linear-gradient(100deg,var(--lilac),var(--lime));border:3px solid var(--ink);border-radius:99px;padding:.5em 1.1em;white-space:nowrap;box-shadow:0 14px 30px rgba(0,0,0,.5)}
@@ -654,11 +653,61 @@ html.has-js .scroll-reveal.is-visible{opacity:1;transform:translate3d(0,0,0);fil
 .pf-dot::before{content:"\2039";font-size:24px;line-height:.6;font-weight:600;transform:translateY(-1px)}
 .pf-dot::after{content:"\203A";font-size:24px;line-height:.6;font-weight:600;transform:translateY(-1px)}
 
-/* ===== CURSOR CUSTOM: tetap berbentuk panah, tapi lebih besar & unik (lime + bayangan ungu, outline putih-hitam) =====
-   Hotspot di ujung panah (4,3). Di atas link/tombol, panah berubah jadi lilac dengan bayangan lime. */
-html,body{cursor:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M7 6 L7 33 L14.5 26 L19.5 37 L25 34.6 L20 23.8 L30 23.8 Z%22 fill=%22%237c5cfd%22 stroke=%22%23111015%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%226.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22%23c0ff72%22 stroke=%22%23111015%22 stroke-width=%222.6%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 11 L8 20%22 stroke=%22%23ffffff%22 stroke-opacity=%22.8%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") 4 3,auto}
-a[href],button,[role="button"],summary,label[for],select,input[type="submit"],.lang button,.pf-arrow,.pf-dots button,.ts-head,.wdock-link,.pr-cta,.ab-link,.pf-btn,.ft-btn,.ft-top{cursor:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M7 6 L7 33 L14.5 26 L19.5 37 L25 34.6 L20 23.8 L30 23.8 Z%22 fill=%22%23c0ff72%22 stroke=%22%23111015%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%226.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22%23a98bff%22 stroke=%22%23111015%22 stroke-width=%222.6%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 11 L8 20%22 stroke=%22%23ffffff%22 stroke-opacity=%22.8%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") 4 3,pointer!important}
-@media (hover:none){html,body{cursor:auto}}
+/* ===== CURSOR CUSTOM: hijau lime + bayangan ungu, outline putih-hitam =====
+   Hotspot di ujung panah (4,3). Tetap menggunakan kursor hijau custom di semua elemen termasuk link/tombol/area interaktif dan tidak berubah ke kursor normal. */
+html,
+body,
+*,
+*::before,
+*::after {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M7 6 L7 33 L14.5 26 L19.5 37 L25 34.6 L20 23.8 L30 23.8 Z%22 fill=%22%237c5cfd%22 stroke=%22%23111015%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%226.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22%23c0ff72%22 stroke=%22%23111015%22 stroke-width=%222.6%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 11 L8 20%22 stroke=%22%23ffffff%22 stroke-opacity=%22.8%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") 4 3, auto !important;
+}
+
+a,
+button,
+[role="button"],
+summary,
+label,
+select,
+input,
+textarea,
+[tabindex],
+.btn,
+.sticker,
+.pf-stage,
+.pf-card,
+.pf-arrow,
+.pf-dots button,
+.ts-head,
+.ts-card,
+.wdock-link,
+.pr-cta,
+.ab-link,
+.pf-btn,
+.ft-btn,
+.ft-top,
+.pill,
+.lang button,
+a *,
+button *,
+[role="button"] *,
+.btn *,
+.pill *,
+.sticker *,
+.pf-stage *,
+.ts-item * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M7 6 L7 33 L14.5 26 L19.5 37 L25 34.6 L20 23.8 L30 23.8 Z%22 fill=%22%237c5cfd%22 stroke=%22%23111015%22 stroke-width=%222.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22none%22 stroke=%22%23ffffff%22 stroke-width=%226.4%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M4 3 L4 30 L11.5 23 L16.5 34 L22 31.6 L17 20.8 L27 20.8 Z%22 fill=%22%23c0ff72%22 stroke=%22%23111015%22 stroke-width=%222.6%22 stroke-linejoin=%22round%22/%3E%3Cpath d=%22M8 11 L8 20%22 stroke=%22%23ffffff%22 stroke-opacity=%22.8%22 stroke-width=%222%22 stroke-linecap=%22round%22/%3E%3C/svg%3E") 4 3, pointer !important;
+}
+
+@media (hover:none){
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+}
 </style>
 </head>
 <body>

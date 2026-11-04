@@ -758,7 +758,7 @@ button *,
           <button class="pf-arrow pf-next" type="button"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 2 4 4-4 4"/></svg></button>
         </div>
         <p></p>
-        <a class="pf-btn" href="#"><span data-id="Lihat detail" data-en="View details">Lihat detail</span>
+        <a class="pf-btn" href="#" target="_blank" rel="noopener"><span data-id="Lihat detail" data-en="View details">Lihat detail</span>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a>
       </div>
       <span class="pf-dot" aria-hidden="true" data-id="Geser" data-en="Drag">Geser</span>
@@ -796,12 +796,12 @@ button *,
            Untuk foto: tambahkan <img src="foto.jpg" alt=""> setelah <span class="ab-ini"> -->
       <ul class="ab-team" aria-label="Tim Webora">
         <li class="ab-p" style="--n:0;--pc:#c0ff72;--pf:#111015">
-          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">A</span><img src="assets/abdurrahman-aiman.png" alt="Abdurrahman Aiman" loading="lazy"></div></div>
+          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">A</span><img src="assets/abdurrahman-aiman.jpg" alt="Abdurrahman Aiman" loading="lazy"></div></div>
           <div class="ab-cap"><span class="ab-name">Abdurrahman Aiman</span><span class="ab-role" data-id="Developer" data-en="Developer">Developer</span>
             <a class="ab-link" href="https://abaimann.github.io/Repository-Gw/" target="_blank" rel="noopener" aria-label="Portofolio Abdurrahman Aiman"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
         <li class="ab-p" style="--n:1;--pc:#a98bff;--pf:#111015">
-          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">F</span><img src="assets/fahru-rizal.jpg" alt="Fahru Rizal" loading="lazy" style="object-position:center top"></div></div>
+          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">F</span><img src="assets/fahru-rizal.jpg" alt="Fahru Rizal" loading="lazy"></div></div>
           <div class="ab-cap"><span class="ab-name">Fahru Rizal</span><span class="ab-role" data-id="Desain &amp; arahan" data-en="Design &amp; direction">Desain &amp; arahan</span>
             <a class="ab-link" href="#" target="_blank" rel="noopener" aria-label="Portofolio Fahru Rizal"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
@@ -1256,19 +1256,84 @@ document
   ];
 
   var ITEMS = [
-    { n: "Kopi Senja", id: "Toko online kopi sangrai dengan checkout dua langkah.", en: "Roastery online store with a two-step checkout.", p: 0 },
-    { n: "Lajur", id: "Pemesanan tiket bus antarkota yang selesai dalam satu layar.", en: "Intercity bus booking done on a single screen.", p: 1 },
-    { n: "Ruang Tamu", id: "Portofolio studio interior dengan galeri yang bisa digeser.", en: "Interior studio portfolio with a swipeable gallery.", p: 2 },
-    { n: "Nada Kecil", id: "Situs rilis album untuk band indie asal Bandung.", en: "Album release site for an indie band from Bandung.", p: 3 },
-    { n: "Pasar Tani", id: "Katalog hasil panen langsung dari petani untuk restoran.", en: "Harvest catalog straight from farmers to restaurants.", p: 1 },
-    { n: "Lari Pagi", id: "Komunitas lari dengan jadwal dan peta rute interaktif.", en: "Running club with a schedule and interactive route maps.", p: 0 },
-    { n: "Warung Data", id: "Dasbor penjualan sederhana untuk pemilik warung.", en: "A simple sales dashboard for shop owners.", p: 2 }
+    {
+      n: "Djeroe Coffee",
+      id: "Website company profile untuk coffee shop Djeroe dengan identitas visual interaktif dan responsif.",
+      en: "Interactive and responsive company profile website for Djeroe Coffee Shop.",
+      img: "assets/projects/djeroe.png",
+      href: "https://abaimann.github.io/djeroe-coffeshop/#beranda",
+      p: 0
+    },
+    {
+      n: "BuildHauss AI",
+      id: "Aplikasi mobile diagnosis kesehatan dan panduan servis motor bertenaga AI.",
+      en: "AI-powered mobile app for motorcycle health diagnostics and personalized maintenance.",
+      img: "assets/projects/buildhauss.png",
+      href: "https://abaimann.github.io/BuildHauss/",
+      p: 1
+    },
+    {
+      n: "EduLink LMS",
+      id: "Platform web kursus bahasa Inggris terstruktur dilengkapi asisten tanya-jawab AI.",
+      en: "Structured English learning web platform featuring AI-assisted question and answer.",
+      img: "assets/projects/edulink.png",
+      href: "https://salmon-scorpion-446340.hostingersite.com/login",
+      p: 2
+    },
+    {
+      n: "SMPN 1 Bangodua",
+      id: "Website profil dan branding sekolah resmi untuk pusat informasi serta dokumentasi kegiatan.",
+      en: "Official school profile and branding website for announcements and documentation.",
+      img: "assets/projects/Bangodua.png",
+      href: "https://youtu.be/Jfh-miAf7m0?si=JA79vtId1PUst7iO",
+      p: 3
+    },
+    {
+      n: "SLB Tunas Harapan",
+      id: "Website profil sekolah inklusif yang dilengkapi formulir pendaftaran siswa baru online.",
+      en: "Inclusive school website equipped with an online student admission system.",
+      img: "assets/projects/slbb.png",
+      href: "https://youtu.be/1ksO8WuCUfI?si=IWB7b9eR55HGCDi3",
+      p: 0
+    },
+    {
+      n: "Sistem Monitoring",
+      id: "Sistem informasi pemantauan dan pengelolaan data akademik sekolah terpadu berbasis web.",
+      en: "Integrated web-based academic monitoring system for structured school administration.",
+      img: "assets/projects/sistem-monitoring.jpg",
+      href: "https://github.com/Abaimann/MonitoringAkademik-SMPN-1-ATAP-1-BANGODUA",
+      p: 1
+    },
+    {
+      n: "M. Baihaqi",
+      id: "Website portofolio personal formal dan rapi untuk profil profesional praktisi hukum.",
+      en: "Clean and formal personal portfolio website showcasing legal professional background.",
+      img: "assets/projects/baihaqi.png",
+      href: "https://abaimann.github.io/Portofolio-MuhammadBaihaqi-Hukum23/#/home",
+      p: 2
+    },
+    {
+      n: "Aulia Zahrani",
+      id: "Website portofolio semi-formal responsif dengan tata letak bersih untuk bidang akuntansi.",
+      en: "Responsive semi-formal portfolio website with clean layout highlighting accounting profile.",
+      img: "assets/projects/aulia.png",
+      href: "https://abaimann.github.io/Portofolio-AuliaZahraniPutri-Akuntansi23/",
+      p: 3
+    },
+    {
+      n: "Razita Fakhira",
+      id: "Website portofolio semi-formal berpenampilan modern untuk profesional bidang agribisnis.",
+      en: "Modern semi-formal portfolio website designed for an agribusiness professional.",
+      img: "assets/projects/razita.png",
+      href: "https://abaimann.github.io/Portofolio-RazitaFakhiraIrdina-Agribisnis23/",
+      p: 0
+    }
   ]
     .map(function (it) {
       it.bg = P[it.p].bg;
       it.c = P[it.p].c;
-      it.href = "#";
-      it.img = "";
+      it.href = it.href || "#";
+      it.img = it.img || "";
       return it;
     });
 
@@ -1308,7 +1373,7 @@ document
       if (it.img) {
         var im = new Image();
         im.src = it.img;
-        im.alt = "";
+        im.alt = it.n;
         im.draggable = false;
         im.loading = "lazy";
         f.appendChild(im);
@@ -1411,10 +1476,21 @@ document
     titleEl.textContent = it.n;
     descEl.textContent = it[l];
     linkEl.href = it.href;
-    linkEl.setAttribute("aria-label", (en ? "View details: " : "Lihat detail: ") + it.n);
-    prevB.setAttribute("aria-label", en ? "Previous project" : "Proyek sebelumnya");
-    nextB.setAttribute("aria-label", en ? "Next project" : "Proyek berikutnya");
-    stage.setAttribute("aria-label", en ? "Portfolio" : "Portofolio");
+    if (it.href && it.href !== "#") {
+      linkEl.target = "_blank";
+      linkEl.rel = "noopener noreferrer";
+    } else {
+      linkEl.removeAttribute("target");
+      linkEl.removeAttribute("rel");
+    }
+    linkEl
+      .setAttribute("aria-label", (en ? "View details: " : "Lihat detail: ") + it.n);
+    prevB
+      .setAttribute("aria-label", en ? "Previous project" : "Proyek sebelumnya");
+    nextB
+      .setAttribute("aria-label", en ? "Next project" : "Proyek berikutnya");
+    stage
+      .setAttribute("aria-label", en ? "Portfolio" : "Portofolio");
   }
 
   function setActive(i) {

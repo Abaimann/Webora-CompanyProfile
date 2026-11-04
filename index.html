@@ -9,7 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@400;500;600&family=Rubik:wght@800&display=swap">
-<script>document.documentElement.classList.add('has-js');</script>
+<script>
+  document.documentElement.classList
+    .add('has-js');
+</script>
 <style>/* HERO SECTION */
 
 :root{
@@ -948,853 +951,2360 @@ a[href],button,[role="button"],summary,label[for],select,input[type="submit"],.l
 // ===== HERO =====
 
 // Bentuk bintang bergerigi untuk stiker
-(function(){var p=[],n=16;for(var i=0;i<n*2;i++){var a=Math.PI*i/n-Math.PI/2,r=i%2?42:50;p.push((50+r*Math.cos(a)).toFixed(1)+"% "+(50+r*Math.sin(a)).toFixed(1)+"%")}
-document.querySelector("#burst .in").style.clipPath="polygon("+p.join(",")+")"})();
+(function () {
+  var p = [];
+  var n = 16;
+  for (var i = 0; i < n * 2; i++) {
+    var a = (Math.PI * i) / n - Math.PI / 2;
+    var r = i % 2 ? 42 : 50;
+    p.push(
+      (50 + r * Math.cos(a)).toFixed(1) + "% " + (50 + r * Math.sin(a)).toFixed(1) + "%"
+    );
+  }
+  document
+    .querySelector("#burst .in")
+    .style.clipPath = "polygon(" + p.join(",") + ")";
+})();
 
 // Stiker bisa diseret
-document.querySelectorAll(".sticker").forEach(function(el){
-  var x=0,y=0,sx=0,sy=0,d=false,vx=0,vy=0,lx=0,ly=0,lt=0,falling=false;
-  el.addEventListener("pointerdown",function(e){if(falling)return;d=true;sx=e.clientX-x;sy=e.clientY-y;lx=e.clientX;ly=e.clientY;lt=performance.now();vx=vy=0;el.setPointerCapture(e.pointerId);el.classList.add("drag")});
-  el.addEventListener("pointermove",function(e){if(!d)return;var n=performance.now(),dt=(n-lt)/1000;if(dt>.001){vx=.5*vx+.5*(e.clientX-lx)/dt;vy=.5*vy+.5*(e.clientY-ly)/dt}lx=e.clientX;ly=e.clientY;lt=n;x=e.clientX-sx;y=e.clientY-sy;el.style.setProperty("--tx",x+"px");el.style.setProperty("--ty",y+"px")});
-  function respawn(){
-    el.style.visibility="hidden";
-    setTimeout(function(){
-      x=y=0;el.style.removeProperty("--tx");el.style.removeProperty("--ty");el.style.removeProperty("--r");
-      void el.offsetWidth;
-      el.classList.remove("fall");el.style.visibility="";falling=false;
-      el.firstElementChild.animate([{transform:"scale(0) rotate(-20deg)",opacity:0},{transform:"none",opacity:1}],{duration:650,easing:"cubic-bezier(.3,1.6,.5,1)"});
-    },1200+Math.random()*1200);
-  }
-  function fall(){
-    falling=true;el.classList.add("fall");
-    var hero=document.querySelector(".hero"),r0=parseFloat(getComputedStyle(el).getPropertyValue("--r"))||0,rot=0,t0=performance.now(),last=t0,
-        vr=vx*.04+(Math.random()-.5)*160;
-    vx=Math.max(-1600,Math.min(1600,vx));vy=Math.max(-1600,Math.min(1600,vy));
-    function step(now){
-      var dt=Math.min((now-last)/1000,.04);last=now;
-      vy+=2400*dt;x+=vx*dt;y+=vy*dt;rot+=vr*dt;
-      el.style.setProperty("--tx",x+"px");el.style.setProperty("--ty",y+"px");el.style.setProperty("--r",(r0+rot)+"deg");
-      if(el.getBoundingClientRect().top>hero.getBoundingClientRect().bottom+20||now-t0>6000)return respawn();
+document
+  .querySelectorAll(".sticker")
+  .forEach(function (el) {
+    var x = 0,
+      y = 0,
+      sx = 0,
+      sy = 0,
+      d = false,
+      vx = 0,
+      vy = 0,
+      lx = 0,
+      ly = 0,
+      lt = 0,
+      falling = false;
+
+    el.addEventListener("pointerdown", function (e) {
+      if (falling) return;
+      d = true;
+      sx = e.clientX - x;
+      sy = e.clientY - y;
+      lx = e.clientX;
+      ly = e.clientY;
+      lt = performance.now();
+      vx = vy = 0;
+      el.setPointerCapture(e.pointerId);
+      el.classList.add("drag");
+    });
+
+    el.addEventListener("pointermove", function (e) {
+      if (!d) return;
+      var n = performance.now();
+      var dt = (n - lt) / 1000;
+      if (dt > 0.001) {
+        vx = 0.5 * vx + 0.5 * (e.clientX - lx) / dt;
+        vy = 0.5 * vy + 0.5 * (e.clientY - ly) / dt;
+      }
+      lx = e.clientX;
+      ly = e.clientY;
+      lt = n;
+      x = e.clientX - sx;
+      y = e.clientY - sy;
+      el.style.setProperty("--tx", x + "px");
+      el.style.setProperty("--ty", y + "px");
+    });
+
+    function respawn() {
+      el.style.visibility = "hidden";
+      setTimeout(function () {
+        x = y = 0;
+        el.style.removeProperty("--tx");
+        el.style.removeProperty("--ty");
+        el.style.removeProperty("--r");
+        void el.offsetWidth;
+        el.classList.remove("fall");
+        el.style.visibility = "";
+        falling = false;
+        el.firstElementChild.animate(
+          [
+            { transform: "scale(0) rotate(-20deg)", opacity: 0 },
+            { transform: "none", opacity: 1 }
+          ],
+          { duration: 650, easing: "cubic-bezier(.3,1.6,.5,1)" }
+        );
+      }, 1200 + Math.random() * 1200);
+    }
+
+    function fall() {
+      falling = true;
+      el.classList.add("fall");
+      var hero = document.querySelector(".hero");
+      var r0 = parseFloat(getComputedStyle(el).getPropertyValue("--r")) || 0;
+      var rot = 0;
+      var t0 = performance.now();
+      var last = t0;
+      var vr = vx * 0.04 + (Math.random() - 0.5) * 160;
+
+      vx = Math.max(-1600, Math.min(1600, vx));
+      vy = Math.max(-1600, Math.min(1600, vy));
+
+      function step(now) {
+        var dt = Math.min((now - last) / 1000, 0.04);
+        last = now;
+        vy += 2400 * dt;
+        x += vx * dt;
+        y += vy * dt;
+        rot += vr * dt;
+        el.style.setProperty("--tx", x + "px");
+        el.style.setProperty("--ty", y + "px");
+        el.style.setProperty("--r", (r0 + rot) + "deg");
+
+        if (
+          el.getBoundingClientRect().top > hero.getBoundingClientRect().bottom + 20 ||
+          now - t0 > 6000
+        ) {
+          return respawn();
+        }
+        requestAnimationFrame(step);
+      }
       requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
-  }
-  ["pointerup","pointercancel"].forEach(function(t){el.addEventListener(t,function(){
-    if(!d)return;d=false;el.classList.remove("drag");
-    if(performance.now()-lt>100)vx=vy=0;
-    fall();
-  })});
-});
+
+    [
+      "pointerup",
+      "pointercancel"
+    ]
+      .forEach(function (t) {
+        el.addEventListener(t, function () {
+          if (!d) return;
+          d = false;
+          el.classList.remove("drag");
+          if (performance.now() - lt > 100) vx = vy = 0;
+          fall();
+        });
+      });
+  });
 
 // Headline: dipecah jadi huruf, bobot & warna tiap huruf mengikuti jarak kursor
-var h1=document.querySelector("h1"),mx=0,my=0,raf=0;
-function split(){
-  var all=[];
-  h1.querySelectorAll(".l > span").forEach(function(line){
-    var txt=line.dataset[document.documentElement.lang]||line.textContent,i=line.dataset.i0||0;
-    all.push(txt);line.setAttribute("aria-hidden","true");line.textContent="";
-    txt.split(" ").forEach(function(word,wi){
-      var w=document.createElement("span");w.className="w";
-      word.split("").forEach(function(c){var s=document.createElement("span");s.className="ch";s.textContent=c;s.style.setProperty("--i",i++);w.appendChild(s)});
-      if(wi)line.appendChild(document.createTextNode(" "));
-      line.appendChild(w);
+var h1 = document.querySelector("h1"),
+  mx = 0,
+  my = 0,
+  raf = 0;
+
+function split() {
+  var all = [];
+  h1
+    .querySelectorAll(".l > span")
+    .forEach(function (line) {
+      var txt = line.dataset[document.documentElement.lang] || line.textContent;
+      var i = line.dataset.i0 || 0;
+      all.push(txt);
+      line.setAttribute("aria-hidden", "true");
+      line.textContent = "";
+
+      txt
+        .split(" ")
+        .forEach(function (word, wi) {
+          var w = document.createElement("span");
+          w.className = "w";
+
+          word
+            .split("")
+            .forEach(function (c) {
+              var s = document.createElement("span");
+              s.className = "ch";
+              s.textContent = c;
+              s.style.setProperty("--i", i++);
+              w.appendChild(s);
+            });
+
+          if (wi) line.appendChild(document.createTextNode(" "));
+          line.appendChild(w);
+        });
     });
-  });
-  h1.setAttribute("aria-label",all.join(" "));
+  h1.setAttribute("aria-label", all.join(" "));
 }
 split();
-function wave(){
-  raf=0;
-  var R=parseFloat(getComputedStyle(h1).fontSize)*1.15;
-  h1.querySelectorAll(".ch").forEach(function(c){
-    var r=c.getBoundingClientRect(),dx=r.left+r.width/2-mx,dy=r.top+r.height/2-my;
-    var t=Math.pow(Math.max(0,1-Math.sqrt(dx*dx+dy*dy)/R),1.4);
-    c.style.fontWeight=Math.round(900-560*t);
-    c.style.color="color-mix(in srgb,var(--lime) "+Math.round(t*100)+"%,var(--ink))";
-  });
+
+function wave() {
+  raf = 0;
+  var R = parseFloat(getComputedStyle(h1).fontSize) * 1.15;
+  h1
+    .querySelectorAll(".ch")
+    .forEach(function (c) {
+      var r = c.getBoundingClientRect();
+      var dx = r.left + r.width / 2 - mx;
+      var dy = r.top + r.height / 2 - my;
+      var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
+      c.style.fontWeight = Math.round(900 - 560 * t);
+      c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+    });
 }
-var stage=document.querySelector(".stage");
-stage.addEventListener("pointermove",function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(wave)});
-stage.addEventListener("pointerleave",function(){h1.querySelectorAll(".ch").forEach(function(c){c.style.fontWeight="";c.style.color=""})});
+
+var stage = document.querySelector(".stage");
+stage.addEventListener("pointermove", function (e) {
+  mx = e.clientX;
+  my = e.clientY;
+  if (!raf) raf = requestAnimationFrame(wave);
+});
+stage.addEventListener("pointerleave", function () {
+  h1
+    .querySelectorAll(".ch")
+    .forEach(function (c) {
+      c.style.fontWeight = "";
+      c.style.color = "";
+    });
+});
 
 // Mata smiley mengikuti kursor
-var eyes=document.querySelectorAll(".eye"),face=document.querySelector(".s2");
-document.addEventListener("pointermove",function(e){
-  var r=face.getBoundingClientRect(),a=Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2));
-  eyes.forEach(function(el){el.style.translate=(Math.cos(a)*4)+"px "+(Math.sin(a)*4)+"px"});
+var eyes = document.querySelectorAll(".eye"),
+  face = document.querySelector(".s2");
+
+document.addEventListener("pointermove", function (e) {
+  var r = face.getBoundingClientRect();
+  var a = Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2));
+  eyes
+    .forEach(function (el) {
+      el.style.translate = (Math.cos(a) * 4) + "px " + (Math.sin(a) * 4) + "px";
+    });
 });
 
 // Ganti bahasa ID / EN
-document.querySelectorAll(".lang button").forEach(function(b){
-  b.addEventListener("click",function(){
-    var l=b.dataset.lang;
-    document.documentElement.lang=l;
-    document.querySelectorAll(".lang button").forEach(function(o){o.setAttribute("aria-pressed",o===b)});
-    document.querySelectorAll("[data-id]").forEach(function(t){t.innerHTML=t.dataset[l]});split();
+document
+  .querySelectorAll(".lang button")
+  .forEach(function (b) {
+    b.addEventListener("click", function () {
+      var l = b.dataset.lang;
+      document.documentElement.lang = l;
+
+      document
+        .querySelectorAll(".lang button")
+        .forEach(function (o) {
+          o.setAttribute("aria-pressed", o === b);
+        });
+
+      document
+        .querySelectorAll("[data-id]")
+        .forEach(function (t) {
+          t.innerHTML = t.dataset[l];
+        });
+
+      split();
+    });
   });
-});
 
 
 // ===== PORTFOLIO =====
 
-(function(){
-// Data proyek. Ganti nama, deskripsi, href, dan isi "img" dengan URL gambar landscape (rasio 3:2) milik kamu.
-// Kalau "img" kosong, kartu menampilkan placeholder warna dengan nama proyek.
-var P=[{bg:["#7c5cfd","#a98bff"],c:"#f4f2ff"},{bg:["#c0ff72","#e8ffc0"],c:"#111015"},{bg:["#a98bff","#d8ccff"],c:"#111015"},{bg:["#2a2733","#1b1922"],c:"#c0ff72"}];
-var ITEMS=[
- {n:"Kopi Senja",id:"Toko online kopi sangrai dengan checkout dua langkah.",en:"Roastery online store with a two-step checkout.",p:0},
- {n:"Lajur",id:"Pemesanan tiket bus antarkota yang selesai dalam satu layar.",en:"Intercity bus booking done on a single screen.",p:1},
- {n:"Ruang Tamu",id:"Portofolio studio interior dengan galeri yang bisa digeser.",en:"Interior studio portfolio with a swipeable gallery.",p:2},
- {n:"Nada Kecil",id:"Situs rilis album untuk band indie asal Bandung.",en:"Album release site for an indie band from Bandung.",p:3},
- {n:"Pasar Tani",id:"Katalog hasil panen langsung dari petani untuk restoran.",en:"Harvest catalog straight from farmers to restaurants.",p:1},
- {n:"Lari Pagi",id:"Komunitas lari dengan jadwal dan peta rute interaktif.",en:"Running club with a schedule and interactive route maps.",p:0},
- {n:"Warung Data",id:"Dasbor penjualan sederhana untuk pemilik warung.",en:"A simple sales dashboard for shop owners.",p:2}
-].map(function(it){it.bg=P[it.p].bg;it.c=P[it.p].c;it.href="#";it.img="";return it});
+(function () {
+  // Data proyek. Ganti nama, deskripsi, href, dan isi "img" dengan URL gambar landscape (rasio 3:2) milik kamu.
+  // Kalau "img" kosong, kartu menampilkan placeholder warna dengan nama proyek.
+  var P = [
+    { bg: ["#7c5cfd", "#a98bff"], c: "#f4f2ff" },
+    { bg: ["#c0ff72", "#e8ffc0"], c: "#111015" },
+    { bg: ["#a98bff", "#d8ccff"], c: "#111015" },
+    { bg: ["#2a2733", "#1b1922"], c: "#c0ff72" }
+  ];
 
-var N=ITEMS.length,STEP=27*Math.PI/180;
-var root=document.getElementById("karya"),stage=root.querySelector(".pf-stage"),meta=root.querySelector(".pf-meta"),
-    titleEl=meta.querySelector("h3"),descEl=meta.querySelector("p"),linkEl=meta.querySelector(".pf-btn"),
-    prevB=meta.querySelector(".pf-prev"),nextB=meta.querySelector(".pf-next"),dot=root.querySelector(".pf-dot");
-var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var ITEMS = [
+    { n: "Kopi Senja", id: "Toko online kopi sangrai dengan checkout dua langkah.", en: "Roastery online store with a two-step checkout.", p: 0 },
+    { n: "Lajur", id: "Pemesanan tiket bus antarkota yang selesai dalam satu layar.", en: "Intercity bus booking done on a single screen.", p: 1 },
+    { n: "Ruang Tamu", id: "Portofolio studio interior dengan galeri yang bisa digeser.", en: "Interior studio portfolio with a swipeable gallery.", p: 2 },
+    { n: "Nada Kecil", id: "Situs rilis album untuk band indie asal Bandung.", en: "Album release site for an indie band from Bandung.", p: 3 },
+    { n: "Pasar Tani", id: "Katalog hasil panen langsung dari petani untuk restoran.", en: "Harvest catalog straight from farmers to restaurants.", p: 1 },
+    { n: "Lari Pagi", id: "Komunitas lari dengan jadwal dan peta rute interaktif.", en: "Running club with a schedule and interactive route maps.", p: 0 },
+    { n: "Warung Data", id: "Dasbor penjualan sederhana untuk pemilik warung.", en: "A simple sales dashboard for shop owners.", p: 2 }
+  ]
+    .map(function (it) {
+      it.bg = P[it.p].bg;
+      it.c = P[it.p].c;
+      it.href = "#";
+      it.img = "";
+      return it;
+    });
 
-var cards=ITEMS.map(function(it,i){
-  var c=document.createElement("div");c.className="pf-card";c.setAttribute("aria-hidden","true");
-  var f=document.createElement("div");f.className="pf-face";
-  f.style.backgroundImage="linear-gradient(120deg,"+it.bg[0]+","+it.bg[1]+","+it.bg[0]+")";f.style.setProperty("--c",it.c);
-  f.style.setProperty("--fdur",(4.4+i*.35)+"s");f.style.setProperty("--fd",(-i*.9)+"s");
-  var ph=document.createElement("span");ph.className="pf-ph";ph.textContent=it.n;f.appendChild(ph);
-  if(it.img){var im=new Image();im.src=it.img;im.alt="";im.draggable=false;im.loading="lazy";f.appendChild(im)}
-  c.appendChild(f);stage.insertBefore(c,meta);return c;
-});
-var pipsEl=document.createElement("div");pipsEl.className="pf-dots";meta.appendChild(pipsEl);
-var pips=ITEMS.map(function(it,i){
-  var b=document.createElement("button");b.type="button";b.setAttribute("aria-label",it.n);
-  b.addEventListener("click",function(){target=Math.round(pos+wrap(i-pos));kick()});pipsEl.appendChild(b);return b;
-});
+  var N = ITEMS.length,
+    STEP = (27 * Math.PI) / 180;
 
-function lang(){return document.documentElement.lang==="en"?"en":"id"}
-function wrap(d){return((d+N/2)%N+N)%N-N/2}
+  var root = document.getElementById("karya"),
+    stage = root.querySelector(".pf-stage"),
+    meta = root.querySelector(".pf-meta"),
+    titleEl = meta.querySelector("h3"),
+    descEl = meta.querySelector("p"),
+    linkEl = meta.querySelector(".pf-btn"),
+    prevB = meta.querySelector(".pf-prev"),
+    nextB = meta.querySelector(".pf-next"),
+    dot = root.querySelector(".pf-dot");
 
-/* Geometri: kartu diletakkan di busur lingkaran, kartu aktif di puncak */
-var W=0,w=0,h=0,R=0,ox=0,oy=0;
-function layout(){
-  W=stage.clientWidth;
-  w=W<720?W*.64:Math.max(240,Math.min(440,W*.24));
-  h=w*.56;R=w*2.6;
-  var pad=36,mt=pad+h*1.12+w*.28,mb=mt+meta.offsetHeight;ox=W/2;oy=pad+h*.56+R;
-  stage.style.height=(mb+48)+"px";
-  stage.style.setProperty("--mk",(mb+4)+"px");
-  stage.style.setProperty("--w",w+"px");stage.style.setProperty("--h",h+"px");
-  stage.style.setProperty("--mt",mt+"px");
-}
+  var reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
-var pos=0,target=0,spread=reduce?1:0,started=reduce,raf=0,last=0,drag=null;
-function render(){
-  for(var i=0;i<N;i++){
-    var o=wrap(i-pos),a=Math.abs(o),th=o*STEP*spread,c=cards[i];
-    var x=ox+R*Math.sin(th)-w/2,y=oy-R*Math.cos(th)-h/2,s=1+.12*Math.max(0,1-a);
-    var op=Math.max(0,Math.min(1,(3.5-a)/.7))*Math.min(1,spread*2);
-    c.style.transform="translate3d("+x+"px,"+y+"px,0) rotate("+th+"rad) scale("+s+")";
-    c.style.opacity=op;c.style.visibility=op<.01?"hidden":"visible";
-    c.style.filter="brightness("+Math.max(.35,1-.2*a)+")";
-    c.style.zIndex=10-Math.round(a*2);c.style.setProperty("--a",Math.max(0,1-a).toFixed(3));
+  var cards = ITEMS
+    .map(function (it, i) {
+      var c = document.createElement("div");
+      c.className = "pf-card";
+      c.setAttribute("aria-hidden", "true");
+
+      var f = document.createElement("div");
+      f.className = "pf-face";
+      f.style.backgroundImage = "linear-gradient(120deg," + it.bg[0] + "," + it.bg[1] + "," + it.bg[0] + ")";
+      f.style.setProperty("--c", it.c);
+      f.style.setProperty("--fdur", (4.4 + i * 0.35) + "s");
+      f.style.setProperty("--fd", (-i * 0.9) + "s");
+
+      var ph = document.createElement("span");
+      ph.className = "pf-ph";
+      ph.textContent = it.n;
+      f.appendChild(ph);
+
+      if (it.img) {
+        var im = new Image();
+        im.src = it.img;
+        im.alt = "";
+        im.draggable = false;
+        im.loading = "lazy";
+        f.appendChild(im);
+      }
+
+      c.appendChild(f);
+      stage.insertBefore(c, meta);
+      return c;
+    });
+
+  var pipsEl = document.createElement("div");
+  pipsEl.className = "pf-dots";
+  meta.appendChild(pipsEl);
+
+  var pips = ITEMS
+    .map(function (it, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", it.n);
+      b.addEventListener("click", function () {
+        target = Math.round(pos + wrap(i - pos));
+        kick();
+      });
+      pipsEl.appendChild(b);
+      return b;
+    });
+
+  function lang() {
+    return document.documentElement.lang === "en" ? "en" : "id";
   }
-  setActive(((Math.round(pos)%N)+N)%N);
-}
 
-/* Teks aktif: judul, deskripsi, tautan */
-var cur=-1;
-function fill(){
-  if(cur<0)return;var it=ITEMS[cur],l=lang(),en=l==="en";
-  titleEl.textContent=it.n;descEl.textContent=it[l];linkEl.href=it.href;
-  linkEl.setAttribute("aria-label",(en?"View details: ":"Lihat detail: ")+it.n);
-  prevB.setAttribute("aria-label",en?"Previous project":"Proyek sebelumnya");
-  nextB.setAttribute("aria-label",en?"Next project":"Proyek berikutnya");
-  stage.setAttribute("aria-label",en?"Portfolio":"Portofolio");
-}
-function setActive(i){
-  if(i===cur)return;var first=cur<0;cur=i;fill();
-  pips.forEach(function(b,k){b.setAttribute("aria-current",k===i)});
-  if(!first&&!reduce)[titleEl,descEl,linkEl].forEach(function(e,k){
-    e.animate([{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:380,delay:k*40,easing:"cubic-bezier(.2,.8,.2,1)",fill:"backwards"});
+  function wrap(d) {
+    return (((d + N / 2) % N) + N) % N - N / 2;
+  }
+
+  /* Geometri: kartu diletakkan di busur lingkaran, kartu aktif di puncak */
+  var W = 0,
+    w = 0,
+    h = 0,
+    R = 0,
+    ox = 0,
+    oy = 0;
+
+  function layout() {
+    W = stage.clientWidth;
+    w = W < 720 ? W * 0.64 : Math.max(240, Math.min(440, W * 0.24));
+    h = w * 0.56;
+    R = w * 2.6;
+    var pad = 36;
+    var mt = pad + h * 1.12 + w * 0.28;
+    var mb = mt + meta.offsetHeight;
+    ox = W / 2;
+    oy = pad + h * 0.56 + R;
+
+    stage.style.height = (mb + 48) + "px";
+    stage.style.setProperty("--mk", (mb + 4) + "px");
+    stage.style.setProperty("--w", w + "px");
+    stage.style.setProperty("--h", h + "px");
+    stage.style.setProperty("--mt", mt + "px");
+  }
+
+  var pos = 0,
+    target = 0,
+    spread = reduce ? 1 : 0,
+    started = reduce,
+    raf = 0,
+    last = 0,
+    drag = null;
+
+  function render() {
+    for (var i = 0; i < N; i++) {
+      var o = wrap(i - pos);
+      var a = Math.abs(o);
+      var th = o * STEP * spread;
+      var c = cards[i];
+      var x = ox + R * Math.sin(th) - w / 2;
+      var y = oy - R * Math.cos(th) - h / 2;
+      var s = 1 + 0.12 * Math.max(0, 1 - a);
+      var op = Math.max(0, Math.min(1, (3.5 - a) / 0.7)) * Math.min(1, spread * 2);
+
+      c.style.transform = "translate3d(" + x + "px," + y + "px,0) rotate(" + th + "rad) scale(" + s + ")";
+      c.style.opacity = op;
+      c.style.visibility = op < 0.01 ? "hidden" : "visible";
+      c.style.filter = "brightness(" + Math.max(0.35, 1 - 0.2 * a) + ")";
+      c.style.zIndex = 10 - Math.round(a * 2);
+      c.style.setProperty("--a", Math.max(0, 1 - a).toFixed(3));
+    }
+    setActive(((Math.round(pos) % N) + N) % N);
+  }
+
+  /* Teks aktif: judul, deskripsi, tautan */
+  var cur = -1;
+
+  function fill() {
+    if (cur < 0) return;
+    var it = ITEMS[cur];
+    var l = lang();
+    var en = l === "en";
+
+    titleEl.textContent = it.n;
+    descEl.textContent = it[l];
+    linkEl.href = it.href;
+    linkEl.setAttribute("aria-label", (en ? "View details: " : "Lihat detail: ") + it.n);
+    prevB.setAttribute("aria-label", en ? "Previous project" : "Proyek sebelumnya");
+    nextB.setAttribute("aria-label", en ? "Next project" : "Proyek berikutnya");
+    stage.setAttribute("aria-label", en ? "Portfolio" : "Portofolio");
+  }
+
+  function setActive(i) {
+    if (i === cur) return;
+    var first = cur < 0;
+    cur = i;
+    fill();
+
+    pips
+      .forEach(function (b, k) {
+        b.setAttribute("aria-current", k === i);
+      });
+
+    if (!first && !reduce) {
+      [titleEl, descEl, linkEl]
+        .forEach(function (e, k) {
+          e.animate(
+            [
+              { opacity: 0, transform: "translateY(8px)" },
+              { opacity: 1, transform: "none" }
+            ],
+            {
+              duration: 380,
+              delay: k * 40,
+              easing: "cubic-bezier(.2,.8,.2,1)",
+              fill: "backwards"
+            }
+          );
+        });
+    }
+  }
+
+  new MutationObserver(fill)
+    .observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
+
+  /* Animasi: pegas menuju target + kartu mengembang saat section terlihat */
+  function tick(now) {
+    var dt = Math.min((now - last) / 1000 || 0.016, 0.05);
+    var busy = false;
+    last = now;
+
+    if (started && spread < 0.999) {
+      spread += (1 - spread) * (1 - Math.exp(-dt * 5));
+      busy = true;
+    } else if (started) {
+      spread = 1;
+    }
+
+    if (!drag) {
+      var d = target - pos;
+      if (Math.abs(d) > 0.0008) {
+        pos += d * (reduce ? 1 : 1 - Math.exp(-dt * 9));
+        busy = true;
+      } else {
+        pos = target;
+      }
+    }
+
+    render();
+    raf = busy ? requestAnimationFrame(tick) : 0;
+  }
+
+  function kick() {
+    if (!raf) {
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    }
+  }
+
+  function go(s) {
+    target = Math.round(target) + s;
+    kick();
+  }
+
+  /* Input: geser, klik kartu, tombol panah, keyboard */
+  stage.addEventListener("pointerdown", function (e) {
+    if (e.button > 0 || e.target.closest(".pf-meta")) return;
+    drag = {
+      x: e.clientX,
+      p: pos,
+      moved: false,
+      id: e.pointerId,
+      v: 0,
+      lx: e.clientX,
+      lt: performance.now(),
+      card: e.target.closest(".pf-card")
+    };
   });
-}
-new MutationObserver(fill).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 
-/* Animasi: pegas menuju target + kartu mengembang saat section terlihat */
-function tick(now){
-  var dt=Math.min((now-last)/1000||.016,.05),busy=false;last=now;
-  if(started&&spread<.999){spread+=(1-spread)*(1-Math.exp(-dt*5));busy=true}else if(started)spread=1;
-  if(!drag){var d=target-pos;if(Math.abs(d)>.0008){pos+=d*(reduce?1:1-Math.exp(-dt*9));busy=true}else pos=target}
-  render();raf=busy?requestAnimationFrame(tick):0;
-}
-function kick(){if(!raf){last=performance.now();raf=requestAnimationFrame(tick)}}
-function go(s){target=Math.round(target)+s;kick()}
+  stage.addEventListener("pointermove", function (e) {
+    if (e.pointerType === "mouse") {
+      var r = stage.getBoundingClientRect();
+      dot.style.transform = "translate3d(" + (e.clientX - r.left + 20) + "px," + (e.clientY - r.top + 20) + "px,0)";
+      dot.classList.toggle("on", !e.target.closest(".pf-meta"));
+    }
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 6) {
+      drag.moved = true;
+      stage.setPointerCapture(drag.id);
+      stage.classList.add("drag");
+    }
+    if (!drag.moved) return;
+    var n = performance.now();
+    var dt = (n - drag.lt) / 1000;
+    if (dt > 0.001) {
+      drag.v = 0.6 * drag.v + 0.4 * (-(e.clientX - drag.lx) / w) / dt;
+      drag.lx = e.clientX;
+      drag.lt = n;
+    }
+    pos = drag.p - dx / w;
+    target = pos;
+    render();
+  });
 
-/* Input: geser, klik kartu, tombol panah, keyboard */
-stage.addEventListener("pointerdown",function(e){
-  if(e.button>0||e.target.closest(".pf-meta"))return;
-  drag={x:e.clientX,p:pos,moved:false,id:e.pointerId,v:0,lx:e.clientX,lt:performance.now(),card:e.target.closest(".pf-card")};
-});
-stage.addEventListener("pointermove",function(e){
-  if(e.pointerType==="mouse"){
-    var r=stage.getBoundingClientRect();
-    dot.style.transform="translate3d("+(e.clientX-r.left+20)+"px,"+(e.clientY-r.top+20)+"px,0)";
-    dot.classList.toggle("on",!e.target.closest(".pf-meta"));
+  function endDrag() {
+    if (!drag) return;
+    var d = drag;
+    drag = null;
+    stage.classList.remove("drag");
+    if (d.moved) {
+      target = Math.round(pos + Math.max(-2, Math.min(2, d.v * 0.2)));
+    } else if (d.card) {
+      var i = cards.indexOf(d.card);
+      if (i > -1) target = Math.round(pos + wrap(i - pos));
+    }
+    kick();
   }
-  if(!drag)return;
-  var dx=e.clientX-drag.x;
-  if(!drag.moved&&Math.abs(dx)>6){drag.moved=true;stage.setPointerCapture(drag.id);stage.classList.add("drag")}
-  if(!drag.moved)return;
-  var n=performance.now(),dt=(n-drag.lt)/1000;
-  if(dt>.001){drag.v=.6*drag.v+.4*(-(e.clientX-drag.lx)/w)/dt;drag.lx=e.clientX;drag.lt=n}
-  pos=drag.p-dx/w;target=pos;render();
-});
-function endDrag(){
-  if(!drag)return;var d=drag;drag=null;stage.classList.remove("drag");
-  if(d.moved)target=Math.round(pos+Math.max(-2,Math.min(2,d.v*.2)));
-  else if(d.card){var i=cards.indexOf(d.card);if(i>-1)target=Math.round(pos+wrap(i-pos))}
-  kick();
-}
-["pointerup","pointercancel"].forEach(function(t){stage.addEventListener(t,endDrag)});
-stage.addEventListener("pointerleave",function(){dot.classList.remove("on")});
-prevB.addEventListener("click",function(){go(-1)});
-nextB.addEventListener("click",function(){go(1)});
-stage.addEventListener("keydown",function(e){
-  if(e.key==="ArrowLeft"){e.preventDefault();go(-1)}else if(e.key==="ArrowRight"){e.preventDefault();go(1)}
-});
 
-layout();render();layout();
-new ResizeObserver(function(){layout();render()}).observe(meta);
-new ResizeObserver(function(){if(stage.clientWidth!==W){layout();render()}}).observe(stage);
-if("IntersectionObserver" in window){
-  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){started=true;kick();ob.disconnect()}},{threshold:.25}).observe(stage);
-}else{started=true;kick()}
+  [
+    "pointerup",
+    "pointercancel"
+  ]
+    .forEach(function (t) {
+      stage.addEventListener(t, endDrag);
+    });
+
+  stage.addEventListener("pointerleave", function () {
+    dot.classList.remove("on");
+  });
+
+  prevB.addEventListener("click", function () {
+    go(-1);
+  });
+
+  nextB.addEventListener("click", function () {
+    go(1);
+  });
+
+  stage.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(-1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      go(1);
+    }
+  });
+
+  layout();
+  render();
+  layout();
+
+  new ResizeObserver(function () {
+    layout();
+    render();
+  })
+    .observe(meta);
+
+  new ResizeObserver(function () {
+    if (stage.clientWidth !== W) {
+      layout();
+      render();
+    }
+  })
+    .observe(stage);
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (es, ob) {
+        if (es[0].isIntersecting) {
+          started = true;
+          kick();
+          ob.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    )
+      .observe(stage);
+  } else {
+    started = true;
+    kick();
+  }
 })();
 
 
 // ===== ABOUT =====
 
-(function(){
-// Kalimat pembuka. Teks di dalam [ ] otomatis jadi stiker. Ganti angka & fakta dengan data studio kamu.
-var T={
- id:"Kami [2 orang] yang merancang dan menulis kode sendiri. Sudah [40+ situs] meluncur, dan kamu selalu bicara langsung dengan [yang membuatnya].",
- en:"We’re [2 people] who design and write the code ourselves. [40+ sites] have launched, and you always talk directly to [whoever builds it]."
-};
-// Warna stiker: [latar, teks, rotasi dalam derajat]
-var K=[["#c0ff72","#111015",-3],["#7c5cfd","#ffffff",2],["#ffe45e","#111015",-2],["#ff9ed8","#111015",1.5]];
+(function () {
+  // Kalimat pembuka. Teks di dalam [ ] otomatis jadi stiker. Ganti angka & fakta dengan data studio kamu.
+  var T = {
+    id: "Kami [2 orang] yang merancang dan menulis kode sendiri. Sudah [40+ situs] meluncur, dan kamu selalu bicara langsung dengan [yang membuatnya].",
+    en: "We’re [2 people] who design and write the code ourselves. [40+ sites] have launched, and you always talk directly to [whoever builds it]."
+  };
 
-var root=document.getElementById("studio"),lead=root.querySelector(".ab-lead"),team=root.querySelector(".ab-team");
-root.classList.add("ab-js");
+  // Warna stiker: [latar, teks, rotasi dalam derajat]
+  var K = [
+    ["#c0ff72", "#111015", -3],
+    ["#7c5cfd", "#ffffff", 2],
+    ["#ffe45e", "#111015", -2],
+    ["#ff9ed8", "#111015", 1.5]
+  ];
 
-var chars=[];
-function lock(){
-  var fs=parseFloat(getComputedStyle(lead).fontSize),w=[];
-  chars.forEach(function(c){c.style.width="";c.style.fontWeight=""});
-  chars.forEach(function(c){w.push(c.getBoundingClientRect().width)});
-  chars.forEach(function(c,i){c.style.width=(w[i]/fs)+"em"});
-}
-function fill(){
-  var l=document.documentElement.lang==="en"?"en":"id",n=0;
-  lead.textContent="";lead.setAttribute("aria-label",T[l].replace(/[\[\]]/g,""));
-  T[l].split(/\[([^\]]+)\]/).forEach(function(s,i){
-    if(i%2===0){
-      s.split(" ").forEach(function(w,wi){
-        if(wi)lead.appendChild(document.createTextNode(" "));
-        if(!w)return;
-        var ws=document.createElement("span");ws.className="ab-w";ws.setAttribute("aria-hidden","true");
-        w.split("").forEach(function(c){var x=document.createElement("span");x.className="ab-ch";x.textContent=c;ws.appendChild(x)});
-        lead.appendChild(ws);
+  var root = document.getElementById("studio"),
+    lead = root.querySelector(".ab-lead"),
+    team = root.querySelector(".ab-team");
+
+  root.classList.add("ab-js");
+
+  var chars = [];
+
+  function lock() {
+    var fs = parseFloat(getComputedStyle(lead).fontSize);
+    var w = [];
+    chars
+      .forEach(function (c) {
+        c.style.width = "";
+        c.style.fontWeight = "";
       });
-      return;
-    }
-    var k=K[n%K.length],p=document.createElement("span");
-    p.className="ab-pill";p.setAttribute("aria-hidden","true");p.textContent=s;
-    p.style.setProperty("--pc",k[0]);p.style.setProperty("--pf",k[1]);p.style.setProperty("--pr",k[2]+"deg");p.style.setProperty("--n",n++);
-    lead.appendChild(p);
-  });
-  chars=[].slice.call(lead.querySelectorAll(".ab-ch"));
-  if(fontsOk)lock();
-}
-var fontsOk=false;
-fill();
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fontsOk=true;lock()});else{fontsOk=true;lock()}
-new MutationObserver(fill).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+    chars
+      .forEach(function (c) {
+        w.push(c.getBoundingClientRect().width);
+      });
+    chars
+      .forEach(function (c, i) {
+        c.style.width = (w[i] / fs) + "em";
+      });
+  }
 
-// Tepi foto: saat kursor mendekati tepi, garis tepi tertarik keluar seperti cairan, lalu kembali dengan pegas
-var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches,hov=matchMedia("(hover:hover)").matches;
-var NS="http://www.w3.org/2000/svg",PAD=56,N=140,RAD=18;
-function Edge(frame,id){
-  var svg=document.createElementNS(NS,"svg");svg.setAttribute("class","ab-edge");svg.setAttribute("aria-hidden","true");
-  svg.innerHTML='<defs><radialGradient id="ab-g'+id+'" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--ink);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--ink);stop-opacity:0"/></radialGradient></defs><path fill="url(#ab-g'+id+')"/><path class="st"/>';
-  frame.appendChild(svg);
-  var fl=svg.children[1],st=svg.children[2],gr=svg.firstChild.firstChild;
-  var S=0,r=RAD,L=0,bx=[],by=[],nx=[],ny=[],ss=[];
-  var sp=0,sq=0,vp=0,vq=0,amp=0,va=0,tS=0,tA=0,run=0,last=0;
-  function wd(d){return((d+L/2)%L+L)%L-L/2}
-  function at(s){
-    var a=S-2*r,q=Math.PI*r/2,seg=[a,q,a,q,a,q,a,q],k=0;
-    while(k<7&&s>=seg[k]){s-=seg[k];k++}
-    var e=k>>1;
-    if(!(k&1))return[[r+s,0,0,-1],[S,r+s,1,0],[S-r-s,S,0,1],[0,S-r-s,-1,0]][e];
-    var c=[[S-r,r],[S-r,S-r],[r,S-r],[r,r]][e],t=-Math.PI/2+e*Math.PI/2+s/r,cx=Math.cos(t),cy=Math.sin(t);
-    return[c[0]+r*cx,c[1]+r*cy,cx,cy];
-  }
-  function build(){
-    S=frame.offsetWidth;if(!S)return;
-    r=Math.min(RAD,S/2);L=4*(S-2*r)+2*Math.PI*r;
-    svg.setAttribute("viewBox","0 0 "+(S+2*PAD)+" "+(S+2*PAD));
-    for(var i=0;i<N;i++){var p=at(i*L/N);bx[i]=p[0];by[i]=p[1];nx[i]=p[2];ny[i]=p[3];ss[i]=i*L/N}
-    draw();
-  }
-  function draw(){
-    var g1=S*.26,g2=S*.34,d=[],e=at(((sp%L)+L)%L);
-    for(var i=0;i<N;i++){
-      var a=wd(ss[i]-sp),b=wd(ss[i]-sq),k=amp*S*.13*(.7*Math.exp(-a*a/(2*g1*g1))+.5*Math.exp(-b*b/(2*g2*g2)));
-      d.push((i?"L":"M")+(bx[i]+nx[i]*k+PAD).toFixed(1)+" "+(by[i]+ny[i]*k+PAD).toFixed(1));
-    }
-    d=d.join("")+"Z";st.setAttribute("d",d);fl.setAttribute("d",d);
-    fl.style.opacity=Math.max(0,Math.min(1,amp*2.2));
-    gr.setAttribute("cx",e[0]+PAD);gr.setAttribute("cy",e[1]+PAD);gr.setAttribute("r",S*.45);
-  }
-  function step(now){
-    var dt=Math.min((now-last)/1000||.016,.04);last=now;
-    vp+=(150*wd(tS-sp)-16*vp)*dt;sp+=vp*dt;
-    vq+=(55*wd(sp-sq)-11*vq)*dt;sq+=vq*dt;
-    va+=(170*(tA-amp)-13*va)*dt;amp+=va*dt;
-    if(!tA&&Math.abs(amp)<.002&&Math.abs(va)<.02){amp=va=0;draw();run=0;return}
-    draw();requestAnimationFrame(step);
-  }
-  function kick(){if(!run){run=1;last=performance.now();requestAnimationFrame(step)}}
-  build();new ResizeObserver(build).observe(frame);
-  if(reduce||!hov)return;
-  frame.addEventListener("pointermove",function(e){
-    if(e.pointerType!=="mouse")return;
-    var b=frame.getBoundingClientRect(),px=e.clientX-b.left,py=e.clientY-b.top,best=0,bd=1e9;
-    for(var i=0;i<N;i++){var dx=px-bx[i],dy=py-by[i],q=dx*dx+dy*dy;if(q<bd){bd=q;best=i}}
-    tS=ss[best];tA=Math.pow(Math.max(0,1-Math.sqrt(bd)/(S*.42)),.8);
-    if(amp<.01){sp=sq=tS;vp=vq=0}
-    kick();
-  });
-  frame.addEventListener("pointerleave",function(){tA=0;kick()});
-}
-root.querySelectorAll(".ab-frame").forEach(Edge);
+  function fill() {
+    var l = document.documentElement.lang === "en" ? "en" : "id";
+    var n = 0;
+    lead.textContent = "";
+    lead.setAttribute("aria-label", T[l].replace(/[\[\]]/g, ""));
 
-// Kalimat pembuka: bobot & warna tiap huruf mengikuti jarak kursor (sama seperti headline hero)
-if(!reduce&&hov){
-  var mx=0,my=0,raf=0;
-  function wave(){
-    raf=0;var R=parseFloat(getComputedStyle(lead).fontSize)*1.15;
-    chars.forEach(function(c){
-      var r=c.getBoundingClientRect(),dx=r.left+r.width/2-mx,dy=r.top+r.height/2-my,
-          t=Math.pow(Math.max(0,1-Math.sqrt(dx*dx+dy*dy)/R),1.4);
-      c.style.fontWeight=Math.round(900-560*t);
-      c.style.color="color-mix(in srgb,var(--lime) "+Math.round(t*100)+"%,var(--ink))";
+    T[l]
+      .split(/\[([^\]]+)\]/)
+      .forEach(function (s, i) {
+        if (i % 2 === 0) {
+          s
+            .split(" ")
+            .forEach(function (w, wi) {
+              if (wi) lead.appendChild(document.createTextNode(" "));
+              if (!w) return;
+              var ws = document.createElement("span");
+              ws.className = "ab-w";
+              ws.setAttribute("aria-hidden", "true");
+              w
+                .split("")
+                .forEach(function (c) {
+                  var x = document.createElement("span");
+                  x.className = "ab-ch";
+                  x.textContent = c;
+                  ws.appendChild(x);
+                });
+              lead.appendChild(ws);
+            });
+          return;
+        }
+
+        var k = K[n % K.length];
+        var p = document.createElement("span");
+        p.className = "ab-pill";
+        p.setAttribute("aria-hidden", "true");
+        p.textContent = s;
+        p.style.setProperty("--pc", k[0]);
+        p.style.setProperty("--pf", k[1]);
+        p.style.setProperty("--pr", k[2] + "deg");
+        p.style.setProperty("--n", n++);
+        lead.appendChild(p);
+      });
+
+    chars = []
+      .slice
+      .call(lead.querySelectorAll(".ab-ch"));
+
+    if (fontsOk) lock();
+  }
+
+  var fontsOk = false;
+  fill();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready
+      .then(function () {
+        fontsOk = true;
+        lock();
+      });
+  } else {
+    fontsOk = true;
+    lock();
+  }
+
+  new MutationObserver(fill)
+    .observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
+
+  // Tepi foto: saat kursor mendekati tepi, garis tepi tertarik keluar seperti cairan, lalu kembali dengan pegas
+  var reduce = matchMedia("(prefers-reduced-motion:reduce)").matches,
+    hov = matchMedia("(hover:hover)").matches;
+  var NS = "http://www.w3.org/2000/svg",
+    PAD = 56,
+    N = 140,
+    RAD = 18;
+
+  function Edge(frame, id) {
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "ab-edge");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML =
+      '<defs><radialGradient id="ab-g' +
+      id +
+      '" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--ink);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--ink);stop-opacity:0"/></radialGradient></defs><path fill="url(#ab-g' +
+      id +
+      ')"/><path class="st"/>';
+    frame.appendChild(svg);
+
+    var fl = svg.children[1],
+      st = svg.children[2],
+      gr = svg.firstChild.firstChild;
+    var S = 0,
+      r = RAD,
+      L = 0,
+      bx = [],
+      by = [],
+      nx = [],
+      ny = [],
+      ss = [];
+    var sp = 0,
+      sq = 0,
+      vp = 0,
+      vq = 0,
+      amp = 0,
+      va = 0,
+      tS = 0,
+      tA = 0,
+      run = 0,
+      last = 0;
+
+    function wd(d) {
+      return (((d + L / 2) % L) + L) % L - L / 2;
+    }
+
+    function at(s) {
+      var a = S - 2 * r,
+        q = (Math.PI * r) / 2,
+        seg = [a, q, a, q, a, q, a, q],
+        k = 0;
+      while (k < 7 && s >= seg[k]) {
+        s -= seg[k];
+        k++;
+      }
+      var e = k >> 1;
+      if (!(k & 1)) {
+        return [
+          [r + s, 0, 0, -1],
+          [S, r + s, 1, 0],
+          [S - r - s, S, 0, 1],
+          [0, S - r - s, -1, 0]
+        ][e];
+      }
+      var c = [
+        [S - r, r],
+        [S - r, S - r],
+        [r, S - r],
+        [r, r]
+      ][e];
+      var t = -Math.PI / 2 + (e * Math.PI) / 2 + s / r;
+      var cx = Math.cos(t);
+      var cy = Math.sin(t);
+      return [c[0] + r * cx, c[1] + r * cy, cx, cy];
+    }
+
+    function build() {
+      S = frame.offsetWidth;
+      if (!S) return;
+      r = Math.min(RAD, S / 2);
+      L = 4 * (S - 2 * r) + 2 * Math.PI * r;
+      svg.setAttribute("viewBox", "0 0 " + (S + 2 * PAD) + " " + (S + 2 * PAD));
+      for (var i = 0; i < N; i++) {
+        var p = at((i * L) / N);
+        bx[i] = p[0];
+        by[i] = p[1];
+        nx[i] = p[2];
+        ny[i] = p[3];
+        ss[i] = (i * L) / N;
+      }
+      draw();
+    }
+
+    function draw() {
+      var g1 = S * 0.26,
+        g2 = S * 0.34,
+        d = [],
+        e = at(((sp % L) + L) % L);
+      for (var i = 0; i < N; i++) {
+        var a = wd(ss[i] - sp);
+        var b = wd(ss[i] - sq);
+        var k = amp * S * 0.13 * (0.7 * Math.exp((-a * a) / (2 * g1 * g1)) + 0.5 * Math.exp((-b * b) / (2 * g2 * g2)));
+        d.push((i ? "L" : "M") + (bx[i] + nx[i] * k + PAD).toFixed(1) + " " + (by[i] + ny[i] * k + PAD).toFixed(1));
+      }
+      d = d.join("") + "Z";
+      st.setAttribute("d", d);
+      fl.setAttribute("d", d);
+      fl.style.opacity = Math.max(0, Math.min(1, amp * 2.2));
+      gr.setAttribute("cx", e[0] + PAD);
+      gr.setAttribute("cy", e[1] + PAD);
+      gr.setAttribute("r", S * 0.45);
+    }
+
+    function step(now) {
+      var dt = Math.min((now - last) / 1000 || 0.016, 0.04);
+      last = now;
+      vp += (150 * wd(tS - sp) - 16 * vp) * dt;
+      sp += vp * dt;
+      vq += (55 * wd(sp - sq) - 11 * vq) * dt;
+      sq += vq * dt;
+      va += (170 * (tA - amp) - 13 * va) * dt;
+      amp += va * dt;
+
+      if (!tA && Math.abs(amp) < 0.002 && Math.abs(va) < 0.02) {
+        amp = va = 0;
+        draw();
+        run = 0;
+        return;
+      }
+      draw();
+      requestAnimationFrame(step);
+    }
+
+    function kick() {
+      if (!run) {
+        run = 1;
+        last = performance.now();
+        requestAnimationFrame(step);
+      }
+    }
+
+    build();
+    new ResizeObserver(build)
+      .observe(frame);
+
+    if (reduce || !hov) return;
+
+    frame.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse") return;
+      var b = frame.getBoundingClientRect();
+      var px = e.clientX - b.left;
+      var py = e.clientY - b.top;
+      var best = 0;
+      var bd = 1e9;
+      for (var i = 0; i < N; i++) {
+        var dx = px - bx[i];
+        var dy = py - by[i];
+        var q = dx * dx + dy * dy;
+        if (q < bd) {
+          bd = q;
+          best = i;
+        }
+      }
+      tS = ss[best];
+      tA = Math.pow(Math.max(0, 1 - Math.sqrt(bd) / (S * 0.42)), 0.8);
+      if (amp < 0.01) {
+        sp = sq = tS;
+        vp = vq = 0;
+      }
+      kick();
+    });
+
+    frame.addEventListener("pointerleave", function () {
+      tA = 0;
+      kick();
     });
   }
-  lead.addEventListener("pointermove",function(e){if(e.pointerType!=="mouse")return;mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(wave)});
-  lead.addEventListener("pointerleave",function(){chars.forEach(function(c){c.style.fontWeight="";c.style.color=""})});
-}
 
-// Stiker & potret muncul sekali saat terlihat
-if("IntersectionObserver" in window){
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.25});
-  io.observe(lead);io.observe(team);
-}else{lead.classList.add("in");team.classList.add("in")}
+  root
+    .querySelectorAll(".ab-frame")
+    .forEach(Edge);
+
+  // Kalimat pembuka: bobot & warna tiap huruf mengikuti jarak kursor (sama seperti headline hero)
+  if (!reduce && hov) {
+    var mx = 0,
+      my = 0,
+      raf = 0;
+
+    function wave() {
+      raf = 0;
+      var R = parseFloat(getComputedStyle(lead).fontSize) * 1.15;
+      chars
+        .forEach(function (c) {
+          var r = c.getBoundingClientRect();
+          var dx = r.left + r.width / 2 - mx;
+          var dy = r.top + r.height / 2 - my;
+          var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
+          c.style.fontWeight = Math.round(900 - 560 * t);
+          c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+        });
+    }
+
+    lead.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse") return;
+      mx = e.clientX;
+      my = e.clientY;
+      if (!raf) raf = requestAnimationFrame(wave);
+    });
+
+    lead.addEventListener("pointerleave", function () {
+      chars
+        .forEach(function (c) {
+          c.style.fontWeight = "";
+          c.style.color = "";
+        });
+    });
+  }
+
+  // Stiker & potret muncul sekali saat terlihat
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(
+      function (es) {
+        es
+          .forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          });
+      },
+      { threshold: 0.25 }
+    );
+
+    io.observe(lead);
+    io.observe(team);
+  } else {
+    lead.classList.add("in");
+    team.classList.add("in");
+  }
 })();
 
 
 // ===== PRICING =====
 
-(function(){
-// Di layar sentuh tidak ada hover, jadi badan kartu naik sendiri (menampilkan fitur) saat kartu masuk ke layar, sekali saja
-if(!matchMedia("(hover:none)").matches||!("IntersectionObserver" in window))return;
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("is-open");io.unobserve(e.target)}})},{threshold:.6});
-document.querySelectorAll("#harga .pr-item").forEach(function(c){io.observe(c)});
-})();
+(function () {
+  // Di layar sentuh tidak ada hover, jadi badan kartu naik sendiri (menampilkan fitur) saat kartu masuk ke layar, sekali saja
+  if (!matchMedia("(hover:none)").matches || !("IntersectionObserver" in window)) return;
 
+  var io = new IntersectionObserver(
+    function (es) {
+      es
+        .forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-open");
+            io.unobserve(e.target);
+          }
+        });
+    },
+    { threshold: 0.6 }
+  );
+
+  document
+    .querySelectorAll("#harga .pr-item")
+    .forEach(function (c) {
+      io.observe(c);
+    });
+})();
 
 // ===== PRICING =====
 
 // Judul: dipecah jadi huruf, bobot & warna tiap huruf mengikuti jarak kursor (sama seperti headline hero)
-(function(){
-var T=document.getElementById("pr-title"),sec=document.getElementById("harga");
-if(!T||!sec)return;
-var mx=0,my=0,raf=0,on=false;
-function split(){
-  var l=(document.documentElement.lang||"id").slice(0,2),txt=T.dataset[l]||T.dataset.id||T.textContent,i=0,wrap=document.createElement("span");
-  wrap.setAttribute("aria-hidden","true");
-  txt.split(" ").forEach(function(word,wi){
-    var w=document.createElement("span");w.className="w";
-    word.split("").forEach(function(c){var s=document.createElement("span");s.className="ch";s.textContent=c;s.style.setProperty("--i",i++);w.appendChild(s)});
-    if(wi)wrap.appendChild(document.createTextNode(" "));
-    wrap.appendChild(w);
+(function () {
+  var T = document.getElementById("pr-title"),
+    sec = document.getElementById("harga");
+  if (!T || !sec) return;
+
+  var mx = 0,
+    my = 0,
+    raf = 0,
+    on = false;
+
+  function split() {
+    var l = (document.documentElement.lang || "id").slice(0, 2);
+    var txt = T.dataset[l] || T.dataset.id || T.textContent;
+    var i = 0;
+    var wrap = document.createElement("span");
+    wrap.setAttribute("aria-hidden", "true");
+
+    txt
+      .split(" ")
+      .forEach(function (word, wi) {
+        var w = document.createElement("span");
+        w.className = "w";
+
+        word
+          .split("")
+          .forEach(function (c) {
+            var s = document.createElement("span");
+            s.className = "ch";
+            s.textContent = c;
+            s.style.setProperty("--i", i++);
+            w.appendChild(s);
+          });
+
+        if (wi) wrap.appendChild(document.createTextNode(" "));
+        wrap.appendChild(w);
+      });
+
+    T.textContent = "";
+    T.appendChild(wrap);
+    T.setAttribute("aria-label", txt);
+  }
+
+  function reset() {
+    on = false;
+    T
+      .querySelectorAll(".ch")
+      .forEach(function (c) {
+        c.style.fontWeight = "";
+        c.style.color = "";
+      });
+  }
+
+  function wave() {
+    raf = 0;
+    var R = parseFloat(getComputedStyle(T).fontSize) * 1.15;
+    var b = T.getBoundingClientRect();
+    if (mx < b.left - R || mx > b.right + R || my < b.top - R || my > b.bottom + R) {
+      if (on) reset();
+      return;
+    }
+    on = true;
+
+    T
+      .querySelectorAll(".ch")
+      .forEach(function (c) {
+        var r = c.getBoundingClientRect();
+        var dx = r.left + r.width / 2 - mx;
+        var dy = r.top + r.height / 2 - my;
+        var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
+        c.style.fontWeight = Math.round(900 - 560 * t);
+        c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+      });
+  }
+
+  split();
+
+  sec.addEventListener("pointermove", function (e) {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!raf) raf = requestAnimationFrame(wave);
   });
-  T.textContent="";T.appendChild(wrap);T.setAttribute("aria-label",txt);
-}
-function reset(){on=false;T.querySelectorAll(".ch").forEach(function(c){c.style.fontWeight="";c.style.color=""})}
-function wave(){
-  raf=0;
-  var R=parseFloat(getComputedStyle(T).fontSize)*1.15,b=T.getBoundingClientRect();
-  if(mx<b.left-R||mx>b.right+R||my<b.top-R||my>b.bottom+R){if(on)reset();return}
-  on=true;
-  T.querySelectorAll(".ch").forEach(function(c){
-    var r=c.getBoundingClientRect(),dx=r.left+r.width/2-mx,dy=r.top+r.height/2-my;
-    var t=Math.pow(Math.max(0,1-Math.sqrt(dx*dx+dy*dy)/R),1.4);
-    c.style.fontWeight=Math.round(900-560*t);
-    c.style.color="color-mix(in srgb,var(--lime) "+Math.round(t*100)+"%,var(--ink))";
-  });
-}
-split();
-sec.addEventListener("pointermove",function(e){mx=e.clientX;my=e.clientY;if(!raf)raf=requestAnimationFrame(wave)});
-sec.addEventListener("pointerleave",reset);
-// Saat bahasa diganti (atribut lang di <html>), teks judul ditimpa skrip bahasa lalu dipecah ulang di sini
-new MutationObserver(split).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+
+  sec.addEventListener("pointerleave", reset);
+
+  // Saat bahasa diganti (atribut lang di <html>), teks judul ditimpa skrip bahasa lalu dipecah ulang di sini
+  new MutationObserver(split)
+    .observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
 })();
 
 
 // ===== TESTIMONIAL =====
 
-(function(){
-// Warna kartu (c = latar, f = warna teks) dan bentuk kartu (rc = bentuk saat tertutup, ro = saat terbuka).
-var C=[{c:"#c0ff72",f:"#111015"},{c:"#f4f2ff",f:"#111015"},{c:"#1b1922",f:"#f4f2ff"},{c:"#ffe45e",f:"#111015"},
-       {c:"#ff9ed8",f:"#111015"},{c:"#8fdcff",f:"#111015"},{c:"#ff8f6b",f:"#111015"},{c:"#d8ccff",f:"#111015"}];
-var S=[{rc:"26px",ro:"30px"},{rc:"8px",ro:"10px"},{rc:"26px 4px 26px 4px",ro:"46px 6px 46px 6px"},{rc:"4px 26px 4px 26px",ro:"6px 46px 6px 46px"},
-       {rc:"16px",ro:"36px"},{rc:"26px 26px 26px 3px",ro:"34px 34px 34px 3px"},{rc:"26px 26px 6px 6px",ro:"56px 56px 8px 8px"},{rc:"3px 26px 26px 26px",ro:"3px 34px 34px 34px"}];
+(function () {
+  // Warna kartu (c = latar, f = warna teks) dan bentuk kartu (rc = bentuk saat tertutup, ro = saat terbuka).
+  var C = [
+    { c: "#c0ff72", f: "#111015" },
+    { c: "#f4f2ff", f: "#111015" },
+    { c: "#1b1922", f: "#f4f2ff" },
+    { c: "#ffe45e", f: "#111015" },
+    { c: "#ff9ed8", f: "#111015" },
+    { c: "#8fdcff", f: "#111015" },
+    { c: "#ff8f6b", f: "#111015" },
+    { c: "#d8ccff", f: "#111015" }
+  ];
 
-// Data testimoni. Ganti nama, jabatan, dan isi dengan testimoni klien asli kamu.
-// p = indeks warna (0-7), s = indeks bentuk (0-7). Posisi & ukuran kartu diacak otomatis tiap halaman dimuat.
-var T=[
- {n:"Dewi Lestari",p:0,s:0,r:{id:"Pemilik Kopi Senja",en:"Owner, Kopi Senja"},
-  id:"Checkout dua langkah dari Webora bikin pesanan biji kopi kami jauh lebih lancar. Mereka juga sabar menjelaskan hal teknis ke saya yang awam.",
-  en:"Webora's two-step checkout made orders for our beans far smoother. They were also patient explaining the technical side to a beginner like me."},
- {n:"Raka Pratama",p:2,s:5,r:{id:"Pendiri Lajur",en:"Founder, Lajur"},
-  id:"Kami minta pemesanan tiket yang selesai di satu layar, dan itu yang jadi. Tim Webora berani bilang fitur mana yang tidak perlu, jadi situsnya ringan dan tepat waktu.",
-  en:"We asked for ticket booking on a single screen and that's what we got. The team dared to say which features we didn't need, so the site stayed light and on time."},
- {n:"Salsa Nirmala",p:7,s:2,r:{id:"Arsitek interior, Ruang Tamu",en:"Interior architect, Ruang Tamu"},
-  id:"Galeri yang bisa digeser membuat foto proyek saya tampil sebagaimana mestinya. Beberapa klien baru menyebutnya langsung saat konsultasi pertama.",
-  en:"The swipeable gallery lets my project photos look the way they should. A few new clients mentioned it right in their first consultation."},
- {n:"Bayu Anggara",p:3,s:1,r:{id:"Vokalis Nada Kecil",en:"Vocalist, Nada Kecil"},
-  id:"Kami band kecil dengan anggaran seadanya, tapi situs rilis albumnya tidak terlihat murah. Pendengar jadi gampang menemukan tautan streaming kami.",
-  en:"We're a small band on a tight budget, but the album site doesn't look cheap. Listeners can now find our streaming links easily."},
- {n:"Hendra Wijaya",p:6,s:6,r:{id:"Koordinator Pasar Tani",en:"Coordinator, Pasar Tani"},
-  id:"Para petani kami tidak terbiasa dengan aplikasi rumit. Katalognya bisa diisi dari ponsel, dan restoran langganan bisa cek stok panen tanpa telepon satu per satu.",
-  en:"Our farmers aren't used to complicated apps. The catalog can be updated from a phone, and restaurant buyers can check the harvest without calling each farmer."},
- {n:"Intan Maharani",p:5,s:3,r:{id:"Pendiri Lari Pagi",en:"Founder, Lari Pagi"},
-  id:"Jadwal dan rute lari dulu tercecer di grup chat. Sekarang semuanya ada di satu situs dan anggota baru bisa membuka peta rute tanpa bertanya.",
-  en:"Run schedules and routes used to be scattered across group chats. Now it all lives on one site and new members can open the route maps without asking."},
- {n:"Rina Kusuma",p:4,s:7,r:{id:"Pemilik warung makan",en:"Food stall owner"},
-  id:"Dulu saya mencatat penjualan di buku dan akhir bulan selalu pusing. Dasbornya sederhana: buka, lihat menu paling laku, selesai.",
-  en:"I used to log sales in a notebook and month-end was a headache. The dashboard is simple: open it, see the best-selling dish, done."},
- {n:"Fajar Nugroho",p:1,s:4,r:{id:"Dokter gigi",en:"Dentist"},
-  id:"Pasien sekarang bisa memesan jadwal sendiri lewat situs, jadi resepsionis tidak lagi sibuk membalas pertanyaan yang sama berulang kali.",
-  en:"Patients can now book their own slots on the site, so our receptionist no longer answers the same questions over and over."},
- {n:"Maya Putri",p:7,s:0,r:{id:"Guru kursus bahasa Inggris",en:"English course teacher"},
-  id:"Halaman kelasnya enak dilihat orang tua murid dan mudah saya perbarui sendiri. Calon murid kini lebih sering bertanya soal jadwal daripada soal harga.",
-  en:"The class pages look good to parents and are easy for me to update. Prospective students now ask about schedules more than prices."},
- {n:"Gilang Saputra",p:0,s:7,r:{id:"Kreator konten",en:"Content creator"},
-  id:"Saya ingin situs yang terasa seperti saya, bukan template. Webora mendengarkan dulu sebelum mendesain, dan hasilnya langsung terasa pas.",
-  en:"I wanted a site that feels like me, not a template. Webora listened before designing, and the result felt right straight away."},
- {n:"Ayu Wulandari",p:6,s:2,r:{id:"Pemilik toko batik",en:"Batik shop owner"},
-  id:"Foto produk kami akhirnya tampil bagus di ponsel. Pembeli dari luar kota mulai memesan lewat situs, bukan lagi lewat DM satu per satu.",
-  en:"Our product photos finally look good on phones. Out-of-town buyers now order through the site instead of DMs one by one."},
- {n:"Dimas Kurnia",p:5,s:5,r:{id:"CTO, startup logistik",en:"CTO, logistics startup"},
-  id:"Mereka cepat paham alur bisnis kami dan tidak menumpuk fitur. Revisi dibalas di hari yang sama, dan kodenya rapi untuk dilanjutkan tim kami.",
-  en:"They grasped our business flow fast and didn't pile on features. Revisions got same-day replies, and the code was tidy enough for our team to continue."},
- {n:"Nadia Rahma",p:2,s:6,r:{id:"Penyelenggara festival zine",en:"Zine festival organizer"},
-  id:"Dua minggu sebelum acara kami baru sadar butuh situs tiket. Webora menyelesaikannya tepat waktu tanpa membuat kami panik.",
-  en:"Two weeks before the event we realized we needed a ticketing site. Webora delivered on time without making us panic."},
- {n:"Budi Santoso",p:3,s:4,r:{id:"Pemilik bengkel motor",en:"Motorcycle workshop owner"},
-  id:"Awalnya saya ragu, ternyata situsnya sederhana dan jelas. Pelanggan bisa melihat layanan dan harga, lalu langsung chat lewat tombol WhatsApp.",
-  en:"I was doubtful at first, but the site is simple and clear. Customers see services and prices, then chat straight from the WhatsApp button."},
- {n:"Clara Wijaya",p:4,s:3,r:{id:"Desainer perhiasan",en:"Jewelry designer"},
-  id:"Mereka menjaga detail kecil yang biasanya terlewat: animasi halus, tulisan terbaca di layar kecil, dan loading yang cepat.",
-  en:"They kept the small details that usually get missed: smooth animation, readable text on small screens, and fast loading."},
- {n:"Eko Prasetyo",p:1,s:1,r:{id:"Ketua komunitas fotografi",en:"Photography club chair"},
-  id:"Situs pameran tahunan kami dibuka ribuan orang tanpa lambat sekali pun. Mereka juga mengajari kami cara mengganti foto sendiri.",
-  en:"Our annual exhibition site took thousands of visitors without a single slowdown. They also taught us how to swap the photos ourselves."}
-];
+  var S = [
+    { rc: "26px", ro: "30px" },
+    { rc: "8px", ro: "10px" },
+    { rc: "26px 4px 26px 4px", ro: "46px 6px 46px 6px" },
+    { rc: "4px 26px 4px 26px", ro: "6px 46px 6px 46px" },
+    { rc: "16px", ro: "36px" },
+    { rc: "26px 26px 26px 3px", ro: "34px 34px 34px 3px" },
+    { rc: "26px 26px 6px 6px", ro: "56px 56px 8px 8px" },
+    { rc: "3px 26px 26px 26px", ro: "3px 34px 34px 34px" }
+  ];
 
-var N=T.length,root=document.getElementById("testimoni"),stage=root.querySelector(".ts-stage"),core=stage.querySelector(".ts-core"),
-    svg=stage.querySelector(".ts-lines"),W=0,VH=0,cur=-1,SEED=Math.random()*1e9|0;
-
-// Teks di tengah (dua baris). Ganti sesuai keinginan.
-var HEAD={id:["Kata mereka,","bukan kata kami"],en:["Their words,","not ours"]};
-
-function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-/* jarak antar dua kotak (negatif kalau saling tumpuk) */
-function sep(a,b){var dx=Math.abs(a.x+a.w/2-b.x-b.w/2)-(a.w+b.w)/2,dy=Math.abs(a.y+a.h/2-b.y-b.h/2)-(a.h+b.h)/2;return dx>0&&dy>0?Math.hypot(dx,dy):Math.max(dx,dy)}
-
-/* Hover tepi cair: saat kursor mendekati tepi bubble, garis tepi tertarik keluar seperti cairan lalu kembali dengan pegas.
-   Bentuk mengikuti sudut tiap bubble (termasuk saat terbuka), garis tepi digambar oleh SVG di dalam .ts-item. */
-var tsHover=matchMedia("(hover:hover)").matches,tsReduce=matchMedia("(prefers-reduced-motion:reduce)").matches,NS="http://www.w3.org/2000/svg",PAD=56;
-function tsEdge(el,card,id){
-  var sv=document.createElementNS(NS,"svg");sv.setAttribute("class","ts-edge");sv.setAttribute("aria-hidden","true");
-  sv.innerHTML='<defs><radialGradient id="ts-g'+id+'" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--ink);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--ink);stop-opacity:0"/></radialGradient></defs><path fill="url(#ts-g'+id+')"/><path class="st"/>';
-  el.appendChild(sv);
-  var fl=sv.children[1],ln=sv.children[2],gr=sv.firstChild.firstChild,ins=1.5,off=PAD+ins;
-  var w=0,h=0,dw=0,dh=0,R=[0,0,0,0],seg=[],L=0,N=0,bx=[],by=[],nx=[],ny=[],ss=[];
-  var sp=0,sq=0,vp=0,vq=0,amp=0,va=0,tS=0,tA=0,run=0,last=0;
-  function wd(d){return((d+L/2)%L+L)%L-L/2}
-  function q(a,b){return b>0?a/b:1}
-  function at(s){
-    var k=0;while(k<7&&s>=seg[k]){s-=seg[k];k++}
-    var e=k>>1;
-    if(!(k&1))return[[R[0]+s,0,0,-1],[dw,R[1]+s,1,0],[dw-R[2]-s,dh,0,1],[0,dh-R[3]-s,-1,0]][e];
-    var c=[[dw-R[1],R[1],R[1]],[dw-R[2],dh-R[2],R[2]],[R[3],dh-R[3],R[3]],[R[0],R[0],R[0]]][e],t=-Math.PI/2+e*Math.PI/2+s/(c[2]||1),cx=Math.cos(t),cy=Math.sin(t);
-    return[c[0]+c[2]*cx,c[1]+c[2]*cy,cx,cy];
-  }
-  function build(){
-    w=el.offsetWidth;h=el.offsetHeight;if(!w||!h)return;
-    var cs=getComputedStyle(card),r=[cs.borderTopLeftRadius,cs.borderTopRightRadius,cs.borderBottomRightRadius,cs.borderBottomLeftRadius].map(function(v){return Math.max(0,(parseFloat(v)||0)-ins)});
-    dw=w-2*ins;dh=h-2*ins;
-    var f=Math.min(1,q(dw,r[0]+r[1]),q(dh,r[1]+r[2]),q(dw,r[2]+r[3]),q(dh,r[3]+r[0]));
-    R=r.map(function(x){return x*f});
-    seg=[dw-R[0]-R[1],Math.PI*R[1]/2,dh-R[1]-R[2],Math.PI*R[2]/2,dw-R[2]-R[3],Math.PI*R[3]/2,dh-R[3]-R[0],Math.PI*R[0]/2].map(function(x){return Math.max(0,x)});
-    L=seg.reduce(function(a,b){return a+b},0);N=Math.max(80,Math.min(260,Math.round(L/5)));
-    sv.setAttribute("viewBox","0 0 "+(w+2*PAD)+" "+(h+2*PAD));
-    for(var i=0;i<N;i++){var p=at(i*L/N);bx[i]=p[0]+off;by[i]=p[1]+off;nx[i]=p[2];ny[i]=p[3];ss[i]=i*L/N}
-    draw();
-  }
-  function draw(){
-    var B=Math.max(90,Math.sqrt(w*h)),g1=B*.26,g2=B*.34,A=Math.max(10,Math.min(30,Math.min(w,h)*.2)),d=[],e=at(((sp%L)+L)%L);
-    for(var i=0;i<N;i++){
-      var a=wd(ss[i]-sp),b=wd(ss[i]-sq),k=amp*A*(.7*Math.exp(-a*a/(2*g1*g1))+.5*Math.exp(-b*b/(2*g2*g2)));
-      d.push((i?"L":"M")+(bx[i]+nx[i]*k).toFixed(1)+" "+(by[i]+ny[i]*k).toFixed(1));
+  // Data testimoni. Ganti nama, jabatan, dan isi dengan testimoni klien asli kamu.
+  // p = indeks warna (0-7), s = indeks bentuk (0-7). Posisi & ukuran kartu diacak otomatis tiap halaman dimuat.
+  var T = [
+    {
+      n: "Dewi Lestari",
+      p: 0,
+      s: 0,
+      r: { id: "Pemilik Kopi Senja", en: "Owner, Kopi Senja" },
+      id: "Checkout dua langkah dari Webora bikin pesanan biji kopi kami jauh lebih lancar. Mereka juga sabar menjelaskan hal teknis ke saya yang awam.",
+      en: "Webora's two-step checkout made orders for our beans far smoother. They were also patient explaining the technical side to a beginner like me."
+    },
+    {
+      n: "Raka Pratama",
+      p: 2,
+      s: 5,
+      r: { id: "Pendiri Lajur", en: "Founder, Lajur" },
+      id: "Kami minta pemesanan tiket yang selesai di satu layar, dan itu yang jadi. Tim Webora berani bilang fitur mana yang tidak perlu, jadi situsnya ringan dan tepat waktu.",
+      en: "We asked for ticket booking on a single screen and that's what we got. The team dared to say which features we didn't need, so the site stayed light and on time."
+    },
+    {
+      n: "Salsa Nirmala",
+      p: 7,
+      s: 2,
+      r: { id: "Arsitek interior, Ruang Tamu", en: "Interior architect, Ruang Tamu" },
+      id: "Galeri yang bisa digeser membuat foto proyek saya tampil sebagaimana mestinya. Beberapa klien baru menyebutnya langsung saat konsultasi pertama.",
+      en: "The swipeable gallery lets my project photos look the way they should. A few new clients mentioned it right in their first consultation."
+    },
+    {
+      n: "Bayu Anggara",
+      p: 3,
+      s: 1,
+      r: { id: "Vokalis Nada Kecil", en: "Vocalist, Nada Kecil" },
+      id: "Kami band kecil dengan anggaran seadanya, tapi situs rilis albumnya tidak terlihat murah. Pendengar jadi gampang menemukan tautan streaming kami.",
+      en: "We're a small band on a tight budget, but the album site doesn't look cheap. Listeners can now find our streaming links easily."
+    },
+    {
+      n: "Hendra Wijaya",
+      p: 6,
+      s: 6,
+      r: { id: "Koordinator Pasar Tani", en: "Coordinator, Pasar Tani" },
+      id: "Para petani kami tidak terbiasa dengan aplikasi rumit. Katalognya bisa diisi dari ponsel, dan restoran langganan bisa cek stok panen tanpa telepon satu per satu.",
+      en: "Our farmers aren't used to complicated apps. The catalog can be updated from a phone, and restaurant buyers can check the harvest without calling each farmer."
+    },
+    {
+      n: "Intan Maharani",
+      p: 5,
+      s: 3,
+      r: { id: "Pendiri Lari Pagi", en: "Founder, Lari Pagi" },
+      id: "Jadwal dan rute lari dulu tercecer di grup chat. Sekarang semuanya ada di satu situs dan anggota baru bisa membuka peta rute tanpa bertanya.",
+      en: "Run schedules and routes used to be scattered across group chats. Now it all lives on one site and new members can open the route maps without asking."
+    },
+    {
+      n: "Rina Kusuma",
+      p: 4,
+      s: 7,
+      r: { id: "Pemilik warung makan", en: "Food stall owner" },
+      id: "Dulu saya mencatat penjualan di buku dan akhir bulan selalu pusing. Dasbornya sederhana: buka, lihat menu paling laku, selesai.",
+      en: "I used to log sales in a notebook and month-end was a headache. The dashboard is simple: open it, see the best-selling dish, done."
+    },
+    {
+      n: "Fajar Nugroho",
+      p: 1,
+      s: 4,
+      r: { id: "Dokter gigi", en: "Dentist" },
+      id: "Pasien sekarang bisa memesan jadwal sendiri lewat situs, jadi resepsionis tidak lagi sibuk membalas pertanyaan yang sama berulang kali.",
+      en: "Patients can now book their own slots on the site, so our receptionist no longer answers the same questions over and over."
+    },
+    {
+      n: "Maya Putri",
+      p: 7,
+      s: 0,
+      r: { id: "Guru kursus bahasa Inggris", en: "English course teacher" },
+      id: "Halaman kelasnya enak dilihat orang tua murid dan mudah saya perbarui sendiri. Calon murid kini lebih sering bertanya soal jadwal daripada soal harga.",
+      en: "The class pages look good to parents and are easy for me to update. Prospective students now ask about schedules more than prices."
+    },
+    {
+      n: "Gilang Saputra",
+      p: 0,
+      s: 7,
+      r: { id: "Kreator konten", en: "Content creator" },
+      id: "Saya ingin situs yang terasa seperti saya, bukan template. Webora mendengarkan dulu sebelum mendesain, dan hasilnya langsung terasa pas.",
+      en: "I wanted a site that feels like me, not a template. Webora listened before designing, and the result felt right straight away."
+    },
+    {
+      n: "Ayu Wulandari",
+      p: 6,
+      s: 2,
+      r: { id: "Pemilik toko batik", en: "Batik shop owner" },
+      id: "Foto produk kami akhirnya tampil bagus di ponsel. Pembeli dari luar kota mulai memesan lewat situs, bukan lagi lewat DM satu per satu.",
+      en: "Our product photos finally look good on phones. Out-of-town buyers now order through the site instead of DMs one by one."
+    },
+    {
+      n: "Dimas Kurnia",
+      p: 5,
+      s: 5,
+      r: { id: "CTO, startup logistik", en: "CTO, logistics startup" },
+      id: "Mereka cepat paham alur bisnis kami dan tidak menumpuk fitur. Revisi dibalas di hari yang sama, dan kodenya rapi untuk dilanjutkan tim kami.",
+      en: "They grasped our business flow fast and didn't pile on features. Revisions got same-day replies, and the code was tidy enough for our team to continue."
+    },
+    {
+      n: "Nadia Rahma",
+      p: 2,
+      s: 6,
+      r: { id: "Penyelenggara festival zine", en: "Zine festival organizer" },
+      id: "Dua minggu sebelum acara kami baru sadar butuh situs tiket. Webora menyelesaikannya tepat waktu tanpa membuat kami panik.",
+      en: "Two weeks before the event we realized we needed a ticketing site. Webora delivered on time without making us panic."
+    },
+    {
+      n: "Budi Santoso",
+      p: 3,
+      s: 4,
+      r: { id: "Pemilik bengkel motor", en: "Motorcycle workshop owner" },
+      id: "Awalnya saya ragu, ternyata situsnya sederhana dan jelas. Pelanggan bisa melihat layanan dan harga, lalu langsung chat lewat tombol WhatsApp.",
+      en: "I was doubtful at first, but the site is simple and clear. Customers see services and prices, then chat straight from the WhatsApp button."
+    },
+    {
+      n: "Clara Wijaya",
+      p: 4,
+      s: 3,
+      r: { id: "Desainer perhiasan", en: "Jewelry designer" },
+      id: "Mereka menjaga detail kecil yang biasanya terlewat: animasi halus, tulisan terbaca di layar kecil, dan loading yang cepat.",
+      en: "They kept the small details that usually get missed: smooth animation, readable text on small screens, and fast loading."
+    },
+    {
+      n: "Eko Prasetyo",
+      p: 1,
+      s: 1,
+      r: { id: "Ketua komunitas fotografi", en: "Photography club chair" },
+      id: "Situs pameran tahunan kami dibuka ribuan orang tanpa lambat sekali pun. Mereka juga mengajari kami cara mengganti foto sendiri.",
+      en: "Our annual exhibition site took thousands of visitors without a single slowdown. They also taught us how to swap the photos ourselves."
     }
-    d=d.join("")+"Z";ln.setAttribute("d",d);fl.setAttribute("d",d);
-    fl.style.opacity=Math.max(0,Math.min(1,amp*2.2));
-    gr.setAttribute("cx",e[0]+off);gr.setAttribute("cy",e[1]+off);gr.setAttribute("r",B*.45);
+  ];
+
+  var N = T.length,
+    root = document.getElementById("testimoni"),
+    stage = root.querySelector(".ts-stage"),
+    core = stage.querySelector(".ts-core"),
+    svg = stage.querySelector(".ts-lines"),
+    W = 0,
+    VH = 0,
+    cur = -1,
+    SEED = (Math.random() * 1e9) | 0;
+
+  // Teks di tengah (dua baris). Ganti sesuai keinginan.
+  var HEAD = {
+    id: ["Kata mereka,", "bukan kata kami"],
+    en: ["Their words,", "not ours"]
+  };
+
+  function rng(a) {
+    return function () {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
   }
-  function step(now){
-    var dt=Math.min((now-last)/1000||.016,.04);last=now;
-    vp+=(150*wd(tS-sp)-16*vp)*dt;sp+=vp*dt;
-    vq+=(55*wd(sp-sq)-11*vq)*dt;sq+=vq*dt;
-    va+=(170*(tA-amp)-13*va)*dt;amp+=va*dt;
-    if(!tA&&Math.abs(amp)<.002&&Math.abs(va)<.02){amp=va=0;draw();run=0;return}
-    draw();requestAnimationFrame(step);
+
+  /* jarak antar dua kotak (negatif kalau saling tumpuk) */
+  function sep(a, b) {
+    var dx = Math.abs(a.x + a.w / 2 - b.x - b.w / 2) - (a.w + b.w) / 2;
+    var dy = Math.abs(a.y + a.h / 2 - b.y - b.h / 2) - (a.h + b.h) / 2;
+    return dx > 0 && dy > 0 ? Math.hypot(dx, dy) : Math.max(dx, dy);
   }
-  function kick(){if(!run){run=1;last=performance.now();requestAnimationFrame(step)}}
-  new ResizeObserver(build).observe(el);build();
-  if(tsReduce||!tsHover)return;
-  el.addEventListener("pointermove",function(e){
-    if(e.pointerType!=="mouse"||!N)return;
-    /* posisi kursor dikembalikan ke koordinat lokal bubble (memperhitungkan rotasi & skala) */
-    var b=el.getBoundingClientRect(),cs=getComputedStyle(el),a=(parseFloat(cs.rotate)||0)*Math.PI/180,sc=parseFloat(cs.scale)||1,
-        dx=e.clientX-(b.left+b.width/2),dy=e.clientY-(b.top+b.height/2),
-        px=(dx*Math.cos(a)+dy*Math.sin(a))/sc+w/2,py=(-dx*Math.sin(a)+dy*Math.cos(a))/sc+h/2,best=0,bd=1e9;
-    for(var i=0;i<N;i++){var x=px-bx[i]+PAD,y=py-by[i]+PAD,m=x*x+y*y;if(m<bd){bd=m;best=i}}
-    tS=ss[best];tA=Math.pow(Math.max(0,1-Math.sqrt(bd)/Math.max(Math.min(w,h)*.5,30)),.8);
-    if(amp<.01){sp=sq=tS;vp=vq=0}
-    kick();
-  });
-  el.addEventListener("pointerleave",function(){tA=0;kick()});
-}
 
-var items=T.map(function(t,i){
-  var el=document.createElement("div"),st=el.style;el.className="ts-item";
-  st.setProperty("--c",C[t.p].c);st.setProperty("--f",C[t.p].f);st.setProperty("--rc",S[t.s].rc);st.setProperty("--ro",S[t.s].ro);
-  st.setProperty("--i",i);st.setProperty("--fd",(4.4+(i%7)*.4)+"s");st.setProperty("--r",(Math.random()*10-5).toFixed(1)+"deg");
-  var h=document.createElement("button");h.type="button";h.className="ts-head";h.textContent=t.n;
-  h.setAttribute("aria-expanded","false");h.setAttribute("aria-controls","ts-b"+i);
-  var b=document.createElement("div");b.className="ts-body";b.id="ts-b"+i;
-  b.innerHTML='<p class="ts-role"></p><p class="ts-text"></p>';
-  var card=document.createElement("div");card.className="ts-card";card.appendChild(h);card.appendChild(b);el.appendChild(card);stage.appendChild(el);tsEdge(el,card,i);
-  var ln=document.createElementNS("http://www.w3.org/2000/svg","path");
-  ln.setAttribute("class","ts-line");ln.setAttribute("pathLength","1");svg.appendChild(ln);
-  var pl=document.createElementNS("http://www.w3.org/2000/svg","path");
-  pl.setAttribute("class","ts-pulse");pl.setAttribute("pathLength","1");
-  pl.style.setProperty("--pd",(3.4+Math.random()*2).toFixed(2)+"s");pl.style.setProperty("--pl",(Math.random()*2).toFixed(2)+"s");svg.appendChild(pl);
-  h.addEventListener("click",function(){setOpen(cur===i?-1:i)});
-  return {el:el,head:h,body:b,line:ln,pulse:pl,ang:0,role:b.firstChild,text:b.lastChild,k:.88+Math.random()*.2,w:0,cw:0,ch:0};
-});
+  /* Hover tepi cair: saat kursor mendekati tepi bubble, garis tepi tertarik keluar seperti cairan lalu kembali dengan pegas.
+     Bentuk mengikuti sudut tiap bubble (termasuk saat terbuka), garis tepi digambar oleh SVG di dalam .ts-item. */
+  var tsHover = matchMedia("(hover:hover)").matches,
+    tsReduce = matchMedia("(prefers-reduced-motion:reduce)").matches,
+    NS = "http://www.w3.org/2000/svg",
+    PAD = 56;
 
-function lang(){return document.documentElement.lang==="en"?"en":"id"}
-function fill(){
-  var l=lang();
-  items.forEach(function(it,i){it.role.textContent=T[i].r[l];it.text.textContent=T[i][l]});
-  core.innerHTML="";core.setAttribute("aria-label",HEAD[l].join(" "));
-  var n=0;
-  HEAD[l].forEach(function(txt){
-    var ln=document.createElement("span");ln.className="ts-ln";ln.setAttribute("aria-hidden","true");
-    for(var k=0;k<txt.length;k++){var c=document.createElement("span");c.className="ts-ch";c.textContent=txt.charAt(k);c.style.setProperty("--c",n++);ln.appendChild(c)}
-    core.appendChild(ln);
-  });
-  stage.setAttribute("aria-label",l==="en"?"Client testimonials":"Testimoni klien");
-}
-function setOpen(i){
-  cur=i;
-  items.forEach(function(it,k){it.el.classList.toggle("open",k===i);it.line.classList.toggle("on",k===i);it.head.setAttribute("aria-expanded",k===i)});
-}
+  function tsEdge(el, card, id) {
+    var sv = document.createElementNS(NS, "svg");
+    sv.setAttribute("class", "ts-edge");
+    sv.setAttribute("aria-hidden", "true");
+    sv.innerHTML =
+      '<defs><radialGradient id="ts-g' +
+      id +
+      '" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--ink);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--ink);stop-opacity:0"/></radialGradient></defs><path fill="url(#ts-g' +
+      id +
+      ')"/><path class="st"/>';
+    el.appendChild(sv);
 
-/* Tata letak: chip disebar acak mengelilingi teks tengah dan sengaja dijauhkan satu sama lain, tiap chip disambung garis ke pusat.
-   Tinggi area mengikuti tinggi layar supaya semuanya muat tanpa scroll. */
-function layout(){
-  W=stage.clientWidth;if(!W)return;
-  VH=window.innerHeight;
-  var cs=getComputedStyle(root),avail=VH-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom),
-      mob=W<520,hh=mob?44:52,base=Math.min(360,W),maxCh=0;
-  stage.classList.add("nt");stage.style.setProperty("--hh",hh+"px");
-  items.forEach(function(it){
-    it.cw=Math.min(W,Math.round(base*it.k));it.el.style.setProperty("--cw",it.cw+"px");
-    it.el.style.width="max-content";it.w=it.el.offsetWidth;it.el.style.width="";
-    it.ch=hh+it.body.offsetHeight;maxCh=Math.max(maxCh,it.ch);
-  });
-  var H=Math.round(Math.max(mob?Math.min(Math.max(avail*1.3,820),1040):Math.min(Math.max(avail*1.02,700),840),maxCh+8,360));
-  stage.style.height=H+"px";
-  var cx=W/2,cy=H/2,R=rng(SEED),placed=[],tw=core.offsetWidth+16,th=core.offsetHeight+16,
-      hole={x:cx-tw/2,y:cy-th/2,w:tw,h:th},order=items.slice().sort(function(a,b){return b.w-a.w});
-  var bestSet=null,bestMin=-1e9;
-  for(var round=0;round<14;round++){
-    var set=[],pl=[],mn=1e9;
-    order.forEach(function(it){
-      /* dari 420 titik acak, pilih yang paling jauh dari teks tengah dan chip yang sudah ditaruh */
-      var best=null,bs=-1e9,Ax=W/2-it.w/2-2,Ay=H/2-hh/2-2;
-      for(var t=0;t<420;t++){
-        var x,y;
-        if(mob){x=R()*(W-it.w);y=R()*(H-hh)}
-        else{var a=R()*6.2832,r=Math.sqrt(R());x=cx+Math.cos(a)*r*Ax-it.w/2;y=cy+Math.sin(a)*r*Ay-hh/2}
-        x=Math.max(0,Math.min(W-it.w,x));y=Math.max(0,Math.min(H-hh,y));
-        var rc={x:x,y:y,w:it.w,h:hh},sc=sep(rc,hole);
-        for(var k=0;k<pl.length;k++)sc=Math.min(sc,sep(rc,pl[k]));
-        if(sc>bs){bs=sc;best=rc}
+    var fl = sv.children[1],
+      ln = sv.children[2],
+      gr = sv.firstChild.firstChild,
+      ins = 1.5,
+      off = PAD + ins;
+    var w = 0,
+      h = 0,
+      dw = 0,
+      dh = 0,
+      R = [0, 0, 0, 0],
+      seg = [],
+      L = 0,
+      N = 0,
+      bx = [],
+      by = [],
+      nx = [],
+      ny = [],
+      ss = [];
+    var sp = 0,
+      sq = 0,
+      vp = 0,
+      vq = 0,
+      amp = 0,
+      va = 0,
+      tS = 0,
+      tA = 0,
+      run = 0,
+      last = 0;
+
+    function wd(d) {
+      return (((d + L / 2) % L) + L) % L - L / 2;
+    }
+
+    function q(a, b) {
+      return b > 0 ? a / b : 1;
+    }
+
+    function at(s) {
+      var k = 0;
+      while (k < 7 && s >= seg[k]) {
+        s -= seg[k];
+        k++;
       }
-      pl.push(best);set.push(best);mn=Math.min(mn,bs);
+      var e = k >> 1;
+      if (!(k & 1)) {
+        return [
+          [R[0] + s, 0, 0, -1],
+          [dw, R[1] + s, 1, 0],
+          [dw - R[2] - s, dh, 0, 1],
+          [0, dh - R[3] - s, -1, 0]
+        ][e];
+      }
+      var c = [
+        [dw - R[1], R[1], R[1]],
+        [dw - R[2], dh - R[2], R[2]],
+        [R[3], dh - R[3], R[3]],
+        [R[0], R[0], R[0]]
+      ][e];
+      var t = -Math.PI / 2 + (e * Math.PI) / 2 + s / (c[2] || 1);
+      var cx = Math.cos(t);
+      var cy = Math.sin(t);
+      return [c[0] + c[2] * cx, c[1] + c[2] * cy, cx, cy];
+    }
+
+    function build() {
+      w = el.offsetWidth;
+      h = el.offsetHeight;
+      if (!w || !h) return;
+
+      var cs = getComputedStyle(card);
+      var r = [
+        cs.borderTopLeftRadius,
+        cs.borderTopRightRadius,
+        cs.borderBottomRightRadius,
+        cs.borderBottomLeftRadius
+      ]
+        .map(function (v) {
+          return Math.max(0, (parseFloat(v) || 0) - ins);
+        });
+
+      dw = w - 2 * ins;
+      dh = h - 2 * ins;
+
+      var f = Math.min(
+        1,
+        q(dw, r[0] + r[1]),
+        q(dh, r[1] + r[2]),
+        q(dw, r[2] + r[3]),
+        q(dh, r[3] + r[0])
+      );
+
+      R = r
+        .map(function (x) {
+          return x * f;
+        });
+
+      seg = [
+        dw - R[0] - R[1],
+        (Math.PI * R[1]) / 2,
+        dh - R[1] - R[2],
+        (Math.PI * R[2]) / 2,
+        dw - R[2] - R[3],
+        (Math.PI * R[3]) / 2,
+        dh - R[3] - R[0],
+        (Math.PI * R[0]) / 2
+      ]
+        .map(function (x) {
+          return Math.max(0, x);
+        });
+
+      L = seg
+        .reduce(function (a, b) {
+          return a + b;
+        }, 0);
+
+      N = Math.max(80, Math.min(260, Math.round(L / 5)));
+      sv.setAttribute("viewBox", "0 0 " + (w + 2 * PAD) + " " + (h + 2 * PAD));
+
+      for (var i = 0; i < N; i++) {
+        var p = at((i * L) / N);
+        bx[i] = p[0] + off;
+        by[i] = p[1] + off;
+        nx[i] = p[2];
+        ny[i] = p[3];
+        ss[i] = (i * L) / N;
+      }
+      draw();
+    }
+
+    function draw() {
+      var B = Math.max(90, Math.sqrt(w * h));
+      var g1 = B * 0.26;
+      var g2 = B * 0.34;
+      var A = Math.max(10, Math.min(30, Math.min(w, h) * 0.2));
+      var d = [];
+      var e = at(((sp % L) + L) % L);
+
+      for (var i = 0; i < N; i++) {
+        var a = wd(ss[i] - sp);
+        var b = wd(ss[i] - sq);
+        var k = amp * A * (0.7 * Math.exp((-a * a) / (2 * g1 * g1)) + 0.5 * Math.exp((-b * b) / (2 * g2 * g2)));
+        d.push((i ? "L" : "M") + (bx[i] + nx[i] * k).toFixed(1) + " " + (by[i] + ny[i] * k).toFixed(1));
+      }
+      d = d.join("") + "Z";
+      ln.setAttribute("d", d);
+      fl.setAttribute("d", d);
+      fl.style.opacity = Math.max(0, Math.min(1, amp * 2.2));
+      gr.setAttribute("cx", e[0] + off);
+      gr.setAttribute("cy", e[1] + off);
+      gr.setAttribute("r", B * 0.45);
+    }
+
+    function step(now) {
+      var dt = Math.min((now - last) / 1000 || 0.016, 0.04);
+      last = now;
+      vp += (150 * wd(tS - sp) - 16 * vp) * dt;
+      sp += vp * dt;
+      vq += (55 * wd(sp - sq) - 11 * vq) * dt;
+      sq += vq * dt;
+      va += (170 * (tA - amp) - 13 * va) * dt;
+      amp += va * dt;
+
+      if (!tA && Math.abs(amp) < 0.002 && Math.abs(va) < 0.02) {
+        amp = va = 0;
+        draw();
+        run = 0;
+        return;
+      }
+      draw();
+      requestAnimationFrame(step);
+    }
+
+    function kick() {
+      if (!run) {
+        run = 1;
+        last = performance.now();
+        requestAnimationFrame(step);
+      }
+    }
+
+    new ResizeObserver(build)
+      .observe(el);
+    build();
+
+    if (tsReduce || !tsHover) return;
+
+    el.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse" || !N) return;
+      /* posisi kursor dikembalikan ke koordinat lokal bubble (memperhitungkan rotasi & skala) */
+      var b = el.getBoundingClientRect();
+      var cs = getComputedStyle(el);
+      var a = ((parseFloat(cs.rotate) || 0) * Math.PI) / 180;
+      var sc = parseFloat(cs.scale) || 1;
+      var dx = e.clientX - (b.left + b.width / 2);
+      var dy = e.clientY - (b.top + b.height / 2);
+      var px = (dx * Math.cos(a) + dy * Math.sin(a)) / sc + w / 2;
+      var py = (-dx * Math.sin(a) + dy * Math.cos(a)) / sc + h / 2;
+      var best = 0;
+      var bd = 1e9;
+
+      for (var i = 0; i < N; i++) {
+        var x = px - bx[i] + PAD;
+        var y = py - by[i] + PAD;
+        var m = x * x + y * y;
+        if (m < bd) {
+          bd = m;
+          best = i;
+        }
+      }
+      tS = ss[best];
+      tA = Math.pow(Math.max(0, 1 - Math.sqrt(bd) / Math.max(Math.min(w, h) * 0.5, 30)), 0.8);
+      if (amp < 0.01) {
+        sp = sq = tS;
+        vp = vq = 0;
+      }
+      kick();
     });
-    if(mn>bestMin){bestMin=mn;bestSet=set}
+
+    el.addEventListener("pointerleave", function () {
+      tA = 0;
+      kick();
+    });
   }
-  order.forEach(function(it,oi){
-    var best=bestSet[oi];
-    placed.push(best);
-    var ccx=best.x+it.w/2,ccy=best.y+hh/2,st=it.el.style,
+
+  var items = T
+    .map(function (t, i) {
+      var el = document.createElement("div");
+      var st = el.style;
+      el.className = "ts-item";
+      st.setProperty("--c", C[t.p].c);
+      st.setProperty("--f", C[t.p].f);
+      st.setProperty("--rc", S[t.s].rc);
+      st.setProperty("--ro", S[t.s].ro);
+      st.setProperty("--i", i);
+      st.setProperty("--fd", (4.4 + (i % 7) * 0.4) + "s");
+      st.setProperty("--r", (Math.random() * 10 - 5).toFixed(1) + "deg");
+
+      var h = document.createElement("button");
+      h.type = "button";
+      h.className = "ts-head";
+      h.textContent = t.n;
+      h.setAttribute("aria-expanded", "false");
+      h.setAttribute("aria-controls", "ts-b" + i);
+
+      var b = document.createElement("div");
+      b.className = "ts-body";
+      b.id = "ts-b" + i;
+      b.innerHTML = '<p class="ts-role"></p><p class="ts-text"></p>';
+
+      var card = document.createElement("div");
+      card.className = "ts-card";
+      card.appendChild(h);
+      card.appendChild(b);
+      el.appendChild(card);
+      stage.appendChild(el);
+      tsEdge(el, card, i);
+
+      var ln = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      ln.setAttribute("class", "ts-line");
+      ln.setAttribute("pathLength", "1");
+      svg.appendChild(ln);
+
+      var pl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      pl.setAttribute("class", "ts-pulse");
+      pl.setAttribute("pathLength", "1");
+      pl.style.setProperty("--pd", (3.4 + Math.random() * 2).toFixed(2) + "s");
+      pl.style.setProperty("--pl", (Math.random() * 2).toFixed(2) + "s");
+      svg.appendChild(pl);
+
+      h.addEventListener("click", function () {
+        setOpen(cur === i ? -1 : i);
+      });
+
+      return {
+        el: el,
+        head: h,
+        body: b,
+        line: ln,
+        pulse: pl,
+        ang: 0,
+        role: b.firstChild,
+        text: b.lastChild,
+        k: 0.88 + Math.random() * 0.2,
+        w: 0,
+        cw: 0,
+        ch: 0
+      };
+    });
+
+  function lang() {
+    return document.documentElement.lang === "en" ? "en" : "id";
+  }
+
+  function fill() {
+    var l = lang();
+    items
+      .forEach(function (it, i) {
+        it.role.textContent = T[i].r[l];
+        it.text.textContent = T[i][l];
+      });
+
+    core.innerHTML = "";
+    core.setAttribute(
+      "aria-label",
+      HEAD[l].join(" ")
+    );
+
+    var n = 0;
+    HEAD[l]
+      .forEach(function (txt) {
+        var ln = document.createElement("span");
+        ln.className = "ts-ln";
+        ln.setAttribute("aria-hidden", "true");
+        for (var k = 0; k < txt.length; k++) {
+          var c = document.createElement("span");
+          c.className = "ts-ch";
+          c.textContent = txt.charAt(k);
+          c.style.setProperty("--c", n++);
+          ln.appendChild(c);
+        }
+        core.appendChild(ln);
+      });
+
+    stage.setAttribute("aria-label", l === "en" ? "Client testimonials" : "Testimoni klien");
+  }
+
+  function setOpen(i) {
+    cur = i;
+    items
+      .forEach(function (it, k) {
+        it.el.classList.toggle("open", k === i);
+        it.line.classList.toggle("on", k === i);
+        it.head.setAttribute("aria-expanded", k === i);
+      });
+  }
+
+  /* Tata letak: chip disebar acak mengelilingi teks tengah dan sengaja dijauhkan satu sama lain, tiap chip disambung garis ke pusat.
+     Tinggi area mengikuti tinggi layar supaya semuanya muat tanpa scroll. */
+  function layout() {
+    W = stage.clientWidth;
+    if (!W) return;
+    VH = window.innerHeight;
+
+    var cs = getComputedStyle(root);
+    var avail = VH - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var mob = W < 520;
+    var hh = mob ? 44 : 52;
+    var base = Math.min(360, W);
+    var maxCh = 0;
+
+    stage.classList.add("nt");
+    stage.style.setProperty("--hh", hh + "px");
+
+    items
+      .forEach(function (it) {
+        it.cw = Math.min(W, Math.round(base * it.k));
+        it.el.style.setProperty("--cw", it.cw + "px");
+        it.el.style.width = "max-content";
+        it.w = it.el.offsetWidth;
+        it.el.style.width = "";
+        it.ch = hh + it.body.offsetHeight;
+        maxCh = Math.max(maxCh, it.ch);
+      });
+
+    var H = Math.round(
+      Math.max(
+        mob
+          ? Math.min(Math.max(avail * 1.3, 820), 1040)
+          : Math.min(Math.max(avail * 1.02, 700), 840),
+        maxCh + 8,
+        360
+      )
+    );
+    stage.style.height = H + "px";
+
+    var cx = W / 2;
+    var cy = H / 2;
+    var R = rng(SEED);
+    var placed = [];
+    var tw = core.offsetWidth + 16;
+    var th = core.offsetHeight + 16;
+    var hole = { x: cx - tw / 2, y: cy - th / 2, w: tw, h: th };
+    var order = items
+      .slice()
+      .sort(function (a, b) {
+        return b.w - a.w;
+      });
+
+    var bestSet = null;
+    var bestMin = -1e9;
+
+    for (var round = 0; round < 14; round++) {
+      var set = [];
+      var pl = [];
+      var mn = 1e9;
+
+      order
+        .forEach(function (it) {
+          /* dari 420 titik acak, pilih yang paling jauh dari teks tengah dan chip yang sudah ditaruh */
+          var best = null;
+          var bs = -1e9;
+          var Ax = W / 2 - it.w / 2 - 2;
+          var Ay = H / 2 - hh / 2 - 2;
+
+          for (var t = 0; t < 420; t++) {
+            var x, y;
+            if (mob) {
+              x = R() * (W - it.w);
+              y = R() * (H - hh);
+            } else {
+              var a = R() * 6.2832;
+              var r = Math.sqrt(R());
+              x = cx + Math.cos(a) * r * Ax - it.w / 2;
+              y = cy + Math.sin(a) * r * Ay - hh / 2;
+            }
+            x = Math.max(0, Math.min(W - it.w, x));
+            y = Math.max(0, Math.min(H - hh, y));
+            var rc = { x: x, y: y, w: it.w, h: hh };
+            var sc = sep(rc, hole);
+            for (var k = 0; k < pl.length; k++) {
+              sc = Math.min(sc, sep(rc, pl[k]));
+            }
+            if (sc > bs) {
+              bs = sc;
+              best = rc;
+            }
+          }
+          pl.push(best);
+          set.push(best);
+          mn = Math.min(mn, bs);
+        });
+
+      if (mn > bestMin) {
+        bestMin = mn;
+        bestSet = set;
+      }
+    }
+
+    order
+      .forEach(function (it, oi) {
+        var best = bestSet[oi];
+        placed.push(best);
+        var ccx = best.x + it.w / 2;
+        var ccy = best.y + hh / 2;
+        var st = it.el.style;
         /* kartu terbuka tumbuh menjauhi teks tengah, lalu dijaga tetap di dalam area */
-        ox=Math.max(0,Math.min(W-it.cw,ccx<cx?best.x+it.w-it.cw:best.x)),
-        oy=Math.max(0,Math.min(H-it.ch,ccy<cy?best.y+hh-it.ch:best.y));
-    st.setProperty("--w",it.w+"px");st.setProperty("--x",best.x+"px");st.setProperty("--y",best.y+"px");
-    st.setProperty("--ox",ox+"px");st.setProperty("--oy",oy+"px");st.setProperty("--ch",it.ch+"px");
-    var d="M"+cx+" "+cy+"L"+ccx+" "+ccy;
-    it.line.setAttribute("d",d);it.pulse.setAttribute("d",d);
-    it.ang=(Math.atan2(ccx-cx,cy-ccy)+6.2832)%6.2832;
-  });
-  /* urutan muncul: berputar searah jarum jam dari atas teks, satu per satu */
-  items.slice().sort(function(a,b){return a.ang-b.ang}).forEach(function(it,n){
-    it.el.style.setProperty("--n",n);it.line.style.setProperty("--n",n);it.pulse.style.setProperty("--n",n);
-  });
-  void stage.offsetWidth;stage.classList.remove("nt");
-}
+        var ox = Math.max(0, Math.min(W - it.cw, ccx < cx ? best.x + it.w - it.cw : best.x));
+        var oy = Math.max(0, Math.min(H - it.ch, ccy < cy ? best.y + hh - it.ch : best.y));
 
-/* Klik di luar atau Esc menutup kartu */
-document.addEventListener("pointerdown",function(e){if(cur>-1&&!e.target.closest(".ts-item"))setOpen(-1)});
-root.addEventListener("keydown",function(e){if(e.key==="Escape"&&cur>-1){var h=items[cur].head;setOpen(-1);h.focus()}});
-new MutationObserver(function(){fill();layout()}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+        st.setProperty("--w", it.w + "px");
+        st.setProperty("--x", best.x + "px");
+        st.setProperty("--y", best.y + "px");
+        st.setProperty("--ox", ox + "px");
+        st.setProperty("--oy", oy + "px");
+        st.setProperty("--ch", it.ch + "px");
 
-fill();layout();
-/* Animasi masuk baru dimulai setelah font siap dan section terlihat: teks dulu, lalu bubble satu per satu */
-var seen=false,ready=false;
-function go(){if(seen&&ready)stage.classList.add("in")}
-function fontsDone(){if(ready)return;ready=true;layout();go()}
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fontsDone);else ready=true;
-setTimeout(fontsDone,2500);
-new ResizeObserver(function(){if(stage.clientWidth!==W)layout()}).observe(stage);
-window.addEventListener("resize",function(){if(window.innerHeight!==VH)layout()});
-if("IntersectionObserver" in window){
-  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){seen=true;go();ob.disconnect()}},{threshold:.2}).observe(stage);
-}else{seen=true;go()}
+        var d = "M" + cx + " " + cy + "L" + ccx + " " + ccy;
+        it.line.setAttribute("d", d);
+        it.pulse.setAttribute("d", d);
+        it.ang = (Math.atan2(ccx - cx, cy - ccy) + 6.2832) % 6.2832;
+      });
+
+    /* urutan muncul: berputar searah jarum jam dari atas teks, satu per satu */
+    items
+      .slice()
+      .sort(function (a, b) {
+        return a.ang - b.ang;
+      })
+      .forEach(function (it, n) {
+        it.el.style.setProperty("--n", n);
+        it.line.style.setProperty("--n", n);
+        it.pulse.style.setProperty("--n", n);
+      });
+
+    void stage.offsetWidth;
+    stage.classList.remove("nt");
+  }
+
+  /* Klik di luar atau Esc menutup kartu */
+  document.addEventListener("pointerdown", function (e) {
+    if (cur > -1 && !e.target.closest(".ts-item")) setOpen(-1);
+  });
+
+  root.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && cur > -1) {
+      var h = items[cur].head;
+      setOpen(-1);
+      h.focus();
+    }
+  });
+
+  new MutationObserver(function () {
+    fill();
+    layout();
+  })
+    .observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
+
+  fill();
+  layout();
+
+  /* Animasi masuk baru dimulai setelah font siap dan section terlihat: teks dulu, lalu bubble satu per satu */
+  var seen = false,
+    ready = false;
+
+  function go() {
+    if (seen && ready) stage.classList.add("in");
+  }
+
+  function fontsDone() {
+    if (ready) return;
+    ready = true;
+    layout();
+    go();
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready
+      .then(fontsDone);
+  } else {
+    ready = true;
+  }
+  setTimeout(fontsDone, 2500);
+
+  new ResizeObserver(function () {
+    if (stage.clientWidth !== W) layout();
+  })
+    .observe(stage);
+
+  window.addEventListener("resize", function () {
+    if (window.innerHeight !== VH) layout();
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (es, ob) {
+        if (es[0].isIntersecting) {
+          seen = true;
+          go();
+          ob.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    )
+      .observe(stage);
+  } else {
+    seen = true;
+    go();
+  }
 })();
 
 
 // ===== FOOTER =====
 
-(function(){
-var root=document.getElementById("kontak"),stage=root.querySelector(".ft-stage"),big=root.querySelector(".ft-big"),inn=big.firstElementChild;
-var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
-var T={id:["Ayo","ngobrol"],en:["Say","hello"]};   // ganti teks headline di sini
-var chs=[],raf=0,last=0,t0=-1,mx=-1e4,my=-1e4,W=0;
-function lang(){return document.documentElement.lang==="en"?"en":"id"}
+(function () {
+  var root = document.getElementById("kontak"),
+    stage = root.querySelector(".ft-stage"),
+    big = root.querySelector(".ft-big"),
+    inn = big.firstElementChild;
+  var reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var T = { id: ["Ayo", "ngobrol"], en: ["Say", "hello"] }; // ganti teks headline di sini
+  var chs = [],
+    raf = 0,
+    last = 0,
+    t0 = -1,
+    mx = -1e4,
+    my = -1e4,
+    W = 0;
 
-/* Headline: tiap huruf punya ketebalan sendiri (variable font Archivo) */
-function build(){
-  var l=lang();inn.textContent="";chs=[];big.setAttribute("aria-label",T[l].join(" "));
-  T[l].forEach(function(wd){
-    var w=document.createElement("span");
-    wd.toUpperCase().split("").forEach(function(c){
-      var s=document.createElement("span");s.className="ft-ch";s.textContent=c;
-      s.w=(t0<0&&!reduce)?250:900;s.p=0;s.style.setProperty("--w",s.w);w.appendChild(s);chs.push(s);
-    });inn.appendChild(w);
-  });
-  fit();kick();
-}
-/* Skala font supaya headline pas selebar section (diukur pada ketebalan maksimum) */
-function fit(){
-  big.classList.add("ft-measure");big.style.fontSize="100px";
-  var m=inn.getBoundingClientRect().width||1;
-  big.style.fontSize=(100*big.clientWidth/m).toFixed(2)+"px";big.classList.remove("ft-measure");
-}
-
-/* Stiker: bisa diseret dan dilempar, jatuh ke garis bawah headline */
-var S=[].map.call(stage.querySelectorAll(".ft-st"),function(el,i){return{el:el,x:0,y:0,vx:0,vy:0,r:i?14:-8,t:i?14:-8,av:0,w:0,h:0,free:false,drag:null}});
-function place(s){s.el.style.transform="translate3d("+s.x.toFixed(1)+"px,"+s.y.toFixed(1)+"px,0) rotate("+s.r.toFixed(1)+"deg)"}
-function home(){
-  var sw=stage.clientWidth,sh=stage.clientHeight;
-  S.forEach(function(s,i){
-    s.w=s.el.offsetWidth;s.h=s.el.offsetHeight;
-    if(!s.free){s.x=i?sw*.77:sw*.035;s.y=i?Math.min(sh*.6,sh-s.h-4):sh*.08}
-    else{s.x=Math.max(0,Math.min(s.x,sw-s.w));s.y=Math.max(0,Math.min(s.y,sh-s.h))}
-    place(s);
-  });
-}
-function phys(s,dt){
-  if(s.drag||!s.free)return false;
-  var mxX=stage.clientWidth-s.w,mxY=stage.clientHeight-s.h;
-  s.vy+=2400*dt;s.x+=s.vx*dt;s.y+=s.vy*dt;s.r+=s.av*dt;s.av*=Math.pow(.5,dt*2);
-  if(s.x<0){s.x=0;s.vx*=-.5}else if(s.x>mxX){s.x=mxX;s.vx*=-.5}
-  if(s.y<0){s.y=0;s.vy*=-.4}
-  var floor=s.y>=mxY,tr=Math.round(s.r/360)*360+s.t;
-  if(floor){s.y=mxY;if(s.vy>140)s.vy*=-.42;else s.vy=0;s.vx*=.86;if(Math.abs(s.vx)<4)s.vx=0;s.av=0;s.r+=(tr-s.r)*(1-Math.exp(-dt*8))}
-  return !(floor&&s.vy===0&&s.vx===0&&Math.abs(tr-s.r)<.3);
-}
-S.forEach(function(s){
-  var el=s.el;
-  el.addEventListener("pointerdown",function(e){
-    if(e.button>0)return;e.preventDefault();el.setPointerCapture(e.pointerId);
-    var r=stage.getBoundingClientRect();
-    s.drag={ox:e.clientX-r.left-s.x,oy:e.clientY-r.top-s.y,lx:e.clientX,ly:e.clientY,lt:performance.now(),vx:0,vy:0};
-    s.vx=s.vy=s.av=0;el.classList.add("drag");
-  });
-  el.addEventListener("pointermove",function(e){
-    var d=s.drag;if(!d)return;
-    var r=stage.getBoundingClientRect(),n=performance.now(),dt=(n-d.lt)/1000;
-    s.x=Math.max(0,Math.min(stage.clientWidth-s.w,e.clientX-r.left-d.ox));
-    s.y=Math.max(0,Math.min(stage.clientHeight-s.h,e.clientY-r.top-d.oy));
-    if(dt>.001){d.vx=.6*d.vx+.4*(e.clientX-d.lx)/dt;d.vy=.6*d.vy+.4*(e.clientY-d.ly)/dt;d.lx=e.clientX;d.ly=e.clientY;d.lt=n}
-    place(s);
-  });
-  function up(){
-    var d=s.drag;if(!d)return;s.drag=null;
-    if(performance.now()-d.lt>80)d.vx=d.vy=0;
-    el.classList.remove("drag");el.classList.add("free");s.free=true;
-    s.vx=Math.max(-2200,Math.min(2200,d.vx));s.vy=Math.max(-2200,Math.min(2200,d.vy));s.av=s.vx*.05;kick();
+  function lang() {
+    return document.documentElement.lang === "en" ? "en" : "id";
   }
-  el.addEventListener("pointerup",up);el.addEventListener("pointercancel",up);
-});
 
-/* Loop animasi: ketebalan huruf mengikuti kursor + fisika stiker */
-function tick(now){
-  var dt=Math.min((now-last)/1000||.016,.05),busy=false;last=now;
-  var R=(parseFloat(big.style.fontSize)||100)*.9,k=reduce?1:1-Math.exp(-dt*10);
-  var rects=chs.map(function(c){return c.getBoundingClientRect()});
-  chs.forEach(function(c,i){
-    var r=rects[i],d=Math.hypot(r.left+r.width/2-mx,(r.top+r.height/2-my)*.5),p=Math.max(0,1-d/R);p*=p;
-    var tw=Math.max(120,((reduce||(t0>=0&&now-t0>=i*55))?900:250)-650*p);
-    c.w+=(tw-c.w)*k;c.p+=(p-c.p)*k;
-    if(Math.abs(tw-c.w)>.5||Math.abs(p-c.p)>.004)busy=true;
-    c.style.setProperty("--w",c.w.toFixed(0));c.style.setProperty("--p",c.p.toFixed(3));
+  /* Headline: tiap huruf punya ketebalan sendiri (variable font Archivo) */
+  function build() {
+    var l = lang();
+    inn.textContent = "";
+    chs = [];
+    big.setAttribute(
+      "aria-label",
+      T[l].join(" ")
+    );
+
+    T[l]
+      .forEach(function (wd) {
+        var w = document.createElement("span");
+        wd
+          .toUpperCase()
+          .split("")
+          .forEach(function (c) {
+            var s = document.createElement("span");
+            s.className = "ft-ch";
+            s.textContent = c;
+            s.w = t0 < 0 && !reduce ? 250 : 900;
+            s.p = 0;
+            s.style.setProperty("--w", s.w);
+            w.appendChild(s);
+            chs.push(s);
+          });
+        inn.appendChild(w);
+      });
+
+    fit();
+    kick();
+  }
+
+  /* Skala font supaya headline pas selebar section (diukur pada ketebalan maksimum) */
+  function fit() {
+    big.classList.add("ft-measure");
+    big.style.fontSize = "100px";
+    var m = inn.getBoundingClientRect().width || 1;
+    big.style.fontSize = ((100 * big.clientWidth) / m).toFixed(2) + "px";
+    big.classList.remove("ft-measure");
+  }
+
+  /* Stiker: bisa diseret dan dilempar, jatuh ke garis bawah headline */
+  var S = []
+    .map
+    .call(stage.querySelectorAll(".ft-st"), function (el, i) {
+      return {
+        el: el,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        r: i ? 14 : -8,
+        t: i ? 14 : -8,
+        av: 0,
+        w: 0,
+        h: 0,
+        free: false,
+        drag: null
+      };
+    });
+
+  function place(s) {
+    s.el.style.transform = "translate3d(" + s.x.toFixed(1) + "px," + s.y.toFixed(1) + "px,0) rotate(" + s.r.toFixed(1) + "deg)";
+  }
+
+  function home() {
+    var sw = stage.clientWidth;
+    var sh = stage.clientHeight;
+    S
+      .forEach(function (s, i) {
+        s.w = s.el.offsetWidth;
+        s.h = s.el.offsetHeight;
+        if (!s.free) {
+          s.x = i ? sw * 0.77 : sw * 0.035;
+          s.y = i ? Math.min(sh * 0.6, sh - s.h - 4) : sh * 0.08;
+        } else {
+          s.x = Math.max(0, Math.min(s.x, sw - s.w));
+          s.y = Math.max(0, Math.min(s.y, sh - s.h));
+        }
+        place(s);
+      });
+  }
+
+  function phys(s, dt) {
+    if (s.drag || !s.free) return false;
+    var mxX = stage.clientWidth - s.w;
+    var mxY = stage.clientHeight - s.h;
+    s.vy += 2400 * dt;
+    s.x += s.vx * dt;
+    s.y += s.vy * dt;
+    s.r += s.av * dt;
+    s.av *= Math.pow(0.5, dt * 2);
+
+    if (s.x < 0) {
+      s.x = 0;
+      s.vx *= -0.5;
+    } else if (s.x > mxX) {
+      s.x = mxX;
+      s.vx *= -0.5;
+    }
+
+    if (s.y < 0) {
+      s.y = 0;
+      s.vy *= -0.4;
+    }
+
+    var floor = s.y >= mxY;
+    var tr = Math.round(s.r / 360) * 360 + s.t;
+
+    if (floor) {
+      s.y = mxY;
+      if (s.vy > 140) {
+        s.vy *= -0.42;
+      } else {
+        s.vy = 0;
+      }
+      s.vx *= 0.86;
+      if (Math.abs(s.vx) < 4) s.vx = 0;
+      s.av = 0;
+      s.r += (tr - s.r) * (1 - Math.exp(-dt * 8));
+    }
+    return !(floor && s.vy === 0 && s.vx === 0 && Math.abs(tr - s.r) < 0.3);
+  }
+
+  S
+    .forEach(function (s) {
+      var el = s.el;
+      el.addEventListener("pointerdown", function (e) {
+        if (e.button > 0) return;
+        e.preventDefault();
+        el.setPointerCapture(e.pointerId);
+        var r = stage.getBoundingClientRect();
+        s.drag = {
+          ox: e.clientX - r.left - s.x,
+          oy: e.clientY - r.top - s.y,
+          lx: e.clientX,
+          ly: e.clientY,
+          lt: performance.now(),
+          vx: 0,
+          vy: 0
+        };
+        s.vx = s.vy = s.av = 0;
+        el.classList.add("drag");
+      });
+
+      el.addEventListener("pointermove", function (e) {
+        var d = s.drag;
+        if (!d) return;
+        var r = stage.getBoundingClientRect();
+        var n = performance.now();
+        var dt = (n - d.lt) / 1000;
+        s.x = Math.max(0, Math.min(stage.clientWidth - s.w, e.clientX - r.left - d.ox));
+        s.y = Math.max(0, Math.min(stage.clientHeight - s.h, e.clientY - r.top - d.oy));
+        if (dt > 0.001) {
+          d.vx = 0.6 * d.vx + 0.4 * (e.clientX - d.lx) / dt;
+          d.vy = 0.6 * d.vy + 0.4 * (e.clientY - d.ly) / dt;
+          d.lx = e.clientX;
+          d.ly = e.clientY;
+          d.lt = n;
+        }
+        place(s);
+      });
+
+      function up() {
+        var d = s.drag;
+        if (!d) return;
+        s.drag = null;
+        if (performance.now() - d.lt > 80) d.vx = d.vy = 0;
+        el.classList.remove("drag");
+        el.classList.add("free");
+        s.free = true;
+        s.vx = Math.max(-2200, Math.min(2200, d.vx));
+        s.vy = Math.max(-2200, Math.min(2200, d.vy));
+        s.av = s.vx * 0.05;
+        kick();
+      }
+
+      el.addEventListener("pointerup", up);
+      el.addEventListener("pointercancel", up);
+    });
+
+  /* Loop animasi: ketebalan huruf mengikuti kursor + fisika stiker */
+  function tick(now) {
+    var dt = Math.min((now - last) / 1000 || 0.016, 0.05);
+    var busy = false;
+    last = now;
+
+    var R = (parseFloat(big.style.fontSize) || 100) * 0.9;
+    var k = reduce ? 1 : 1 - Math.exp(-dt * 10);
+    var rects = chs
+      .map(function (c) {
+        return c.getBoundingClientRect();
+      });
+
+    chs
+      .forEach(function (c, i) {
+        var r = rects[i];
+        var d = Math.hypot(r.left + r.width / 2 - mx, (r.top + r.height / 2 - my) * 0.5);
+        var p = Math.max(0, 1 - d / R);
+        p *= p;
+        var tw = Math.max(120, (reduce || (t0 >= 0 && now - t0 >= i * 55) ? 900 : 250) - 650 * p);
+        c.w += (tw - c.w) * k;
+        c.p += (p - c.p) * k;
+        if (Math.abs(tw - c.w) > 0.5 || Math.abs(p - c.p) > 0.004) busy = true;
+        c.style.setProperty("--w", c.w.toFixed(0));
+        c.style.setProperty("--p", c.p.toFixed(3));
+      });
+
+    if (t0 >= 0 && now - t0 < chs.length * 55 + 80) busy = true;
+
+    S
+      .forEach(function (s) {
+        if (phys(s, dt)) busy = true;
+        place(s);
+      });
+
+    raf = busy ? requestAnimationFrame(tick) : 0;
+  }
+
+  function kick() {
+    if (!raf) {
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    }
+  }
+
+  stage.addEventListener("pointermove", function (e) {
+    if (e.pointerType === "touch") return;
+    mx = e.clientX;
+    my = e.clientY;
+    kick();
   });
-  if(t0>=0&&now-t0<chs.length*55+80)busy=true;
-  S.forEach(function(s){if(phys(s,dt))busy=true;place(s)});
-  raf=busy?requestAnimationFrame(tick):0;
-}
-function kick(){if(!raf){last=performance.now();raf=requestAnimationFrame(tick)}}
-stage.addEventListener("pointermove",function(e){if(e.pointerType==="touch")return;mx=e.clientX;my=e.clientY;kick()});
-stage.addEventListener("pointerleave",function(){mx=my=-1e4;kick()});
 
-/* Jam lokal, tautan, bahasa */
-var tEl=document.getElementById("ftTime");
-function clock(){try{tEl.textContent=new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Jakarta"}).format(new Date())}catch(e){}}
-clock();setInterval(clock,20000);
-root.querySelector(".ft-top").addEventListener("click",function(e){e.preventDefault();scrollTo({top:0,behavior:reduce?"auto":"smooth"})});
-function aria(){
-  var en=lang()==="en";
-  [].forEach.call(root.querySelectorAll(".ft-ai a"),function(a){a.setAttribute("aria-label",(en?"Ask ":"Tanya ")+a.dataset.n+(en?" about Webora":" soal Webora"))});
-}
-new MutationObserver(function(){build();home();aria()}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+  stage.addEventListener("pointerleave", function () {
+    mx = my = -1e4;
+    kick();
+  });
 
-build();aria();home();
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fit();home()});
-new ResizeObserver(function(){if(stage.clientWidth!==W){W=stage.clientWidth;fit()}home()}).observe(stage);
-if("IntersectionObserver" in window){
-  new IntersectionObserver(function(es,ob){if(es[0].isIntersecting){t0=performance.now();kick();ob.disconnect()}},{threshold:.25}).observe(stage);
-}else{t0=0;kick()}
+  /* Jam lokal, tautan, bahasa */
+  var tEl = document.getElementById("ftTime");
+
+  function clock() {
+    try {
+      tEl.textContent = new Intl.DateTimeFormat("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Jakarta"
+      })
+        .format(new Date());
+    } catch (e) {}
+  }
+  clock();
+  setInterval(clock, 20000);
+
+  root
+    .querySelector(".ft-top")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    });
+
+  function aria() {
+    var en = lang() === "en";
+    []
+      .forEach
+      .call(root.querySelectorAll(".ft-ai a"), function (a) {
+        a.setAttribute(
+          "aria-label",
+          (en ? "Ask " : "Tanya ") + a.dataset.n + (en ? " about Webora" : " soal Webora")
+        );
+      });
+  }
+
+  new MutationObserver(function () {
+    build();
+    home();
+    aria();
+  })
+    .observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["lang"]
+    });
+
+  build();
+  aria();
+  home();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready
+      .then(function () {
+        fit();
+        home();
+      });
+  }
+
+  new ResizeObserver(function () {
+    if (stage.clientWidth !== W) {
+      W = stage.clientWidth;
+      fit();
+    }
+    home();
+  })
+    .observe(stage);
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (es, ob) {
+        if (es[0].isIntersecting) {
+          t0 = performance.now();
+          kick();
+          ob.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    )
+      .observe(stage);
+  } else {
+    t0 = 0;
+    kick();
+  }
 })();
 
 
-(function(){
+(function () {
   // Reveal yang bekerja hanya jika JS aktif, termasuk fallback browser lama.
-  var root=document.documentElement;
-  var parts=[
-    ['.pf-stage',0],['.ab-lead',0],['.ab-bottom > div',130],['.ab-team',210],
-    ['.pr-head',0],['.ts-stage',0],['.ft-stage',0],['.ft-bar',80]
+  var root = document.documentElement;
+  var parts = [
+    [".pf-stage", 0],
+    [".ab-lead", 0],
+    [".ab-bottom > div", 130],
+    [".ab-team", 210],
+    [".pr-head", 0],
+    [".ts-stage", 0],
+    [".ft-stage", 0],
+    [".ft-bar", 80]
   ];
-  parts.forEach(function(pair){
-    document.querySelectorAll(pair[0]).forEach(function(el){
-      el.classList.add('scroll-reveal');
-      el.style.setProperty('--reveal-delay',pair[1]+'ms');
+
+  parts
+    .forEach(function (pair) {
+      document
+        .querySelectorAll(pair[0])
+        .forEach(function (el) {
+          el.classList.add("scroll-reveal");
+          el.style.setProperty("--reveal-delay", pair[1] + "ms");
+        });
     });
-  });
-  document.querySelectorAll('.pr-item').forEach(function(el,i){
-    el.classList.add('scroll-reveal');
-    el.style.setProperty('--reveal-delay',Math.min(i*110,330)+'ms');
-  });
-  document.querySelectorAll('.ft-col').forEach(function(el,i){
-    el.classList.add('scroll-reveal');
-    el.style.setProperty('--reveal-delay',Math.min(i*85,320)+'ms');
-  });
-  document.querySelectorAll('.ab-list li').forEach(function(el,i){
-    el.classList.add('scroll-reveal');
-    el.style.setProperty('--reveal-delay',Math.min(i*90,270)+'ms');
-  });
-  var reveals=[].slice.call(document.querySelectorAll('.scroll-reveal'));
-  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){
-    reveals.forEach(function(el){el.classList.add('is-visible')});
-  }else{
-    var observer=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}
+
+  document
+    .querySelectorAll(".pr-item")
+    .forEach(function (el, i) {
+      el.classList.add("scroll-reveal");
+      el.style.setProperty("--reveal-delay", Math.min(i * 110, 330) + "ms");
+    });
+
+  document
+    .querySelectorAll(".ft-col")
+    .forEach(function (el, i) {
+      el.classList.add("scroll-reveal");
+      el.style.setProperty("--reveal-delay", Math.min(i * 85, 320) + "ms");
+    });
+
+  document
+    .querySelectorAll(".ab-list li")
+    .forEach(function (el, i) {
+      el.classList.add("scroll-reveal");
+      el.style.setProperty("--reveal-delay", Math.min(i * 90, 270) + "ms");
+    });
+
+  var reveals = []
+    .slice
+    .call(document.querySelectorAll(".scroll-reveal"));
+
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    reveals
+      .forEach(function (el) {
+        el.classList.add("is-visible");
       });
-    },{rootMargin:'0px 0px -7% 0px',threshold:.06});
-    reveals.forEach(function(el){observer.observe(el)});
+  } else {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries
+          .forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+      },
+      { rootMargin: "0px 0px -7% 0px", threshold: 0.06 }
+    );
+
+    reveals
+      .forEach(function (el) {
+        observer.observe(el);
+      });
   }
 
   // Menandai item navigasi yang sedang dibaca.
-  var dock=[].slice.call(document.querySelectorAll('.wdock-link'));
-  var sections=dock.map(function(a){return document.getElementById(a.dataset.target)});
-  function active(){
-    var point=window.scrollY+window.innerHeight*.37;
-    var current=-1;
-    sections.forEach(function(el,i){if(el&&el.offsetTop<=point)current=i});
-    dock.forEach(function(a,i){
-      var on=i===current;
-      a.classList.toggle('is-active',on);
-      if(on)a.setAttribute('aria-current','location');
-      else a.removeAttribute('aria-current');
+  var dock = []
+    .slice
+    .call(document.querySelectorAll(".wdock-link"));
+
+  var sections = dock
+    .map(function (a) {
+      return document.getElementById(a.dataset.target);
     });
+
+  function active() {
+    var point = window.scrollY + window.innerHeight * 0.37;
+    var current = -1;
+
+    sections
+      .forEach(function (el, i) {
+        if (el && el.offsetTop <= point) current = i;
+      });
+
+    dock
+      .forEach(function (a, i) {
+        var on = i === current;
+        a.classList.toggle("is-active", on);
+        if (on) {
+          a.setAttribute("aria-current", "location");
+        } else {
+          a.removeAttribute("aria-current");
+        }
+      });
   }
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(!ticking){requestAnimationFrame(function(){active();ticking=false});ticking=true}
-  },{passive:true});
-  window.addEventListener('resize',active);
-  window.addEventListener('hashchange',active);
+
+  var ticking = false;
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          active();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("resize", active);
+  window.addEventListener("hashchange", active);
   active();
 })();
 
 
-(function(){
+(function () {
   /* Navbar: muncul mulai section portofolio, hilang lagi di hero dan di bar footer paling bawah */
-  var dock=document.querySelector('.wdock'),start=document.getElementById('karya'),bar=document.querySelector('.ft-bar');
-  if(!dock||!start)return;
-  var tick=false;
-  function update(){
-    tick=false;
-    var vh=window.innerHeight,
-        pastStart=start.getBoundingClientRect().top<vh*.55,
-        atEnd=bar&&bar.getBoundingClientRect().top<vh&&bar.getBoundingClientRect().bottom>0;
-    dock.classList.toggle('dock-on',pastStart&&!atEnd);
+  var dock = document.querySelector(".wdock"),
+    start = document.getElementById("karya"),
+    bar = document.querySelector(".ft-bar");
+
+  if (!dock || !start) return;
+
+  var tick = false;
+
+  function update() {
+    tick = false;
+    var vh = window.innerHeight;
+    var pastStart = start.getBoundingClientRect().top < vh * 0.55;
+    var atEnd = bar && bar.getBoundingClientRect().top < vh && bar.getBoundingClientRect().bottom > 0;
+    dock.classList.toggle("dock-on", pastStart && !atEnd);
   }
-  function req(){if(!tick){tick=true;requestAnimationFrame(update)}}
-  addEventListener('scroll',req,{passive:true});
-  addEventListener('resize',req);
-  addEventListener('hashchange',req);
+
+  function req() {
+    if (!tick) {
+      tick = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  addEventListener("scroll", req, { passive: true });
+  addEventListener("resize", req);
+  addEventListener("hashchange", req);
   update();
 })();
 

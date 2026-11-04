@@ -119,7 +119,7 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 
 .pf-meta{position:absolute;left:50%;top:var(--mt,300px);transform:translateX(-50%);z-index:30;width:min(94%,440px);display:flex;flex-direction:column;align-items:center;text-align:center}
 .pf-row{display:flex;align-items:center;gap:clamp(10px,2vw,20px)}
-.pf-row h3{margin:0;min-width:clamp(150px,22vw,300px);font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-stretch:66%;font-variation-settings:"wdth" 66;text-transform:uppercase;font-size:clamp(30px,4vw,52px);line-height:.9}
+.pf-row h3{margin:0;min-width:clamp(150px,22vw,300px);font-family:Archivo,Impact,"Arial Narrow",sans-serif;font-weight:900;font-stretch:66%;font-variation-settings:"wdth" 66;text-transform:uppercase;font-size:clamp(30px,4vw,52px);line-height:.9;display:flex;align-items:center;justify-content:center}
 .pf-arrow{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);transition:background .2s,border-color .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
 .pf-arrow:hover{background:rgba(124,92,253,.16);border-color:var(--purple);transform:scale(1.1)}.pf-arrow:active{transform:scale(.94)}
 .pf-meta p{display:flex;align-items:center;justify-content:center;min-height:3em;margin:14px 0 20px;max-width:340px;color:var(--muted);font-size:clamp(14px,1.4vw,16px);line-height:1.5}
@@ -1418,7 +1418,36 @@ document
     ox = 0,
     oy = 0;
 
+  /* Tinggi judul & deskripsi dikunci ke proyek terpanjang (ID & EN),
+     supaya tinggi section tidak naik-turun setiap kali proyek berganti */
+  function lockMeta() {
+    var keepT = titleEl.textContent,
+      keepD = descEl.textContent,
+      maxT = 0,
+      maxD = 0;
+
+    titleEl.style.minHeight = "";
+    descEl.style.minHeight = "";
+
+    ITEMS
+      .forEach(function (it) {
+        ["id", "en"]
+          .forEach(function (l) {
+            titleEl.textContent = it.n;
+            descEl.textContent = it[l];
+            maxT = Math.max(maxT, titleEl.offsetHeight);
+            maxD = Math.max(maxD, descEl.offsetHeight);
+          });
+      });
+
+    titleEl.textContent = keepT;
+    descEl.textContent = keepD;
+    titleEl.style.minHeight = maxT + "px";
+    descEl.style.minHeight = maxD + "px";
+  }
+
   function layout() {
+    lockMeta();
     W = stage.clientWidth;
     w = W < 720 ? W * 0.64 : Math.max(240, Math.min(440, W * 0.24));
     h = w * 0.56;

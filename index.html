@@ -3498,6 +3498,39 @@ document
     movePillTo(target, animate);
   }
 
+  var isClickScrolling = false;
+  var clickScrollTimer = null;
+
+  function unlockClickScroll() {
+    if (isClickScrolling) {
+      isClickScrolling = false;
+      clearTimeout(clickScrollTimer);
+    }
+  }
+
+  window
+    .addEventListener("wheel", unlockClickScroll, { passive: true });
+
+  window
+    .addEventListener("touchmove", unlockClickScroll, { passive: true });
+
+  function setActiveLink(targetLink) {
+    dock
+      .forEach(function (a) {
+        var on = a === targetLink;
+        a
+          .classList
+          .toggle("is-active", on);
+        if (on) {
+          a
+            .setAttribute("aria-current", "location");
+        } else {
+          a
+            .removeAttribute("aria-current");
+        }
+      });
+  }
+
   dock
     .forEach(function (a) {
       a
@@ -3515,7 +3548,15 @@ document
       a
         .addEventListener("click", function () {
           hoveredLink = a;
-          syncPill(true);
+          setActiveLink(a);
+          movePillTo(a, true);
+
+          isClickScrolling = true;
+          clearTimeout(clickScrollTimer);
+          clickScrollTimer = setTimeout(function () {
+            isClickScrolling = false;
+            active();
+          }, 900);
         });
     });
 
@@ -3527,15 +3568,17 @@ document
       });
 
     dockNav
-      .addEventListener("blur", function (e) {
-        if (!dockNav.contains(e.relatedTarget)) {
+      .addEventListener("focusout", function (e) {
+        if (e.relatedTarget && !dockNav.contains(e.relatedTarget)) {
           hoveredLink = null;
           syncPill(true);
         }
-      }, true);
+      });
   }
 
   function active() {
+    if (isClickScrolling) return;
+
     var point = window.scrollY + window.innerHeight * 0.37;
     var current = -1;
 

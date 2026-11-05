@@ -212,6 +212,10 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .ab-link{position:relative;overflow:hidden}
 .ab-link::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);transform:translateX(-120%);animation:ab-shine 5s ease-in-out calc(2s + var(--n,0)*1.3s) infinite;pointer-events:none}
 .ab-link:hover::after{animation-duration:1.4s}
+.ab-link.is-purple{background:var(--purple);color:#ffffff}
+.ab-link.is-purple:hover{background:var(--lilac);color:var(--bg);box-shadow:0 12px 32px rgba(124,92,253,.5)}
+.ab-link.is-green{background:var(--lime);color:var(--bg)}
+.ab-link.is-green:hover{box-shadow:0 12px 32px rgba(192,255,114,.4)}
 .ab-team.in .ab-face::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.45) 50%,transparent 62%);transform:translateX(-130%);animation:ab-shine 5.5s ease-in-out calc(1.6s + var(--n)*1.4s) infinite}
 .ab-name{transition:color .25s}
 @media (hover:hover){.ab-p:hover .ab-name{color:var(--lime)}}
@@ -800,12 +804,12 @@ button *,
         <li class="ab-p" style="--n:0;--pc:#c0ff72;--pf:#111015">
           <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">A</span><img src="assets/abdurrahman-aiman.jpg" alt="Abdurrahman Aiman" loading="lazy"></div></div>
           <div class="ab-cap"><span class="ab-name">Abdurrahman Aiman</span><span class="ab-role" data-id="Developer" data-en="Developer">Developer</span>
-            <a class="ab-link" href="https://abaimann.github.io/Repository-Gw/" target="_blank" rel="noopener" aria-label="Portofolio Abdurrahman Aiman"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
+            <a class="ab-link is-purple" href="https://abaimann.github.io/Repository-Gw/" target="_blank" rel="noopener" aria-label="Portofolio Abdurrahman Aiman"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
         <li class="ab-p" style="--n:1;--pc:#a98bff;--pf:#111015">
           <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">F</span><img src="assets/fahru-rizal.jpg" alt="Fahru Rizal" loading="lazy"></div></div>
           <div class="ab-cap"><span class="ab-name">Fahru Rizal</span><span class="ab-role" data-id="Desain &amp; arahan" data-en="Design &amp; direction">Desain &amp; arahan</span>
-            <a class="ab-link" href="#" target="_blank" rel="noopener" aria-label="Portofolio Fahru Rizal"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
+            <a class="ab-link is-green" href="#" target="_blank" rel="noopener" aria-label="Portofolio Fahru Rizal"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
       </ul>
     </div>

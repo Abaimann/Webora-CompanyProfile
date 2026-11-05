@@ -511,21 +511,33 @@ body{display:block;min-height:100%;flex-direction:initial;justify-content:initia
   transition:transform .7s cubic-bezier(.2,1.25,.4,1),opacity .35s ease,visibility 0s;
 }
 /* ikon & label masuk satu per satu setelah kapsul muncul */
-.wdock .wdock-link{opacity:0;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease,background .2s,color .2s}
-.wdock.dock-on .wdock-link{opacity:1;transform:none;transition:opacity .4s ease calc(.12s + var(--k,0)*.06s),transform .5s cubic-bezier(.2,1.4,.4,1) calc(.12s + var(--k,0)*.06s),background .2s,color .2s}
-.wdock.dock-on .wdock-link:hover,.wdock.dock-on .wdock-link:focus-visible{transform:translateY(-1px);transition-delay:0s}
+.wdock .wdock-link{opacity:0;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease,color .2s}
+.wdock.dock-on .wdock-link{opacity:1;transform:none;transition:opacity .4s ease calc(.12s + var(--k,0)*.06s),transform .5s cubic-bezier(.2,1.4,.4,1) calc(.12s + var(--k,0)*.06s),color .2s}
+.wdock.dock-on .wdock-link:hover,.wdock.dock-on .wdock-link:focus-visible{transform:none;transition-delay:0s}
 .wdock-link:nth-child(2){--k:1}.wdock-link:nth-child(3){--k:2}.wdock-link:nth-child(4){--k:3}
 .wdock-link{
-  position:relative;display:flex;align-items:center;gap:10px;
+  position:relative;z-index:2;display:flex;align-items:center;gap:10px;
   padding:12px 16px;border-radius:999px;
   font:600 14px/1.1 Inter,system-ui,sans-serif;
   color:#ffffff;text-decoration:none;white-space:nowrap;
-  transition:background .2s ease,color .2s ease,transform .2s ease;
+  background:transparent;
+  transition:color .2s ease;
 }
 .wdock-link svg{width:18px;height:18px;flex:none}
-.wdock-link:hover,.wdock-link:focus-visible{background:#28262d;transform:translateY(-1px)}
-.wdock-link.is-active{background:#29252f;color:#d3ffae}
+.wdock-link:hover,.wdock-link:focus-visible{background:transparent}
+.wdock-link.is-active{background:transparent;color:#d3ffae}
 .wdock-link:focus-visible{outline:2px solid #c0ff72;outline-offset:-2px}
+.wdock-pill{
+  position:absolute;top:0;left:0;
+  border-radius:999px;
+  background:#28262d;
+  box-shadow:0 3px 12px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08);
+  pointer-events:none;
+  z-index:1;
+  opacity:0;
+  transform:translate3d(0,0,0);
+  transition:transform .28s cubic-bezier(.2,.9,.3,1),width .28s cubic-bezier(.2,.9,.3,1),height .28s cubic-bezier(.2,.9,.3,1),opacity .2s ease;
+}
 
 /* Animasi reveal: bertahap ketika masuk ke viewport, tidak menyentuh keyframe section aslinya. */
 html.has-js .scroll-reveal{opacity:0;transform:translate3d(0,32px,0);filter:blur(4px);transition:opacity .82s cubic-bezier(.2,.8,.2,1),transform .82s cubic-bezier(.2,.8,.2,1),filter .82s ease;transition-delay:var(--reveal-delay,0ms)}
@@ -546,6 +558,7 @@ html.has-js .scroll-reveal.is-visible{opacity:1;transform:translate3d(0,0,0);fil
   .wdock,.wdock.dock-on{transition:opacity .2s ease,visibility 0s}
   .wdock,.wdock.dock-on{transform:translate(-50%,0)}
   .wdock .wdock-link,.wdock.dock-on .wdock-link{transform:none;transition:opacity .2s ease}
+  .wdock-pill{transition:none!important}
 }
 
 
@@ -1003,6 +1016,7 @@ button *,
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5.5 3V6A2 2 0 0 1 5 4Z"/></svg>
     <span data-id="Kontak" data-en="Contact">Kontak</span>
   </a>
+  <span class="wdock-pill" aria-hidden="true"></span>
 </nav>
 
 <script>
@@ -3396,7 +3410,14 @@ document
       });
   }
 
-  // Menandai item navigasi yang sedang dibaca.
+  // Menandai item navigasi yang sedang dibaca dan mengatur background bergeser pada navbar.
+  var dockNav = document
+    .querySelector(".wdock");
+
+  var dockPill = dockNav
+    ? dockNav.querySelector(".wdock-pill")
+    : null;
+
   var dock = []
     .slice
     .call(document.querySelectorAll(".wdock-link"));
@@ -3405,6 +3426,114 @@ document
     .map(function (a) {
       return document.getElementById(a.dataset.target);
     });
+
+  var hoveredLink = null;
+  var isPillReady = false;
+
+  function movePillTo(target, animate) {
+    if (!dockPill || !target) {
+      if (dockPill) {
+        dockPill
+          .style
+          .setProperty("opacity", "0");
+      }
+      isPillReady = false;
+      return;
+    }
+
+    var x = target.offsetLeft;
+    var y = target.offsetTop;
+    var w = target.offsetWidth;
+    var h = target.offsetHeight;
+
+    if (!isPillReady || animate === false) {
+      dockPill
+        .style
+        .setProperty("transition", "none");
+
+      dockPill
+        .style
+        .setProperty("transform", "translate3d(" + x + "px," + y + "px,0)");
+
+      dockPill
+        .style
+        .setProperty("width", w + "px");
+
+      dockPill
+        .style
+        .setProperty("height", h + "px");
+
+      void dockPill.offsetWidth;
+
+      dockPill
+        .style
+        .removeProperty("transition");
+
+      isPillReady = true;
+    } else {
+      dockPill
+        .style
+        .setProperty("transform", "translate3d(" + x + "px," + y + "px,0)");
+
+      dockPill
+        .style
+        .setProperty("width", w + "px");
+
+      dockPill
+        .style
+        .setProperty("height", h + "px");
+    }
+
+    dockPill
+      .style
+      .setProperty("opacity", "1");
+  }
+
+  function syncPill(animate) {
+    var target = hoveredLink;
+    if (!target && dockNav) {
+      target = dockNav
+        .querySelector(".wdock-link.is-active");
+    }
+    movePillTo(target, animate);
+  }
+
+  dock
+    .forEach(function (a) {
+      a
+        .addEventListener("mouseenter", function () {
+          hoveredLink = a;
+          syncPill(true);
+        });
+
+      a
+        .addEventListener("focus", function () {
+          hoveredLink = a;
+          syncPill(true);
+        });
+
+      a
+        .addEventListener("click", function () {
+          hoveredLink = a;
+          syncPill(true);
+        });
+    });
+
+  if (dockNav) {
+    dockNav
+      .addEventListener("mouseleave", function () {
+        hoveredLink = null;
+        syncPill(true);
+      });
+
+    dockNav
+      .addEventListener("blur", function (e) {
+        if (!dockNav.contains(e.relatedTarget)) {
+          hoveredLink = null;
+          syncPill(true);
+        }
+      }, true);
+  }
 
   function active() {
     var point = window.scrollY + window.innerHeight * 0.37;
@@ -3418,32 +3547,51 @@ document
     dock
       .forEach(function (a, i) {
         var on = i === current;
-        a.classList.toggle("is-active", on);
+        a
+          .classList
+          .toggle("is-active", on);
         if (on) {
-          a.setAttribute("aria-current", "location");
+          a
+            .setAttribute("aria-current", "location");
         } else {
-          a.removeAttribute("aria-current");
+          a
+            .removeAttribute("aria-current");
         }
       });
+
+    syncPill(true);
   }
 
   var ticking = false;
-  window.addEventListener(
-    "scroll",
-    function () {
-      if (!ticking) {
-        requestAnimationFrame(function () {
-          active();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
+  window
+    .addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            active();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
 
-  window.addEventListener("resize", active);
-  window.addEventListener("hashchange", active);
+  window
+    .addEventListener("resize", function () {
+      syncPill(false);
+      active();
+    });
+
+  window
+    .addEventListener("hashchange", active);
+
+  window
+    .addEventListener("load", function () {
+      syncPill(false);
+    });
+
   active();
 })();
 

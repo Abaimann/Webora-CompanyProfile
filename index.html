@@ -113,7 +113,7 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 .pf-stage{position:relative;height:560px;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-mask-image:linear-gradient(#000 var(--mk,78%),transparent);mask-image:linear-gradient(#000 var(--mk,78%),transparent)}
 .pf-stage:focus-visible{outline-offset:-3px}
 
-.pf-card{position:absolute;left:0;top:0;width:var(--w);height:var(--h);will-change:transform,opacity}
+.pf-card{position:absolute;left:0;top:0;width:var(--w);height:var(--h);will-change:transform,opacity;contain:layout style}
 .pf-face{position:absolute;inset:0;display:flex;align-items:flex-end;border-radius:18px;overflow:hidden;border:3px solid var(--line);border-color:color-mix(in srgb,var(--ink) calc(var(--a,0)*100%),var(--line));box-shadow:0 18px 40px rgba(0,0,0,.45);background-size:250% 100%;animation:pf-float var(--fdur,5s) ease-in-out var(--fd,0s) infinite,pf-slide 7s ease-in-out infinite alternate;transition:transform .4s cubic-bezier(.3,1.6,.5,1),box-shadow .3s,border-color .25s}
 .pf-face::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);opacity:var(--a,0);animation:pf-shine 5s ease-in-out 1.5s infinite;pointer-events:none}
 .pf-face img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
@@ -341,7 +341,8 @@ h1 .l>span{display:block;color:var(--ink)}.w{display:inline-block;white-space:no
 @keyframes ts-draw{from{stroke-dashoffset:1}}
 .ts-item{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--hh);rotate:var(--r);z-index:1;
   transition:left .5s cubic-bezier(.3,1.4,.5,1),top .5s cubic-bezier(.3,1.4,.5,1),width .5s cubic-bezier(.3,1.4,.5,1),height .5s cubic-bezier(.3,1.4,.5,1),rotate .5s cubic-bezier(.3,1.4,.5,1)}
-.ts-card{position:relative;width:100%;height:100%;overflow:hidden;border:3px solid transparent;border-radius:var(--rc);background:var(--c);color:var(--f);box-shadow:0 14px 28px rgba(0,0,0,.45);transition:border-radius .5s cubic-bezier(.3,1.4,.5,1),box-shadow .35s}
+.ts-card{position:relative;width:100%;height:100%;overflow:hidden;border:3px solid transparent;border-radius:var(--rc);background:var(--c);color:var(--f);box-shadow:0 14px 28px rgba(0,0,0,.45);transition:border-radius .5s cubic-bezier(.3,1.4,.5,1),box-shadow .35s;contain:layout style}
+.pf-card,.ts-card,.serv-card,.step,.pr-card{contain:layout style}
 .ts-edge{position:absolute;left:-56px;top:-56px;width:calc(100% + 112px);height:calc(100% + 112px);overflow:visible;pointer-events:none;z-index:3}
 .ts-edge .st{fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
 .ts-item:has(:focus-visible) .ts-card{outline:3px solid var(--lime);outline-offset:3px}
@@ -815,12 +816,12 @@ button *,
            Untuk foto: tambahkan <img src="foto.jpg" alt=""> setelah <span class="ab-ini"> -->
       <ul class="ab-team" aria-label="Tim Webora">
         <li class="ab-p" style="--n:0;--pc:#c0ff72;--pf:#111015">
-          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">A</span><img src="assets/abdurrahman-aiman.jpg" alt="Abdurrahman Aiman" loading="lazy"></div></div>
+          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">A</span><img src="assets/abdurrahman-aiman.webp" alt="Abdurrahman Aiman" loading="lazy" decoding="async"></div></div>
           <div class="ab-cap"><span class="ab-name">Abdurrahman Aiman</span><span class="ab-role" data-id="Developer" data-en="Developer">Developer</span>
             <a class="ab-link is-purple" href="https://abaimann.github.io/Repository-Gw/" target="_blank" rel="noopener" aria-label="Portofolio Abdurrahman Aiman"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
         <li class="ab-p" style="--n:1;--pc:#a98bff;--pf:#111015">
-          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">F</span><img src="assets/fahru-rizal.jpg" alt="Fahru Rizal" loading="lazy"></div></div>
+          <div class="ab-frame"><div class="ab-face"><span class="ab-ini" aria-hidden="true">F</span><img src="assets/fahru-rizal.webp" alt="Fahru Rizal" loading="lazy" decoding="async"></div></div>
           <div class="ab-cap"><span class="ab-name">Fahru Rizal</span><span class="ab-role" data-id="Desain &amp; arahan" data-en="Design &amp; direction">Desain &amp; arahan</span>
             <a class="ab-link is-green" href="https://abaimann.github.io/Portofolio-Kafka/" target="_blank" rel="noopener" aria-label="Portofolio Fahru Rizal"><span data-id="Lihat portofolio" data-en="View portfolio">Lihat portofolio</span><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 10 10 2M4 2h6v6"/></svg></a></div>
         </li>
@@ -1118,6 +1119,11 @@ document
       vx = Math.max(-1600, Math.min(1600, vx));
       vy = Math.max(-1600, Math.min(1600, vy));
 
+      // Calculate max falling distance once before rAF loop to avoid forced reflows on every frame
+      var heroBottom = hero ? hero.getBoundingClientRect().bottom : window.innerHeight;
+      var currentElTop = el.getBoundingClientRect().top;
+      var maxFallDistance = y + (heroBottom - currentElTop) + 20;
+
       function step(now) {
         var dt = Math.min((now - last) / 1000, 0.04);
         last = now;
@@ -1129,10 +1135,7 @@ document
         el.style.setProperty("--ty", y + "px");
         el.style.setProperty("--r", (r0 + rot) + "deg");
 
-        if (
-          el.getBoundingClientRect().top > hero.getBoundingClientRect().bottom + 20 ||
-          now - t0 > 6000
-        ) {
+        if (y > maxFallDistance || now - t0 > 6000) {
           return respawn();
         }
         requestAnimationFrame(step);
@@ -1157,9 +1160,32 @@ document
 
 // Headline: dipecah jadi huruf, bobot & warna tiap huruf mengikuti jarak kursor
 var h1 = document.querySelector("h1"),
+  heroStage = document.querySelector(".stage"),
   mx = 0,
   my = 0,
-  raf = 0;
+  raf = 0,
+  heroCharCache = null,
+  heroWaveRadius = 0;
+
+function updateHeroCharCache() {
+  if (!h1) return;
+  heroWaveRadius = parseFloat(getComputedStyle(h1).fontSize) * 1.15;
+  var chars = h1.querySelectorAll(".ch");
+  heroCharCache = [];
+  for (var i = 0; i < chars.length; i++) {
+    var c = chars[i];
+    var r = c.getBoundingClientRect();
+    heroCharCache.push({
+      el: c,
+      x: r.left + r.width / 2,
+      y: r.top + r.height / 2
+    });
+  }
+}
+
+function invalidateHeroCharCache() {
+  heroCharCache = null;
+}
 
 function split() {
   var all = [];
@@ -1193,51 +1219,98 @@ function split() {
         });
     });
   h1.setAttribute("aria-label", all.join(" "));
+  invalidateHeroCharCache();
 }
 split();
 
 function wave() {
   raf = 0;
-  var R = parseFloat(getComputedStyle(h1).fontSize) * 1.15;
-  h1
-    .querySelectorAll(".ch")
-    .forEach(function (c) {
-      var r = c.getBoundingClientRect();
-      var dx = r.left + r.width / 2 - mx;
-      var dy = r.top + r.height / 2 - my;
-      var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
-      c.style.fontWeight = Math.round(900 - 560 * t);
-      c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
-    });
+  if (!heroCharCache || heroCharCache.length === 0) {
+    updateHeroCharCache();
+  }
+  if (!heroCharCache) return;
+
+  var R = heroWaveRadius;
+  var items = heroCharCache;
+  var count = items.length;
+
+  for (var i = 0; i < count; i++) {
+    var item = items[i];
+    var dx = item.x - mx;
+    var dy = item.y - my;
+    var dist = Math.sqrt(dx * dx + dy * dy);
+    var t = Math.pow(Math.max(0, 1 - dist / R), 1.4);
+    item.el.style.fontWeight = Math.round(900 - 560 * t);
+    item.el.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+  }
 }
 
-var stage = document.querySelector(".stage");
-stage.addEventListener("pointermove", function (e) {
-  mx = e.clientX;
-  my = e.clientY;
-  if (!raf) raf = requestAnimationFrame(wave);
-});
-stage.addEventListener("pointerleave", function () {
-  h1
-    .querySelectorAll(".ch")
-    .forEach(function (c) {
-      c.style.fontWeight = "";
-      c.style.color = "";
-    });
-});
+if (heroStage) {
+  heroStage.addEventListener("pointerenter", updateHeroCharCache);
+  heroStage.addEventListener("pointermove", function (e) {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!raf) raf = requestAnimationFrame(wave);
+  });
+  heroStage.addEventListener("pointerleave", function () {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+    if (heroCharCache) {
+      for (var i = 0; i < heroCharCache.length; i++) {
+        var el = heroCharCache[i].el;
+        el.style.fontWeight = "";
+        el.style.color = "";
+      }
+    }
+  });
+}
 
-// Mata smiley mengikuti kursor
+window.addEventListener("resize", invalidateHeroCharCache, { passive: true });
+window.addEventListener("scroll", invalidateHeroCharCache, { passive: true });
+
+// Mata smiley mengikuti kursor (posisi face dicache dan update rAF-throttled)
 var eyes = document.querySelectorAll(".eye"),
-  face = document.querySelector(".s2");
+  face = document.querySelector(".s2"),
+  faceCenter = null,
+  eyesRaf = 0,
+  cursorX = 0,
+  cursorY = 0;
+
+function updateFaceCenter() {
+  if (!face) return;
+  var r = face.getBoundingClientRect();
+  faceCenter = {
+    x: r.left + r.width / 2,
+    y: r.top + r.height / 2
+  };
+}
+
+function renderEyes() {
+  eyesRaf = 0;
+  if (!faceCenter) {
+    updateFaceCenter();
+  }
+  if (!faceCenter) return;
+
+  var a = Math.atan2(cursorY - faceCenter.y, cursorX - faceCenter.x);
+  var translateVal = (Math.cos(a) * 4).toFixed(2) + "px " + (Math.sin(a) * 4).toFixed(2) + "px";
+  for (var i = 0; i < eyes.length; i++) {
+    eyes[i].style.translate = translateVal;
+  }
+}
 
 document.addEventListener("pointermove", function (e) {
-  var r = face.getBoundingClientRect();
-  var a = Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2));
-  eyes
-    .forEach(function (el) {
-      el.style.translate = (Math.cos(a) * 4) + "px " + (Math.sin(a) * 4) + "px";
-    });
-});
+  cursorX = e.clientX;
+  cursorY = e.clientY;
+  if (!eyesRaf) {
+    eyesRaf = requestAnimationFrame(renderEyes);
+  }
+}, { passive: true });
+
+window.addEventListener("resize", function () { faceCenter = null; }, { passive: true });
+window.addEventListener("scroll", function () { faceCenter = null; }, { passive: true });
 
 // Ganti bahasa ID / EN
 document
@@ -1281,7 +1354,7 @@ document
       n: "Djeroe Coffee",
       id: "Website company profile untuk coffee shop Djeroe dengan identitas visual interaktif dan responsif.",
       en: "Interactive and responsive company profile website for Djeroe Coffee Shop.",
-      img: "assets/projects/djeroe.png",
+      img: "assets/projects/djeroe.webp",
       href: "https://abaimann.github.io/djeroe-coffeshop/#beranda",
       p: 0
     },
@@ -1289,7 +1362,7 @@ document
       n: "Portofolio Abdurrahman",
       id: "Website portofolio interaktif fullstack developer dengan tema dinamis, sirkuit animasi, dan visual modern.",
       en: "Interactive fullstack developer portfolio website featuring dynamic themes, animated circuits, and modern visuals.",
-      img: "assets/projects/repository-gw.png",
+      img: "assets/projects/repository-gw.webp",
       href: "https://abaimann.github.io/Repository-Gw/",
       p: 1
     },
@@ -1297,7 +1370,7 @@ document
       n: "Portofolio Kafka",
       id: "Website portofolio personal interaktif untuk Frontend Developer dengan visual langit dinamis, transisi halus, dan tema siang-malam.",
       en: "Interactive personal frontend developer portfolio featuring dynamic sky visuals, smooth transitions, and day-night themes.",
-      img: "assets/projects/kafka.png",
+      img: "assets/projects/kafka.webp",
       href: "https://abaimann.github.io/Portofolio-Kafka/",
       p: 2
     },
@@ -1305,7 +1378,7 @@ document
       n: "BuildHauss AI",
       id: "Aplikasi mobile diagnosis kesehatan dan panduan servis motor bertenaga AI.",
       en: "AI-powered mobile app for motorcycle health diagnostics and personalized maintenance.",
-      img: "assets/projects/buildhauss.png",
+      img: "assets/projects/buildhauss.webp",
       href: "https://abaimann.github.io/BuildHauss/",
       p: 1
     },
@@ -1313,7 +1386,7 @@ document
       n: "EduLink LMS",
       id: "Platform web kursus bahasa Inggris terstruktur dilengkapi asisten tanya-jawab AI.",
       en: "Structured English learning web platform featuring AI-assisted question and answer.",
-      img: "assets/projects/edulink.png",
+      img: "assets/projects/edulink.webp",
       href: "https://salmon-scorpion-446340.hostingersite.com/login",
       p: 2
     },
@@ -1321,7 +1394,7 @@ document
       n: "SMPN 1 Bangodua",
       id: "Website profil dan branding sekolah resmi untuk pusat informasi serta dokumentasi kegiatan.",
       en: "Official school profile and branding website for announcements and documentation.",
-      img: "assets/projects/Bangodua.png",
+      img: "assets/projects/Bangodua.webp",
       href: "https://youtu.be/Jfh-miAf7m0?si=JA79vtId1PUst7iO",
       p: 3
     },
@@ -1329,7 +1402,7 @@ document
       n: "SLB Tunas Harapan",
       id: "Website profil sekolah inklusif yang dilengkapi formulir pendaftaran siswa baru online.",
       en: "Inclusive school website equipped with an online student admission system.",
-      img: "assets/projects/slbb.png",
+      img: "assets/projects/slbb.webp",
       href: "https://youtu.be/1ksO8WuCUfI?si=IWB7b9eR55HGCDi3",
       p: 0
     },
@@ -1337,7 +1410,7 @@ document
       n: "Sistem Monitoring",
       id: "Sistem informasi pemantauan dan pengelolaan data akademik sekolah terpadu berbasis web.",
       en: "Integrated web-based academic monitoring system for structured school administration.",
-      img: "assets/projects/sistem-monitoring.jpg",
+      img: "assets/projects/sistem-monitoring.webp",
       href: "https://github.com/Abaimann/MonitoringAkademik-SMPN-1-ATAP-1-BANGODUA",
       p: 1
     },
@@ -1345,7 +1418,7 @@ document
       n: "M. Baihaqi",
       id: "Website portofolio personal formal dan rapi untuk profil profesional praktisi hukum.",
       en: "Clean and formal personal portfolio website showcasing legal professional background.",
-      img: "assets/projects/baihaqi.png",
+      img: "assets/projects/baihaqi.webp",
       href: "https://abaimann.github.io/Portofolio-MuhammadBaihaqi-Hukum23/#/home",
       p: 2
     },
@@ -1353,7 +1426,7 @@ document
       n: "Aulia Zahrani",
       id: "Website portofolio semi-formal responsif dengan tata letak bersih untuk bidang akuntansi.",
       en: "Responsive semi-formal portfolio website with clean layout highlighting accounting profile.",
-      img: "assets/projects/aulia.png",
+      img: "assets/projects/aulia.webp",
       href: "https://abaimann.github.io/Portofolio-AuliaZahraniPutri-Akuntansi23/",
       p: 3
     },
@@ -1361,7 +1434,7 @@ document
       n: "Razita Fakhira",
       id: "Website portofolio semi-formal berpenampilan modern untuk profesional bidang agribisnis.",
       en: "Modern semi-formal portfolio website designed for an agribusiness professional.",
-      img: "assets/projects/razita.png",
+      img: "assets/projects/razita.webp",
       href: "https://abaimann.github.io/Portofolio-RazitaFakhiraIrdina-Agribisnis23/",
       p: 0
     }
@@ -1413,6 +1486,7 @@ document
         im.alt = it.n;
         im.draggable = false;
         im.loading = "lazy";
+        im.decoding = "async";
         f.appendChild(im);
       }
 
@@ -1596,7 +1670,13 @@ document
     });
 
   /* Animasi: pegas menuju target + kartu mengembang saat section terlihat */
+  var isPortfolioIntersecting = false;
+
   function tick(now) {
+    if (!isPortfolioIntersecting) {
+      raf = 0;
+      return;
+    }
     var dt = Math.min((now - last) / 1000 || 0.016, 0.05);
     var busy = false;
     last = now;
@@ -1619,10 +1699,11 @@ document
     }
 
     render();
-    raf = busy ? requestAnimationFrame(tick) : 0;
+    raf = (busy && isPortfolioIntersecting) ? requestAnimationFrame(tick) : 0;
   }
 
   function kick() {
+    if (!isPortfolioIntersecting) return;
     if (!raf) {
       last = performance.now();
       raf = requestAnimationFrame(tick);
@@ -1649,10 +1730,20 @@ document
     };
   });
 
+  var stageRect = null;
+  function updateStageRect() {
+    if (stage) stageRect = stage.getBoundingClientRect();
+  }
+  stage.addEventListener("pointerenter", updateStageRect);
+  window.addEventListener("resize", function () { stageRect = null; }, { passive: true });
+  window.addEventListener("scroll", function () { stageRect = null; }, { passive: true });
+
   stage.addEventListener("pointermove", function (e) {
     if (e.pointerType === "mouse") {
-      var r = stage.getBoundingClientRect();
-      dot.style.transform = "translate3d(" + (e.clientX - r.left + 20) + "px," + (e.clientY - r.top + 20) + "px,0)";
+      if (!stageRect) updateStageRect();
+      var left = stageRect ? stageRect.left : 0;
+      var top = stageRect ? stageRect.top : 0;
+      dot.style.transform = "translate3d(" + (e.clientX - left + 20) + "px," + (e.clientY - top + 20) + "px,0)";
       dot.classList.toggle("on", !e.target.closest(".pf-meta"));
     }
     if (!drag) return;
@@ -1738,18 +1829,27 @@ document
     .observe(stage);
 
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver(
-      function (es, ob) {
-        if (es[0].isIntersecting) {
-          started = true;
+    var portfolioObserver = new IntersectionObserver(
+      function (es) {
+        var entry = es[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          isPortfolioIntersecting = true;
+          if (!started) started = true;
           kick();
-          ob.disconnect();
+        } else {
+          isPortfolioIntersecting = false;
+          if (raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+          }
         }
       },
-      { threshold: 0.25 }
-    )
-      .observe(stage);
+      { threshold: 0.15 }
+    );
+    portfolioObserver.observe(stage);
   } else {
+    isPortfolioIntersecting = true;
     started = true;
     kick();
   }
@@ -2016,9 +2116,23 @@ document
 
     if (reduce || !hov) return;
 
+    var frameRect = null;
+    function updateFrameRect() {
+      frameRect = frame.getBoundingClientRect();
+    }
+    frame.addEventListener("pointerenter", updateFrameRect);
+    frame.addEventListener("pointerleave", function () {
+      frameRect = null;
+      tA = 0;
+      kick();
+    });
+    window.addEventListener("resize", function () { frameRect = null; }, { passive: true });
+    window.addEventListener("scroll", function () { frameRect = null; }, { passive: true });
+
     frame.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse") return;
-      var b = frame.getBoundingClientRect();
+      if (!frameRect) updateFrameRect();
+      var b = frameRect;
       var px = e.clientX - b.left;
       var py = e.clientY - b.top;
       var best = 0;
@@ -2055,22 +2169,50 @@ document
   if (!reduce && hov) {
     var mx = 0,
       my = 0,
-      raf = 0;
+      raf = 0,
+      leadCharCenters = null,
+      leadRadius = 0;
+
+    function updateLeadCharCenters() {
+      if (!lead) return;
+      leadRadius = parseFloat(getComputedStyle(lead).fontSize) * 1.15;
+      leadCharCenters = chars.map(function (c) {
+        var r = c.getBoundingClientRect();
+        return {
+          el: c,
+          x: r.left + r.width / 2,
+          y: r.top + r.height / 2
+        };
+      });
+    }
+
+    function invalidateLeadCharCenters() {
+      leadCharCenters = null;
+    }
 
     function wave() {
       raf = 0;
-      var R = parseFloat(getComputedStyle(lead).fontSize) * 1.15;
-      chars
-        .forEach(function (c) {
-          var r = c.getBoundingClientRect();
-          var dx = r.left + r.width / 2 - mx;
-          var dy = r.top + r.height / 2 - my;
-          var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
-          c.style.fontWeight = Math.round(900 - 560 * t);
-          c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
-        });
+      if (!leadCharCenters || leadCharCenters.length === 0) {
+        updateLeadCharCenters();
+      }
+      if (!leadCharCenters) return;
+
+      var R = leadRadius;
+      var items = leadCharCenters;
+      var count = items.length;
+
+      for (var i = 0; i < count; i++) {
+        var item = items[i];
+        var dx = item.x - mx;
+        var dy = item.y - my;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var t = Math.pow(Math.max(0, 1 - dist / R), 1.4);
+        item.el.style.fontWeight = Math.round(900 - 560 * t);
+        item.el.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+      }
     }
 
+    lead.addEventListener("pointerenter", updateLeadCharCenters);
     lead.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse") return;
       mx = e.clientX;
@@ -2079,12 +2221,21 @@ document
     });
 
     lead.addEventListener("pointerleave", function () {
-      chars
-        .forEach(function (c) {
-          c.style.fontWeight = "";
-          c.style.color = "";
-        });
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+      if (leadCharCenters) {
+        for (var i = 0; i < leadCharCenters.length; i++) {
+          var el = leadCharCenters[i].el;
+          el.style.fontWeight = "";
+          el.style.color = "";
+        }
+      }
     });
+
+    window.addEventListener("resize", invalidateLeadCharCenters, { passive: true });
+    window.addEventListener("scroll", invalidateLeadCharCenters, { passive: true });
   }
 
   // Stiker & potret muncul sekali saat terlihat
@@ -2182,40 +2333,89 @@ document
     T.setAttribute("aria-label", txt);
   }
 
+  var studioBounds = null,
+    studioRadius = 0,
+    studioCharCache = null;
+
+  function updateStudioCache() {
+    if (!T) return;
+    studioRadius = parseFloat(getComputedStyle(T).fontSize) * 1.15;
+    var b = T.getBoundingClientRect();
+    studioBounds = {
+      left: b.left,
+      right: b.right,
+      top: b.top,
+      bottom: b.bottom
+    };
+    var chars = T.querySelectorAll(".ch");
+    studioCharCache = [];
+    for (var i = 0; i < chars.length; i++) {
+      var c = chars[i];
+      var r = c.getBoundingClientRect();
+      studioCharCache.push({
+        el: c,
+        x: r.left + r.width / 2,
+        y: r.top + r.height / 2
+      });
+    }
+  }
+
+  function invalidateStudioCache() {
+    studioBounds = null;
+    studioCharCache = null;
+  }
+
   function reset() {
     on = false;
-    T
-      .querySelectorAll(".ch")
-      .forEach(function (c) {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+    if (studioCharCache) {
+      for (var i = 0; i < studioCharCache.length; i++) {
+        var el = studioCharCache[i].el;
+        el.style.fontWeight = "";
+        el.style.color = "";
+      }
+    } else {
+      T.querySelectorAll(".ch").forEach(function (c) {
         c.style.fontWeight = "";
         c.style.color = "";
       });
+    }
   }
 
   function wave() {
     raf = 0;
-    var R = parseFloat(getComputedStyle(T).fontSize) * 1.15;
-    var b = T.getBoundingClientRect();
+    if (!studioBounds || !studioCharCache) {
+      updateStudioCache();
+    }
+    if (!studioBounds || !studioCharCache) return;
+
+    var R = studioRadius;
+    var b = studioBounds;
     if (mx < b.left - R || mx > b.right + R || my < b.top - R || my > b.bottom + R) {
       if (on) reset();
       return;
     }
     on = true;
 
-    T
-      .querySelectorAll(".ch")
-      .forEach(function (c) {
-        var r = c.getBoundingClientRect();
-        var dx = r.left + r.width / 2 - mx;
-        var dy = r.top + r.height / 2 - my;
-        var t = Math.pow(Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R), 1.4);
-        c.style.fontWeight = Math.round(900 - 560 * t);
-        c.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
-      });
+    var items = studioCharCache;
+    var count = items.length;
+    for (var i = 0; i < count; i++) {
+      var item = items[i];
+      var dx = item.x - mx;
+      var dy = item.y - my;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var t = Math.pow(Math.max(0, 1 - dist / R), 1.4);
+      item.el.style.fontWeight = Math.round(900 - 560 * t);
+      item.el.style.color = "color-mix(in srgb,var(--lime) " + Math.round(t * 100) + "%,var(--ink))";
+    }
   }
 
   split();
 
+  sec.addEventListener("pointerenter", updateStudioCache);
   sec.addEventListener("pointermove", function (e) {
     mx = e.clientX;
     my = e.clientY;
@@ -2223,9 +2423,14 @@ document
   });
 
   sec.addEventListener("pointerleave", reset);
+  window.addEventListener("resize", invalidateStudioCache, { passive: true });
+  window.addEventListener("scroll", invalidateStudioCache, { passive: true });
 
   // Saat bahasa diganti (atribut lang di <html>), teks judul ditimpa skrip bahasa lalu dipecah ulang di sini
-  new MutationObserver(split)
+  new MutationObserver(function () {
+    split();
+    invalidateStudioCache();
+  })
     .observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["lang"]
@@ -2630,10 +2835,24 @@ document
 
     if (tsReduce || !tsHover) return;
 
+    var elBounds = null;
+    function updateElBounds() {
+      elBounds = el.getBoundingClientRect();
+    }
+    el.addEventListener("pointerenter", updateElBounds);
+    el.addEventListener("pointerleave", function () {
+      elBounds = null;
+      tA = 0;
+      kick();
+    });
+    window.addEventListener("resize", function () { elBounds = null; }, { passive: true });
+    window.addEventListener("scroll", function () { elBounds = null; }, { passive: true });
+
     el.addEventListener("pointermove", function (e) {
       if (e.pointerType !== "mouse" || !N) return;
       /* posisi kursor dikembalikan ke koordinat lokal bubble (memperhitungkan rotasi & skala) */
-      var b = el.getBoundingClientRect();
+      if (!elBounds) updateElBounds();
+      var b = elBounds;
       var cs = getComputedStyle(el);
       var a = ((parseFloat(cs.rotate) || 0) * Math.PI) / 180;
       var sc = parseFloat(cs.scale) || 1;
@@ -2979,19 +3198,28 @@ document
     if (window.innerHeight !== VH) layout();
   });
 
+  var isTestimoniIntersecting = false;
+
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver(
-      function (es, ob) {
-        if (es[0].isIntersecting) {
-          seen = true;
-          go();
-          ob.disconnect();
+    var tsObserver = new IntersectionObserver(
+      function (es) {
+        var entry = es[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          isTestimoniIntersecting = true;
+          if (!seen) {
+            seen = true;
+            go();
+          }
+        } else {
+          isTestimoniIntersecting = false;
         }
       },
-      { threshold: 0.2 }
-    )
-      .observe(stage);
+      { threshold: 0.15 }
+    );
+    tsObserver.observe(stage);
   } else {
+    isTestimoniIntersecting = true;
     seen = true;
     go();
   }
@@ -3159,7 +3387,9 @@ document
           ly: e.clientY,
           lt: performance.now(),
           vx: 0,
-          vy: 0
+          vy: 0,
+          stageLeft: r.left,
+          stageTop: r.top
         };
         s.vx = s.vy = s.av = 0;
         el.classList.add("drag");
@@ -3168,11 +3398,10 @@ document
       el.addEventListener("pointermove", function (e) {
         var d = s.drag;
         if (!d) return;
-        var r = stage.getBoundingClientRect();
         var n = performance.now();
         var dt = (n - d.lt) / 1000;
-        s.x = Math.max(0, Math.min(stage.clientWidth - s.w, e.clientX - r.left - d.ox));
-        s.y = Math.max(0, Math.min(stage.clientHeight - s.h, e.clientY - r.top - d.oy));
+        s.x = Math.max(0, Math.min(stage.clientWidth - s.w, e.clientX - d.stageLeft - d.ox));
+        s.y = Math.max(0, Math.min(stage.clientHeight - s.h, e.clientY - d.stageTop - d.oy));
         if (dt > 0.001) {
           d.vx = 0.6 * d.vx + 0.4 * (e.clientX - d.lx) / dt;
           d.vy = 0.6 * d.vy + 0.4 * (e.clientY - d.ly) / dt;
@@ -3201,45 +3430,74 @@ document
       el.addEventListener("pointercancel", up);
     });
 
+  var chCenters = null,
+    bigRadius = 0,
+    isFooterIntersecting = false;
+
+  function updateChCenters() {
+    if (!chs || !chs.length) return;
+    bigRadius = (parseFloat(big.style.fontSize) || 100) * 0.9;
+    chCenters = chs.map(function (c) {
+      var r = c.getBoundingClientRect();
+      return {
+        x: r.left + r.width / 2,
+        y: r.top + r.height / 2
+      };
+    });
+  }
+
+  function invalidateChCenters() {
+    chCenters = null;
+  }
+
   /* Loop animasi: ketebalan huruf mengikuti kursor + fisika stiker */
   function tick(now) {
+    if (!isFooterIntersecting) {
+      raf = 0;
+      return;
+    }
+
     var dt = Math.min((now - last) / 1000 || 0.016, 0.05);
     var busy = false;
     last = now;
 
-    var R = (parseFloat(big.style.fontSize) || 100) * 0.9;
-    var k = reduce ? 1 : 1 - Math.exp(-dt * 10);
-    var rects = chs
-      .map(function (c) {
-        return c.getBoundingClientRect();
-      });
+    if (!chCenters || chCenters.length !== chs.length) {
+      updateChCenters();
+    }
 
-    chs
-      .forEach(function (c, i) {
-        var r = rects[i];
-        var d = Math.hypot(r.left + r.width / 2 - mx, (r.top + r.height / 2 - my) * 0.5);
-        var p = Math.max(0, 1 - d / R);
-        p *= p;
-        var tw = Math.max(120, (reduce || (t0 >= 0 && now - t0 >= i * 55) ? 900 : 250) - 650 * p);
-        c.w += (tw - c.w) * k;
-        c.p += (p - c.p) * k;
-        if (Math.abs(tw - c.w) > 0.5 || Math.abs(p - c.p) > 0.004) busy = true;
-        c.style.setProperty("--w", c.w.toFixed(0));
-        c.style.setProperty("--p", c.p.toFixed(3));
-      });
+    var R = bigRadius || ((parseFloat(big.style.fontSize) || 100) * 0.9);
+    var k = reduce ? 1 : 1 - Math.exp(-dt * 10);
+    var centers = chCenters;
+
+    for (var i = 0; i < chs.length; i++) {
+      var c = chs[i];
+      var center = centers ? centers[i] : null;
+      var cx = center ? center.x : 0;
+      var cy = center ? center.y : 0;
+      var d = Math.hypot(cx - mx, (cy - my) * 0.5);
+      var p = Math.max(0, 1 - d / R);
+      p *= p;
+      var tw = Math.max(120, (reduce || (t0 >= 0 && now - t0 >= i * 55) ? 900 : 250) - 650 * p);
+      c.w += (tw - c.w) * k;
+      c.p += (p - c.p) * k;
+      if (Math.abs(tw - c.w) > 0.5 || Math.abs(p - c.p) > 0.004) busy = true;
+      c.style.setProperty("--w", c.w.toFixed(0));
+      c.style.setProperty("--p", c.p.toFixed(3));
+    }
 
     if (t0 >= 0 && now - t0 < chs.length * 55 + 80) busy = true;
 
-    S
-      .forEach(function (s) {
-        if (phys(s, dt)) busy = true;
-        place(s);
-      });
+    for (var j = 0; j < S.length; j++) {
+      var s = S[j];
+      if (phys(s, dt)) busy = true;
+      place(s);
+    }
 
-    raf = busy ? requestAnimationFrame(tick) : 0;
+    raf = (busy && isFooterIntersecting) ? requestAnimationFrame(tick) : 0;
   }
 
   function kick() {
+    if (!isFooterIntersecting) return;
     if (!raf) {
       last = performance.now();
       raf = requestAnimationFrame(tick);
@@ -3253,10 +3511,13 @@ document
     kick();
   });
 
+  stage.addEventListener("pointerenter", updateChCenters);
   stage.addEventListener("pointerleave", function () {
     mx = my = -1e4;
     kick();
   });
+  window.addEventListener("resize", invalidateChCenters, { passive: true });
+  window.addEventListener("scroll", invalidateChCenters, { passive: true });
 
   /* Jam lokal, tautan, bahasa */
   var tEl = document.getElementById("ftTime");
@@ -3326,18 +3587,28 @@ document
     .observe(stage);
 
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver(
-      function (es, ob) {
-        if (es[0].isIntersecting) {
-          t0 = performance.now();
+    var footerObserver = new IntersectionObserver(
+      function (es) {
+        var entry = es[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          isFooterIntersecting = true;
+          if (t0 < 0) t0 = performance.now();
+          updateChCenters();
           kick();
-          ob.disconnect();
+        } else {
+          isFooterIntersecting = false;
+          if (raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+          }
         }
       },
-      { threshold: 0.25 }
-    )
-      .observe(stage);
+      { threshold: 0.15 }
+    );
+    footerObserver.observe(stage);
   } else {
+    isFooterIntersecting = true;
     t0 = 0;
     kick();
   }
